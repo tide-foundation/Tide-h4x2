@@ -1,0 +1,40 @@
+@startuml h4x_prism
+title Tide PRISM authentication
+!include https://raw.githubusercontent.com/bschwarz/puml-themes/master/themes/aws-orange-light/puml-theme-aws-orange-light.puml
+
+actor "User" as usr
+collections "Servers" as ork
+
+group Precondition
+note over usr
+    <latex>password : \textbf{Password attempt}</latex>
+end note 
+
+note over ork
+    <latex>f_i : \textbf{secret shard of OPRF }f</latex> 
+end note
+
+end
+
+== Authentication ==
+
+--> usr: <latex> EncryptedMessage </latex>
+activate usr
+hnote over usr
+    <latex> A \gets hash2ECpoint(password)</latex>
+    <latex> r_1 \gets random(\mathbb{Z}_p)</latex>
+end note
+
+usr -> ork: <latex>[A \cdot r_1]</latex>
+activate ork
+
+ork --> usr: <latex> [A \cdot r_1] \cdot f_i </latex>
+deactivate ork
+
+hnote over usr
+    <latex>K \gets ( \sum_{i=1}^{t} [A \cdot r_1 \cdot f_i] ) \cdot r_1^{-1} \equiv A \cdot f</latex>
+    <latex>k \gets H(K)</latex>
+    <latex>Prize \gets \mathsf{DEC}_k(EncryptedMessage)</latex>
+end note
+
+@enduml

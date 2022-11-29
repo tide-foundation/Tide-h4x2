@@ -1,0 +1,96 @@
+@startuml H4X2_uxflow
+title H4X2 UX Flow
+!include https://raw.githubusercontent.com/bschwarz/puml-themes/master/themes/aws-orange-light/puml-theme-aws-orange-light.puml
+
+actor Consumer as "User"
+participant "WWW" as hOrk
+collections "Nodes" as mORKx
+
+== Test password ==
+
+group Precondition
+note over Consumer
+    password : Attempted password
+    PRISM : Augmented password
+    PRISMi : Partial of a PRISM.  Each node holds a PRISMi
+end note 
+
+note over hOrk
+    encMsg1 : Encrypted Prize "The iTunes card code is "
+    encMsg2 : Example encrypted message
+end note 
+
+note over mORKx
+    node1 : Exposed - will reveal a part of the Secret
+    node2 : Closed
+end note
+
+end
+
+Consumer->hOrk: Request page
+activate hOrk
+activate Consumer
+
+hOrk-->Consumer: send encypted message
+deactivate hOrk
+
+Consumer->Consumer: convert **password** to an obfuscated form (gBlurPass)
+Consumer->mORKx: Send gBlurPass to the nodes
+activate mORKx
+
+note over mORKx
+    //<color orange>Verify gBlurPass to meet criteria</color>//
+    //<color orange>Test if IP needs to be throttled</color>//    
+end note 
+
+alt \n If criteria met and IP is not throttled\n
+    note over mORKx
+        Apply the Pseudorandom Function (PRF) to the gBlurPass.
+    end note
+else Criteria not met or IP is throttled \n
+    note over mORKx
+        Send random response
+    end note
+end
+
+alt If this is an exposed server \n
+    note over mORKx
+        //<color orange>If server exposed, send partial PRISM</color>//
+        info = PRISMi
+    end note
+else
+    note over mORKx
+        //<color orange>if server is closed,send nothing</color>//
+        info = null
+    end note
+end
+
+mORKx-->Consumer: Send gBlurPass,PRISMi, info
+deactivate mORKx
+
+note over Consumer
+    
+    gPassPRISM = **∑ ( gBlurPassPRISMi ) ⋅ modInv(r1)** //<color orange>( gPass ⋅ PRISM )</color>//
+    PRISMKey = hash( gPassPRISM )
+    Prize = aesDec_PRISMKey( encMsg1 )
+    if Prize.decryptionSuccessful then Display( Prize )
+    Example = aesDec_PRISMKey( encMsg2 )
+    if Example.decryptionSuccessful then Display( Example )
+    if info != null then Display( info )
+end note
+
+
+alt \n Test PRISM \n
+    note over Consumer
+        //<color orange>if PRISM is correct display</color>//
+        Example Password = "This is an Example"
+        Prize Password = "itunes Card number"
+    end note
+else
+    note over Consumer
+        //<color orange>if PRISM is wrong display</color>//
+        "random" message
+    end note
+end
+
+@enduml
