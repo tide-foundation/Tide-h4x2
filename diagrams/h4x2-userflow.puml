@@ -49,7 +49,7 @@ alt \n If criteria met and IP is not throttled\n
     end note
 else Criteria not met or IP is throttled \n
     note over mORKx
-        Send random response
+        Send random response and throttled time.
     end note
 end
 
