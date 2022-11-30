@@ -111,7 +111,7 @@ alt \nIsSafePoint == True \nand\nisIpThrottled == False ?\n
     end note
 else \nIsSafePoint == False \nor\nisIpThrottled == True ?\n
     note over mORKx
-        //<color orange>Send pseurandom response</color>//
+        //<color orange>Send pseudorandom response</color>//
         gBlurPassPRISMi = **gBlurPass ⋅ H(PRISMi)**
     end note
 end
