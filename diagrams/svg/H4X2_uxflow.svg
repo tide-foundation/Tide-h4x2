@@ -1,0 +1,506 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" height="1591.6667px" preserveAspectRatio="none" style="width:1030px;height:1591px;background:#00000000;" version="1.1" viewBox="0 0 1030 1591" width="1030.2083px" zoomAndPan="magnify"><defs><linearGradient id="g18cri126wr70j0" x1="50%" x2="50%" y1="0%" y2="100%"><stop offset="0%" stop-color="#FFFFFF"/><stop offset="100%" stop-color="#CCCCCC"/></linearGradient><linearGradient id="g18cri126wr70j1" x1="50%" x2="50%" y1="0%" y2="100%"><stop offset="0%" stop-color="#F08E41"/><stop offset="100%" stop-color="#EC7211"/></linearGradient></defs><g><rect fill="url(#g18cri126wr70j0)" height="45.0846" rx="4.1667" ry="4.1667" style="stroke:#FFFFFF;stroke-width:1.0416666666666667;" width="185.4167" x="418.2292" y="10.4167"/><text fill="#4E5D6C" font-family="&quot;Verdana&quot;" font-size="20.8333" font-weight="bold" lengthAdjust="spacing" textLength="164.5833" x="428.6458" y="40.1713">H4X2 UX Flow</text><rect fill="#BCC5CE" height="1008.138" style="stroke:#ABB6C2;stroke-width:1.0416666666666667;" width="10.4167" x="242.1875" y="482.2266"/><rect fill="#BCC5CE" height="39.5508" style="stroke:#ABB6C2;stroke-width:1.0416666666666667;" width="10.4167" x="632.8125" y="482.2266"/><rect fill="#BCC5CE" height="501.4974" style="stroke:#ABB6C2;stroke-width:1.0416666666666667;" width="10.4167" x="791.6667" y="614.4206"/><line style="stroke:#ABB6C2;stroke-width:0.5208333333333334;stroke-dasharray:5.0,5.0;" x1="246.875" x2="246.875" y1="149.2188" y2="1499.7396"/><line style="stroke:#ABB6C2;stroke-width:0.5208333333333334;stroke-dasharray:5.0,5.0;" x1="637.5" x2="637.5" y1="149.2188" y2="1499.7396"/><line style="stroke:#ABB6C2;stroke-width:0.5208333333333334;stroke-dasharray:5.0,5.0;" x1="796.875" x2="796.875" y1="149.2188" y2="1499.7396"/><text fill="#4E5D6C" font-family="&quot;Verdana&quot;" font-size="12.5" lengthAdjust="spacing" textLength="30.2083" x="229.1667" y="141.0624">User</text><ellipse cx="247.3958" cy="70.6055" fill="url(#g18cri126wr70j1)" rx="8.3333" ry="8.3333" style="stroke:#EC7211;stroke-width:0.5208333333333334;"/><path d="M247.3958,78.9388 L247.3958,107.0638 M233.8542,87.2721 L260.9375,87.2721 M247.3958,107.0638 L233.8542,122.6888 M247.3958,107.0638 L260.9375,122.6888 " fill="none" style="stroke:#EC7211;stroke-width:0.5208333333333334;"/><text fill="#4E5D6C" font-family="&quot;Verdana&quot;" font-size="12.5" lengthAdjust="spacing" textLength="30.2083" x="229.1667" y="1515.509">User</text><ellipse cx="247.3958" cy="1532.5195" fill="url(#g18cri126wr70j1)" rx="8.3333" ry="8.3333" style="stroke:#EC7211;stroke-width:0.5208333333333334;"/><path d="M247.3958,1540.8529 L247.3958,1568.9779 M233.8542,1549.1862 L260.9375,1549.1862 M247.3958,1568.9779 L233.8542,1584.6029 M247.3958,1568.9779 L260.9375,1584.6029 " fill="none" style="stroke:#EC7211;stroke-width:0.5208333333333334;"/><rect fill="url(#g18cri126wr70j1)" height="39.5508" rx="4.1667" ry="4.1667" style="stroke:#EC7211;stroke-width:0.5208333333333334;" width="59.375" x="608.3333" y="108.6263"/><text fill="#FFFFFF" font-family="&quot;Verdana&quot;" font-size="12.5" lengthAdjust="spacing" textLength="34.375" x="620.8333" y="132.7291">WWW</text><rect fill="url(#g18cri126wr70j1)" height="39.5508" rx="4.1667" ry="4.1667" style="stroke:#EC7211;stroke-width:0.5208333333333334;" width="59.375" x="608.3333" y="1498.6979"/><text fill="#FFFFFF" font-family="&quot;Verdana&quot;" font-size="12.5" lengthAdjust="spacing" textLength="34.375" x="620.8333" y="1522.8007">WWW</text><rect fill="url(#g18cri126wr70j1)" height="39.5508" rx="4.1667" ry="4.1667" style="stroke:#EC7211;stroke-width:0.5208333333333334;" width="66.6667" x="765.625" y="104.4596"/><rect fill="url(#g18cri126wr70j1)" height="39.5508" rx="4.1667" ry="4.1667" style="stroke:#EC7211;stroke-width:0.5208333333333334;" width="66.6667" x="761.4583" y="108.6263"/><text fill="#FFFFFF" font-family="&quot;Verdana&quot;" font-size="12.5" lengthAdjust="spacing" textLength="41.6667" x="773.9583" y="132.7291">Nodes</text><rect fill="url(#g18cri126wr70j1)" height="39.5508" rx="4.1667" ry="4.1667" style="stroke:#EC7211;stroke-width:0.5208333333333334;" width="66.6667" x="765.625" y="1498.6979"/><rect fill="url(#g18cri126wr70j1)" height="39.5508" rx="4.1667" ry="4.1667" style="stroke:#EC7211;stroke-width:0.5208333333333334;" width="66.6667" x="761.4583" y="1502.8646"/><text fill="#FFFFFF" font-family="&quot;Verdana&quot;" font-size="12.5" lengthAdjust="spacing" textLength="41.6667" x="773.9583" y="1526.9674">Nodes</text><rect fill="#BCC5CE" height="1008.138" style="stroke:#ABB6C2;stroke-width:1.0416666666666667;" width="10.4167" x="242.1875" y="482.2266"/><rect fill="#BCC5CE" height="39.5508" style="stroke:#ABB6C2;stroke-width:1.0416666666666667;" width="10.4167" x="632.8125" y="482.2266"/><rect fill="#BCC5CE" height="501.4974" style="stroke:#ABB6C2;stroke-width:1.0416666666666667;" width="10.4167" x="791.6667" y="614.4206"/><rect fill="#4E5D6C" height="3.125" rx="4.1667" ry="4.1667" style="stroke:#4E5D6C;stroke-width:1.0416666666666667;" width="1022.9167" x="0" y="185.6608"/><line style="stroke:#4E5D6C;stroke-width:1.0416666666666667;" x1="0" x2="1022.9167" y1="185.6608" y2="185.6608"/><line style="stroke:#4E5D6C;stroke-width:1.0416666666666667;" x1="0" x2="1022.9167" y1="188.7858" y2="188.7858"/><rect fill="#4E5D6C" height="33.3008" rx="4.1667" ry="4.1667" style="stroke:#4E5D6C;stroke-width:2.0833333333333335;" width="138.5417" x="442.1875" y="170.0521"/><text fill="#ABB6C2" font-family="&quot;Verdana&quot;" font-size="12.5" font-weight="bold" lengthAdjust="spacing" textLength="109.375" x="453.6458" y="191.0299">Test password</text><path d="M51.0417,221.0612 L197.9167,221.0612 L197.9167,237.6953 L187.5,248.112 L46.875,248.112 L46.875,225.2279 A4.1667,4.1667 0 0 1 51.0417,221.0612 " fill="#FFFFFF" style="stroke:#4E5D6C;stroke-width:1.5625;"/><rect fill="none" height="222.6563" rx="4.1667" ry="4.1667" style="stroke:#4E5D6C;stroke-width:1.5625;" width="935.4167" x="46.875" y="221.0612"/><text fill="#0073BB" font-family="&quot;Verdana&quot;" font-size="12.5" font-weight="bold" lengthAdjust="spacing" textLength="93.75" x="67.7083" y="238.914">Precondition</text><path d="M57.2917,257.487 L57.2917,312.6953 A4.1667,4.1667 0 0 0 61.4583,316.862 L433.3333,316.862 A4.1667,4.1667 0 0 0 437.5,312.6953 L437.5,263.737 L427.0833,253.3203 L61.4583,253.3203 A4.1667,4.1667 0 0 0 57.2917,257.487 " fill="#0073BB" style="stroke:#181818;stroke-width:1.0416666666666667;"/><path d="M427.0833,253.3203 L427.0833,261.6536 A2.0833,2.0833 0 0 0 429.1667,263.737 L437.5,263.737 L427.0833,253.3203 " fill="#0073BB" style="stroke:#181818;stroke-width:1.0416666666666667;"/><text fill="#FFFFFF" font-family="&quot;Verdana&quot;" font-size="12.5" lengthAdjust="spacing" textLength="210.4167" x="68.75" y="275.3398">password : Attempted password</text><text fill="#FFFFFF" font-family="&quot;Verdana&quot;" font-size="12.5" lengthAdjust="spacing" textLength="192.7083" x="68.75" y="289.8905">PRISM : Augmented password</text><text fill="#FFFFFF" font-family="&quot;Verdana&quot;" font-size="12.5" lengthAdjust="spacing" textLength="347.9167" x="68.75" y="304.4413">PRISMi : Partial of a PRISM.  Each node holds a PRISMi</text><path d="M448.9583,332.3893 L448.9583,373.0143 A4.1667,4.1667 0 0 0 453.125,377.181 L821.875,377.181 A4.1667,4.1667 0 0 0 826.0417,373.0143 L826.0417,338.6393 L815.625,328.2227 L453.125,328.2227 A4.1667,4.1667 0 0 0 448.9583,332.3893 " fill="#0073BB" style="stroke:#181818;stroke-width:1.0416666666666667;"/><path d="M815.625,328.2227 L815.625,336.556 A2.0833,2.0833 0 0 0 817.7083,338.6393 L826.0417,338.6393 L815.625,328.2227 " fill="#0073BB" style="stroke:#181818;stroke-width:1.0416666666666667;"/><text fill="#FFFFFF" font-family="&quot;Verdana&quot;" font-size="12.5" lengthAdjust="spacing" textLength="344.7917" x="460.4167" y="350.2421">encMsg1 : Encrypted Prize "The iTunes card code is "</text><text fill="#FFFFFF" font-family="&quot;Verdana&quot;" font-size="12.5" lengthAdjust="spacing" textLength="258.3333" x="460.4167" y="364.7929">encMsg2 : Example encrypted message</text><path d="M621.875,392.7409 L621.875,433.3659 A4.1667,4.1667 0 0 0 626.0417,437.5326 L967.7083,437.5326 A4.1667,4.1667 0 0 0 971.875,433.3659 L971.875,398.9909 L961.4583,388.5742 L626.0417,388.5742 A4.1667,4.1667 0 0 0 621.875,392.7409 " fill="#0073BB" style="stroke:#181818;stroke-width:1.0416666666666667;"/><path d="M961.4583,388.5742 L961.4583,396.9076 A2.0833,2.0833 0 0 0 963.5417,398.9909 L971.875,398.9909 L961.4583,388.5742 " fill="#0073BB" style="stroke:#181818;stroke-width:1.0416666666666667;"/><text fill="#FFFFFF" font-family="&quot;Verdana&quot;" font-size="12.5" lengthAdjust="spacing" textLength="317.7083" x="633.3333" y="410.5937">node1 : Exposed - will reveal a part of the Secret</text><text fill="#FFFFFF" font-family="&quot;Verdana&quot;" font-size="12.5" lengthAdjust="spacing" textLength="97.9167" x="633.3333" y="425.1444">node2 : Closed</text><polygon fill="#EC7211" points="620.3125,478.0599,630.7292,482.2266,620.3125,486.3932,624.4792,482.2266" style="stroke:#EC7211;stroke-width:1.0416666666666667;"/><line style="stroke:#EC7211;stroke-width:3.125;" x1="252.6042" x2="626.5625" y1="482.2266" y2="482.2266"/><text fill="#4E5D6C" font-family="&quot;Verdana&quot;" font-size="12.5" lengthAdjust="spacing" textLength="91.6667" x="265.1042" y="471.9869">Request page</text><polygon fill="#EC7211" points="264.0625,517.6107,253.6458,521.7773,264.0625,525.944,259.8958,521.7773" style="stroke:#EC7211;stroke-width:1.0416666666666667;"/><line style="stroke:#EC7211;stroke-width:3.125;stroke-dasharray:2.0,2.0;" x1="257.8125" x2="636.9792" y1="521.7773" y2="521.7773"/><text fill="#4E5D6C" font-family="&quot;Verdana&quot;" font-size="12.5" lengthAdjust="spacing" textLength="160.4167" x="275.5208" y="511.5377">send encypted message</text><line style="stroke:#EC7211;stroke-width:3.125;" x1="252.6042" x2="296.3542" y1="561.3281" y2="561.3281"/><line style="stroke:#EC7211;stroke-width:3.125;" x1="296.3542" x2="296.3542" y1="561.3281" y2="574.8698"/><line style="stroke:#EC7211;stroke-width:3.125;" x1="253.6458" x2="296.3542" y1="574.8698" y2="574.8698"/><polygon fill="#EC7211" points="264.0625,570.7031,253.6458,574.8698,264.0625,579.0365,259.8958,574.8698" style="stroke:#EC7211;stroke-width:1.0416666666666667;"/><text fill="#4E5D6C" font-family="&quot;Verdana&quot;" font-size="12.5" lengthAdjust="spacing" textLength="48.9583" x="265.1042" y="551.0885">convert</text><text fill="#4E5D6C" font-family="&quot;Verdana&quot;" font-size="12.5" font-weight="bold" lengthAdjust="spacing" textLength="72.9167" x="318.2292" y="551.0885">password</text><text fill="#4E5D6C" font-family="&quot;Verdana&quot;" font-size="12.5" lengthAdjust="spacing" textLength="225" x="395.3125" y="551.0885">to an obfuscated form (gBlurPass)</text><polygon fill="#EC7211" points="779.1667,610.2539,789.5833,614.4206,779.1667,618.5872,783.3333,614.4206" style="stroke:#EC7211;stroke-width:1.0416666666666667;"/><line style="stroke:#EC7211;stroke-width:3.125;" x1="252.6042" x2="785.4167" y1="614.4206" y2="614.4206"/><text fill="#4E5D6C" font-family="&quot;Verdana&quot;" font-size="12.5" lengthAdjust="spacing" textLength="190.625" x="265.1042" y="604.1809">Send gBlurPass to the nodes</text><path d="M672.9167,632.1289 L672.9167,672.7539 A4.1667,4.1667 0 0 0 677.0833,676.9206 L915.625,676.9206 A4.1667,4.1667 0 0 0 919.7917,672.7539 L919.7917,638.3789 L909.375,627.9622 L677.0833,627.9622 A4.1667,4.1667 0 0 0 672.9167,632.1289 " fill="#0073BB" style="stroke:#181818;stroke-width:1.0416666666666667;"/><path d="M909.375,627.9622 L909.375,636.2956 A2.0833,2.0833 0 0 0 911.4583,638.3789 L919.7917,638.3789 L909.375,627.9622 " fill="#0073BB" style="stroke:#181818;stroke-width:1.0416666666666667;"/><text fill="#FFA500" font-family="&quot;Verdana&quot;" font-size="12.5" font-style="italic" lengthAdjust="spacing" textLength="207.2917" x="684.375" y="649.9817">Verify gBlurPass to meet criteria</text><text fill="#FFA500" font-family="&quot;Verdana&quot;" font-size="12.5" font-style="italic" lengthAdjust="spacing" textLength="197.9167" x="684.375" y="664.5325">Test if IP needs to be throttled</text><text fill="#FFFFFF" font-family="&quot;Verdana&quot;" font-size="12.5" lengthAdjust="spacing" textLength="16.6667" x="882.2917" y="664.5325">    </text><path d="M584.375,690.3971 L657.2917,690.3971 L657.2917,707.0313 L646.875,717.4479 L580.2083,717.4479 L580.2083,694.5638 A4.1667,4.1667 0 0 1 584.375,690.3971 " fill="#FFFFFF" style="stroke:#4E5D6C;stroke-width:1.5625;"/><rect fill="none" height="198.6979" rx="4.1667" ry="4.1667" style="stroke:#4E5D6C;stroke-width:1.5625;" width="432.2917" x="580.2083" y="690.3971"/><text fill="#0073BB" font-family="&quot;Verdana&quot;" font-size="12.5" font-weight="bold" lengthAdjust="spacing" textLength="19.7917" x="601.0417" y="708.2499">alt</text><text fill="#4E5D6C" font-family="&quot;Verdana&quot;" font-size="12.5" font-weight="bold" lengthAdjust="spacing" textLength="5.2083" x="678.125" y="709.2916">[</text><text fill="#4E5D6C" font-family="&quot;Verdana&quot;" font-size="12.5" font-weight="bold" lengthAdjust="spacing" textLength="265.625" x="682.2917" y="723.8424">If criteria met and IP is not throttled</text><text fill="#4E5D6C" font-family="&quot;Verdana&quot;" font-size="12.5" font-weight="bold" lengthAdjust="spacing" textLength="5.2083" x="678.125" y="738.3931">]</text><path d="M590.625,765.2669 L590.625,791.3086 A4.1667,4.1667 0 0 0 594.7917,795.4753 L997.9167,795.4753 A4.1667,4.1667 0 0 0 1002.0833,791.3086 L1002.0833,771.5169 L991.6667,761.1003 L594.7917,761.1003 A4.1667,4.1667 0 0 0 590.625,765.2669 " fill="#0073BB" style="stroke:#181818;stroke-width:1.0416666666666667;"/><path d="M991.6667,761.1003 L991.6667,769.4336 A2.0833,2.0833 0 0 0 993.75,771.5169 L1002.0833,771.5169 L991.6667,761.1003 " fill="#0073BB" style="stroke:#181818;stroke-width:1.0416666666666667;"/><text fill="#FFFFFF" font-family="&quot;Verdana&quot;" font-size="12.5" lengthAdjust="spacing" textLength="379.1667" x="602.0833" y="783.1197">Apply the Pseudorandom Function (PRF) to the gBlurPass.</text><line style="stroke:#4E5D6C;stroke-width:1.0416666666666667;stroke-dasharray:2.0,2.0;" x1="580.2083" x2="1012.5" y1="802.7344" y2="802.7344"/><text fill="#4E5D6C" font-family="&quot;Verdana&quot;" font-size="12.5" font-weight="bold" lengthAdjust="spacing" textLength="246.875" x="590.625" y="819.5455">[Criteria not met or IP is throttled</text><text fill="#4E5D6C" font-family="&quot;Verdana&quot;" font-size="12.5" font-weight="bold" lengthAdjust="spacing" textLength="5.2083" x="590.625" y="834.0963">]</text><path d="M640.625,852.6693 L640.625,878.7109 A4.1667,4.1667 0 0 0 644.7917,882.8776 L948.9583,882.8776 A4.1667,4.1667 0 0 0 953.125,878.7109 L953.125,858.9193 L942.7083,848.5026 L644.7917,848.5026 A4.1667,4.1667 0 0 0 640.625,852.6693 " fill="#0073BB" style="stroke:#181818;stroke-width:1.0416666666666667;"/><path d="M942.7083,848.5026 L942.7083,856.8359 A2.0833,2.0833 0 0 0 944.7917,858.9193 L953.125,858.9193 L942.7083,848.5026 " fill="#0073BB" style="stroke:#181818;stroke-width:1.0416666666666667;"/><text fill="#FFFFFF" font-family="&quot;Verdana&quot;" font-size="12.5" lengthAdjust="spacing" textLength="280.2083" x="652.0833" y="870.5221">Send random response and throttled time.</text><path d="M654.1667,903.6784 L727.0833,903.6784 L727.0833,920.3125 L716.6667,930.7292 L650,930.7292 L650,907.8451 A4.1667,4.1667 0 0 1 654.1667,903.6784 " fill="#FFFFFF" style="stroke:#4E5D6C;stroke-width:1.5625;"/><rect fill="none" height="173.7305" rx="4.1667" ry="4.1667" style="stroke:#4E5D6C;stroke-width:1.5625;" width="316.6667" x="650" y="903.6784"/><text fill="#0073BB" font-family="&quot;Verdana&quot;" font-size="12.5" font-weight="bold" lengthAdjust="spacing" textLength="19.7917" x="670.8333" y="921.5312">alt</text><text fill="#4E5D6C" font-family="&quot;Verdana&quot;" font-size="12.5" font-weight="bold" lengthAdjust="spacing" textLength="204.1667" x="747.9167" y="922.5728">[If this is an exposed server</text><text fill="#4E5D6C" font-family="&quot;Verdana&quot;" font-size="12.5" font-weight="bold" lengthAdjust="spacing" textLength="5.2083" x="747.9167" y="937.1236">]</text><path d="M660.4167,963.9974 L660.4167,1004.6224 A4.1667,4.1667 0 0 0 664.5833,1008.7891 L928.125,1008.7891 A4.1667,4.1667 0 0 0 932.2917,1004.6224 L932.2917,970.2474 L921.875,959.8307 L664.5833,959.8307 A4.1667,4.1667 0 0 0 660.4167,963.9974 " fill="#0073BB" style="stroke:#181818;stroke-width:1.0416666666666667;"/><path d="M921.875,959.8307 L921.875,968.1641 A2.0833,2.0833 0 0 0 923.9583,970.2474 L932.2917,970.2474 L921.875,959.8307 " fill="#0073BB" style="stroke:#181818;stroke-width:1.0416666666666667;"/><text fill="#FFA500" font-family="&quot;Verdana&quot;" font-size="12.5" font-style="italic" lengthAdjust="spacing" textLength="239.5833" x="671.875" y="981.8502">If server exposed, send partial PRISM</text><text fill="#FFFFFF" font-family="&quot;Verdana&quot;" font-size="12.5" lengthAdjust="spacing" textLength="84.375" x="671.875" y="996.401">info = PRISMi</text><line style="stroke:#4E5D6C;stroke-width:1.0416666666666667;stroke-dasharray:2.0,2.0;" x1="650" x2="966.6667" y1="1016.0156" y2="1016.0156"/><path d="M680.2083,1026.4323 L680.2083,1067.0573 A4.1667,4.1667 0 0 0 684.375,1071.224 L908.3333,1071.224 A4.1667,4.1667 0 0 0 912.5,1067.0573 L912.5,1032.6823 L902.0833,1022.2656 L684.375,1022.2656 A4.1667,4.1667 0 0 0 680.2083,1026.4323 " fill="#0073BB" style="stroke:#181818;stroke-width:1.0416666666666667;"/><path d="M902.0833,1022.2656 L902.0833,1030.599 A2.0833,2.0833 0 0 0 904.1667,1032.6823 L912.5,1032.6823 L902.0833,1022.2656 " fill="#0073BB" style="stroke:#181818;stroke-width:1.0416666666666667;"/><text fill="#FFA500" font-family="&quot;Verdana&quot;" font-size="12.5" font-style="italic" lengthAdjust="spacing" textLength="200" x="691.6667" y="1044.2851">if server is closed,send nothing</text><text fill="#FFFFFF" font-family="&quot;Verdana&quot;" font-size="12.5" lengthAdjust="spacing" textLength="65.625" x="691.6667" y="1058.8359">info = null</text><polygon fill="#EC7211" points="264.0625,1111.7513,253.6458,1115.918,264.0625,1120.0846,259.8958,1115.918" style="stroke:#EC7211;stroke-width:1.0416666666666667;"/><line style="stroke:#EC7211;stroke-width:3.125;stroke-dasharray:2.0,2.0;" x1="257.8125" x2="795.8333" y1="1115.918" y2="1115.918"/><text fill="#4E5D6C" font-family="&quot;Verdana&quot;" font-size="12.5" lengthAdjust="spacing" textLength="180.2083" x="275.5208" y="1105.6783">Send gBlurPass,PRISMi, info</text><path d="M5.2083,1133.6263 L5.2083,1261.7513 A4.1667,4.1667 0 0 0 9.375,1265.918 L486.4583,1265.918 A4.1667,4.1667 0 0 0 490.625,1261.7513 L490.625,1139.8763 L480.2083,1129.4596 L9.375,1129.4596 A4.1667,4.1667 0 0 0 5.2083,1133.6263 " fill="#0073BB" style="stroke:#181818;stroke-width:1.0416666666666667;"/><path d="M480.2083,1129.4596 L480.2083,1137.793 A2.0833,2.0833 0 0 0 482.2917,1139.8763 L490.625,1139.8763 L480.2083,1129.4596 " fill="#0073BB" style="stroke:#181818;stroke-width:1.0416666666666667;"/><text fill="#FFFFFF" font-family="&quot;Verdana&quot;" font-size="12.5" lengthAdjust="spacing" textLength="4.1667" x="16.6667" y="1151.4791"> </text><text fill="#FFFFFF" font-family="&quot;Verdana&quot;" font-size="12.5" lengthAdjust="spacing" textLength="92.7083" x="16.6667" y="1166.0299">gPassPRISM =</text><text fill="#FFFFFF" font-family="&quot;Verdana&quot;" font-size="12.5" font-weight="bold" lengthAdjust="spacing" textLength="245.8333" x="113.5417" y="1166.0299">∑ ( gBlurPassPRISMi ) ⋅ modInv(r1)</text><text fill="#FFFFFF" font-family="&quot;Verdana&quot;" font-size="12.5" lengthAdjust="spacing" textLength="4.1667" x="359.375" y="1166.0299"> </text><text fill="#FFA500" font-family="&quot;Verdana&quot;" font-size="12.5" font-style="italic" lengthAdjust="spacing" textLength="106.25" x="363.5417" y="1166.0299">( gPass ⋅ PRISM )</text><text fill="#FFFFFF" font-family="&quot;Verdana&quot;" font-size="12.5" lengthAdjust="spacing" textLength="208.3333" x="16.6667" y="1180.5806">PRISMKey = hash( gPassPRISM )</text><text fill="#FFFFFF" font-family="&quot;Verdana&quot;" font-size="12.5" lengthAdjust="spacing" textLength="241.6667" x="16.6667" y="1195.1314">Prize = aesDec_PRISMKey( encMsg1 )</text><text fill="#FFFFFF" font-family="&quot;Verdana&quot;" font-size="12.5" lengthAdjust="spacing" textLength="317.7083" x="16.6667" y="1209.6822">if Prize.decryptionSuccessful then Display( Prize )</text><text fill="#FFFFFF" font-family="&quot;Verdana&quot;" font-size="12.5" lengthAdjust="spacing" textLength="265.625" x="16.6667" y="1224.233">Example = aesDec_PRISMKey( encMsg2 )</text><text fill="#FFFFFF" font-family="&quot;Verdana&quot;" font-size="12.5" lengthAdjust="spacing" textLength="365.625" x="16.6667" y="1238.7838">if Example.decryptionSuccessful then Display( Example )</text><text fill="#FFFFFF" font-family="&quot;Verdana&quot;" font-size="12.5" lengthAdjust="spacing" textLength="209.375" x="16.6667" y="1253.3346">if info != null then Display( info )</text><path d="M89.5833,1279.1992 L162.5,1279.1992 L162.5,1295.8333 L152.0833,1306.25 L85.4167,1306.25 L85.4167,1283.3659 A4.1667,4.1667 0 0 1 89.5833,1279.1992 " fill="#FFFFFF" style="stroke:#4E5D6C;stroke-width:1.5625;"/><rect fill="none" height="202.832" rx="4.1667" ry="4.1667" style="stroke:#4E5D6C;stroke-width:1.5625;" width="322.9167" x="85.4167" y="1279.1992"/><text fill="#0073BB" font-family="&quot;Verdana&quot;" font-size="12.5" font-weight="bold" lengthAdjust="spacing" textLength="19.7917" x="106.25" y="1297.052">alt</text><text fill="#4E5D6C" font-family="&quot;Verdana&quot;" font-size="12.5" font-weight="bold" lengthAdjust="spacing" textLength="5.2083" x="183.3333" y="1298.0937">[</text><text fill="#4E5D6C" font-family="&quot;Verdana&quot;" font-size="12.5" font-weight="bold" lengthAdjust="spacing" textLength="81.25" x="187.5" y="1312.6444">Test PRISM</text><text fill="#4E5D6C" font-family="&quot;Verdana&quot;" font-size="12.5" font-weight="bold" lengthAdjust="spacing" textLength="5.2083" x="183.3333" y="1327.1952">]</text><path d="M95.8333,1354.069 L95.8333,1409.2773 A4.1667,4.1667 0 0 0 100,1413.444 L393.75,1413.444 A4.1667,4.1667 0 0 0 397.9167,1409.2773 L397.9167,1360.319 L387.5,1349.9023 L100,1349.9023 A4.1667,4.1667 0 0 0 95.8333,1354.069 " fill="#0073BB" style="stroke:#181818;stroke-width:1.0416666666666667;"/><path d="M387.5,1349.9023 L387.5,1358.2357 A2.0833,2.0833 0 0 0 389.5833,1360.319 L397.9167,1360.319 L387.5,1349.9023 " fill="#0073BB" style="stroke:#181818;stroke-width:1.0416666666666667;"/><text fill="#FFA500" font-family="&quot;Verdana&quot;" font-size="12.5" font-style="italic" lengthAdjust="spacing" textLength="163.5417" x="107.2917" y="1371.9218">if PRISM is correct display</text><text fill="#FFFFFF" font-family="&quot;Verdana&quot;" font-size="12.5" lengthAdjust="spacing" textLength="269.7917" x="107.2917" y="1386.4726">Example Password = "This is an Example"</text><text fill="#FFFFFF" font-family="&quot;Verdana&quot;" font-size="12.5" lengthAdjust="spacing" textLength="255.2083" x="107.2917" y="1401.0234">Prize Password = "itunes Card number"</text><line style="stroke:#4E5D6C;stroke-width:1.0416666666666667;stroke-dasharray:2.0,2.0;" x1="85.4167" x2="408.3333" y1="1420.638" y2="1420.638"/><path d="M152.0833,1431.0547 L152.0833,1471.6797 A4.1667,4.1667 0 0 0 156.25,1475.8464 L337.5,1475.8464 A4.1667,4.1667 0 0 0 341.6667,1471.6797 L341.6667,1437.3047 L331.25,1426.888 L156.25,1426.888 A4.1667,4.1667 0 0 0 152.0833,1431.0547 " fill="#0073BB" style="stroke:#181818;stroke-width:1.0416666666666667;"/><path d="M331.25,1426.888 L331.25,1435.2214 A2.0833,2.0833 0 0 0 333.3333,1437.3047 L341.6667,1437.3047 L331.25,1426.888 " fill="#0073BB" style="stroke:#181818;stroke-width:1.0416666666666667;"/><text fill="#FFA500" font-family="&quot;Verdana&quot;" font-size="12.5" font-style="italic" lengthAdjust="spacing" textLength="157.2917" x="163.5417" y="1448.9075">if PRISM is wrong display</text><text fill="#FFFFFF" font-family="&quot;Verdana&quot;" font-size="12.5" lengthAdjust="spacing" textLength="123.9583" x="163.5417" y="1463.4583">"random" message</text><!--MD5=[d168ecb4035a057b32ff891df285e5ad]
+@startuml H4X2_uxflow
+title H4X2 UX Flow
+!include https://raw.githubusercontent.com/bschwarz/puml-themes/master/themes/aws-orange-light/puml-theme-aws-orange-light.puml
+
+actor Consumer as "User"
+participant "WWW" as hOrk
+collections "Nodes" as mORKx
+
+== Test password ==
+
+group Precondition
+note over Consumer
+    password : Attempted password
+    PRISM : Augmented password
+    PRISMi : Partial of a PRISM.  Each node holds a PRISMi
+end note 
+
+note over hOrk
+    encMsg1 : Encrypted Prize "The iTunes card code is "
+    encMsg2 : Example encrypted message
+end note 
+
+note over mORKx
+    node1 : Exposed - will reveal a part of the Secret
+    node2 : Closed
+end note
+
+end
+
+Consumer->hOrk: Request page
+activate hOrk
+activate Consumer
+
+hOrk- ->Consumer: send encypted message
+deactivate hOrk
+
+Consumer->Consumer: convert **password** to an obfuscated form (gBlurPass)
+Consumer->mORKx: Send gBlurPass to the nodes
+activate mORKx
+
+note over mORKx
+    //<color orange>Verify gBlurPass to meet criteria</color>//
+    //<color orange>Test if IP needs to be throttled</color>//    
+end note 
+
+alt \n If criteria met and IP is not throttled\n
+    note over mORKx
+        Apply the Pseudorandom Function (PRF) to the gBlurPass.
+    end note
+else Criteria not met or IP is throttled \n
+    note over mORKx
+        Send random response and throttled time.
+    end note
+end
+
+alt If this is an exposed server \n
+    note over mORKx
+        //<color orange>If server exposed, send partial PRISM</color>//
+        info = PRISMi
+    end note
+else
+    note over mORKx
+        //<color orange>if server is closed,send nothing</color>//
+        info = null
+    end note
+end
+
+mORKx- ->Consumer: Send gBlurPass,PRISMi, info
+deactivate mORKx
+
+note over Consumer
+    
+    gPassPRISM = **∑ ( gBlurPassPRISMi ) ⋅ modInv(r1)** //<color orange>( gPass ⋅ PRISM )</color>//
+    PRISMKey = hash( gPassPRISM )
+    Prize = aesDec_PRISMKey( encMsg1 )
+    if Prize.decryptionSuccessful then Display( Prize )
+    Example = aesDec_PRISMKey( encMsg2 )
+    if Example.decryptionSuccessful then Display( Example )
+    if info != null then Display( info )
+end note
+
+
+alt \n Test PRISM \n
+    note over Consumer
+        //<color orange>if PRISM is correct display</color>//
+        Example Password = "This is an Example"
+        Prize Password = "itunes Card number"
+    end note
+else
+    note over Consumer
+        //<color orange>if PRISM is wrong display</color>//
+        "random" message
+    end note
+end
+
+@enduml
+
+@startuml H4X2_uxflow
+title H4X2 UX Flow
+
+
+
+skinparam backgroundColor transparent
+
+
+
+
+
+
+
+
+
+
+skinparam defaultFontName       "Verdana"
+skinparam defaultFontSize       12
+skinparam dpi                   100
+skinparam shadowing             false
+skinparam roundcorner           8
+skinparam ParticipantPadding    40
+skinparam BoxPadding            40
+skinparam Padding               5
+skinparam ArrowColor            #4E5D6C
+skinparam stereotype {
+    CBackgroundColor #ffffff
+    CBorderColor #cccccc
+    ABackgroundColor #4a9a35
+    ABorderColor #176702
+    IBackgroundColor #da5b41
+    IBorderColor #a7280e
+    EBackgroundColor #f08e41
+    EBorderColor #bd5b0e
+    NBackgroundColor #338fc9
+    NBorderColor #005c96
+}
+skinparam title {
+	FontColor	                 #4E5D6C
+	BorderColor	                 #FFFFFF
+	FontSize	    	         20
+	BorderRoundCorner            8
+	BorderThickness 	         1
+	BackgroundColor              #FFFFFF-#cccccc
+}
+
+skinparam legend {
+	BackgroundColor #FFFFFF
+	BorderColor #cccccc
+	FontColor #abb6c2
+}
+
+skinparam swimlane {
+	BorderColor #0073bb
+	BorderThickness 2
+	TitleBackgroundColor  #FFFFFF-#cccccc
+	TitleFontColor #EC7211
+}
+
+
+skinparam activity {
+		FontColor #FFF
+	BorderColor #EC7211
+	BackgroundColor #f08e41-#EC7211
+	BarColor #1D8102
+	StartColor #0073bb
+	EndColor #0073bb
+	DiamondBackgroundColor #ffffff
+  	DiamondBorderColor #cccccc
+  	DiamondFontColor #4E5D6C
+}
+
+skinparam participant {
+		FontColor #FFF
+	BorderColor #EC7211
+	BackgroundColor #f08e41-#EC7211
+	ParticipantBorderThickness 2
+}
+
+skinparam actor {
+		FontColor #FFF
+	BorderColor #EC7211
+	BackgroundColor #f08e41-#EC7211
+	FontColor #4E5D6C
+}
+
+skinparam arrow {
+	Thickness 3
+	Color #EC7211
+	FontColor #4E5D6C
+}
+
+skinparam sequence {
+	ArrowThickness 3
+	BorderColor #EC7211
+	TitleFontColor #EC7211
+	BackgroundColor transparent
+	StartColor #EC7211
+	EndColor #EC7211
+	BoxBackgroundColor transparent
+	BoxBorderColor #4E5D6C
+	BoxFontColor #4E5D6C
+	DelayFontColor #4E5D6C
+	LifeLineBorderColor #abb6c2
+	LifeLineBorderThickness 2
+	LifeLineBackgroundColor #bcc5ce
+	GroupBorderColor #4E5D6C
+	GroupFontColor #4E5D6C
+	GroupHeaderFontColor #0073bb
+	GroupBackgroundColor #FFFFFF
+	GroupBodyBackgroundColor transparent
+	GroupHeaderBackgroundColor transparent
+	DividerBackgroundColor #4E5D6C
+    DividerBorderColor #4E5D6C
+    DividerBorderThickness 2
+    DividerFontColor #abb6c2
+	ReferenceBackgroundColor transparent
+	ReferenceBorderColor #4E5D6C
+	ReferenceFontColor #4E5D6C
+	ReferenceHeaderFontColor #0073bb
+	ReferenceHeaderBackgroundColor #FFFFFF
+	StereotypeFontColor #FFF
+}
+
+skinparam partition {
+	BorderColor #EC7211
+	FontColor #EC7211
+	BackgroundColor transparent
+}
+
+skinparam collections {
+		FontColor #FFF
+	BorderColor #EC7211
+	BackgroundColor #f08e41-#EC7211
+}
+
+skinparam control {
+		FontColor #FFF
+	BorderColor #EC7211
+	BackgroundColor #f08e41-#EC7211
+	FontColor #4E5D6C
+}
+
+skinparam entity {
+		FontColor #FFF
+	BorderColor #EC7211
+	BackgroundColor #f08e41-#EC7211
+	FontColor #4E5D6C
+}
+
+skinparam boundary {
+		FontColor #FFF
+	BorderColor #EC7211
+	BackgroundColor #f08e41-#EC7211
+	FontColor #4E5D6C
+}
+
+skinparam agent {
+	BackgroundColor #EC7211
+	BorderColor #f08e41
+	FontColor #4E5D6C
+}
+
+skinparam note {
+	BorderThickness 1
+	BackgroundColor #0073bb
+	BorderColor #005c96
+	FontColor #FFF
+}
+
+skinparam artifact {
+	BackgroundColor #4E5D6C
+	BorderColor #717d89
+	FontColor #abb6c2
+}
+
+skinparam component {
+		FontColor #FFF
+	BorderColor #EC7211
+	BackgroundColor #f08e41-#EC7211
+}
+
+skinparam interface {
+	BackgroundColor  #a7280e
+	BorderColor  #d13212
+	FontColor #4E5D6C
+}
+
+skinparam storage {
+	BackgroundColor #EC7211
+  	BorderColor #bd5b0e
+	FontColor #FFF
+}
+
+skinparam node {
+	BackgroundColor  transparent
+	BorderColor #abb6c2
+	FontColor #abb6c2
+}
+
+skinparam cloud {
+	BackgroundColor transparent
+	BorderColor #4E5D6C
+	FontColor #abb6c2
+}
+
+skinparam database {
+		FontColor #FFF
+	BorderColor #EC7211
+	BackgroundColor #f08e41-#EC7211
+	FontColor #4E5D6C
+}
+
+skinparam class {
+		FontColor #FFF
+	BorderColor #EC7211
+	BackgroundColor #f08e41-#EC7211
+	HeaderBackgroundColor #f08e41
+	StereotypeFontColor #4E5D6C
+	BorderThickness 1
+	AttributeFontColor #FFF
+	AttributeFontSize 11
+}
+
+skinparam object {
+		FontColor #FFF
+	BorderColor #EC7211
+	BackgroundColor #f08e41-#EC7211
+	StereotypeFontColor #4E5D6C
+	BorderThickness 1
+	AttributeFontColor #FFF
+	AttributeFontSize 11
+}
+
+skinparam usecase {
+		FontColor #FFF
+	BorderColor #EC7211
+	BackgroundColor #f08e41-#EC7211
+	BorderThickness 2
+	StereotypeFontColor #EC7211
+}
+
+skinparam rectangle {
+	BackgroundColor transparent
+	FontColor #4E5D6C
+	BorderColor #4E5D6C
+	BorderThickness 2
+	StereotypeFontColor #abb6c2
+}
+
+skinparam package {
+	BackgroundColor #FFFFFF
+  	BorderColor #4E5D6C
+	FontColor #4E5D6C
+	BorderThickness 2
+}
+
+skinparam folder {
+	BackgroundColor #ffffff
+  	BorderColor #EC7211
+	FontColor #EC7211
+	BorderThickness 2
+}
+
+skinparam frame {
+	BackgroundColor #ffffff
+  	BorderColor #0073bb
+	FontColor #0073bb
+	BorderThickness 2
+}
+
+skinparam state {
+		FontColor #FFF
+	BorderColor #EC7211
+	BackgroundColor #f08e41-#EC7211
+	StartColor #0073bb
+	EndColor #0073bb
+	AttributeFontColor #4E5D6C
+	AttributeFontSize 11
+}
+
+skinparam queue {
+		FontColor #FFF
+	BorderColor #EC7211
+	BackgroundColor #f08e41-#EC7211
+}
+
+skinparam card {
+	BackgroundColor #0073bb
+	BorderColor #005c96
+	FontColor #FFF
+}
+
+skinparam file {
+	BackgroundColor #cccccc
+	BorderColor #abb6c2
+	FontColor #4E5D6C
+}
+
+
+skinparam stack {
+		FontColor #FFF
+	BorderColor #EC7211
+	BackgroundColor #f08e41-#EC7211
+}
+
+
+actor Consumer as "User"
+participant "WWW" as hOrk
+collections "Nodes" as mORKx
+
+== Test password ==
+
+group Precondition
+note over Consumer
+    password : Attempted password
+    PRISM : Augmented password
+    PRISMi : Partial of a PRISM.  Each node holds a PRISMi
+end note 
+
+note over hOrk
+    encMsg1 : Encrypted Prize "The iTunes card code is "
+    encMsg2 : Example encrypted message
+end note 
+
+note over mORKx
+    node1 : Exposed - will reveal a part of the Secret
+    node2 : Closed
+end note
+
+end
+
+Consumer->hOrk: Request page
+activate hOrk
+activate Consumer
+
+hOrk- ->Consumer: send encypted message
+deactivate hOrk
+
+Consumer->Consumer: convert **password** to an obfuscated form (gBlurPass)
+Consumer->mORKx: Send gBlurPass to the nodes
+activate mORKx
+
+note over mORKx
+    //<color orange>Verify gBlurPass to meet criteria</color>//
+    //<color orange>Test if IP needs to be throttled</color>//    
+end note 
+
+alt \n If criteria met and IP is not throttled\n
+    note over mORKx
+        Apply the Pseudorandom Function (PRF) to the gBlurPass.
+    end note
+else Criteria not met or IP is throttled \n
+    note over mORKx
+        Send random response and throttled time.
+    end note
+end
+
+alt If this is an exposed server \n
+    note over mORKx
+        //<color orange>If server exposed, send partial PRISM</color>//
+        info = PRISMi
+    end note
+else
+    note over mORKx
+        //<color orange>if server is closed,send nothing</color>//
+        info = null
+    end note
+end
+
+mORKx- ->Consumer: Send gBlurPass,PRISMi, info
+deactivate mORKx
+
+note over Consumer
+    
+    gPassPRISM = **∑ ( gBlurPassPRISMi ) ⋅ modInv(r1)** //<color orange>( gPass ⋅ PRISM )</color>//
+    PRISMKey = hash( gPassPRISM )
+    Prize = aesDec_PRISMKey( encMsg1 )
+    if Prize.decryptionSuccessful then Display( Prize )
+    Example = aesDec_PRISMKey( encMsg2 )
+    if Example.decryptionSuccessful then Display( Example )
+    if info != null then Display( info )
+end note
+
+
+alt \n Test PRISM \n
+    note over Consumer
+        //<color orange>if PRISM is correct display</color>//
+        Example Password = "This is an Example"
+        Prize Password = "itunes Card number"
+    end note
+else
+    note over Consumer
+        //<color orange>if PRISM is wrong display</color>//
+        "random" message
+    end note
+end
+
+@enduml
+
+PlantUML version 1.2022.6(Tue Jun 21 17:34:49 UTC 2022)
+(GPL source distribution)
+Java Runtime: OpenJDK Runtime Environment
+JVM: OpenJDK 64-Bit Server VM
+Default Encoding: UTF-8
+Language: en
+Country: null
+--></g></svg>
