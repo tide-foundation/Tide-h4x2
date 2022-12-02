@@ -16,7 +16,7 @@ jobs:
           sudo apt-get install graphviz
           sudo mkdir -p /opt/plantuml
           cd /opt/plantuml
-          UML=https://github.com/tide-foundation/devopsDL/raw/main/download/plantuml-1.2022.6.jar
+          UML=https://github.com/tide-foundation/devopsDL/raw/main/download/plantuml-1.2022.13.jar
           sudo curl -JLO ${UML}
           UML=https://github.com/tide-foundation/devopsDL/raw/main/download/batik-all-1.7.jar
           sudo curl -JLO ${UML}
