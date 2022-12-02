@@ -29,9 +29,9 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v2
       - name: Process Diagrams svg
-        run: java -jar /opt/plantuml/plantuml-1.2022.6.jar -v -tsvg -r -o "./svg" "./**.puml"
+        run: java -jar /opt/plantuml/plantuml-1.2022.13.jar -v -tsvg -r -o "./svg" "./**.puml"
 #      - name: Process Diagrams png
-#        run: java -jar /opt/plantuml/plantuml-1.2022.6.jar -v -tpng -r -o "./png" "diagrams/**.puml"
+#        run: java -jar /opt/plantuml/plantuml-1.2022.13.jar -v -tpng -r -o "./png" "diagrams/**.puml"
       - name: Display Diagrams
         run: pwd &&  ls diagrams/** | grep \.svg$
       - name: Commit Diagrams
