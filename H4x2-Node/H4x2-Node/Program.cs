@@ -5,15 +5,10 @@ using System.Numerics;
 
 var builder = WebApplication.CreateBuilder(args);
 
-var testKey = "1";
-var prizeKey = "2";
-var isPublic = true;
-
-/*
 var testKey = Environment.GetEnvironmentVariable("PARTIAL_TEST_KEY");
 var prizeKey = Environment.GetEnvironmentVariable("PARTIAL_PRIZE_KEY");
 var isPublic = Convert.ToBoolean(Environment.GetEnvironmentVariable("ISPUBLIC"));
-*/
+
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
