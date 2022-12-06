@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using H4x2_TinySDK.Ed25519;
 
-namespace H4x2_Challenge_ORK.Binders
+namespace H4x2_Node.Binders
 {
     public class BinderProvider : IModelBinderProvider
     {

@@ -4,7 +4,7 @@
     <TargetFramework>net6.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <RootNamespace>H4x2_Challenge_ORK</RootNamespace>
+    <RootNamespace>H4x2_Node</RootNamespace>
     <UserSecretsId>faf8840c-74eb-4190-907d-6a7ab04f8163</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
   </PropertyGroup>

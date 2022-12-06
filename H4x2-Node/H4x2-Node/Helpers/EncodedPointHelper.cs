@@ -1,7 +1,7 @@
 ﻿using System.Numerics;
 using System.Text.RegularExpressions;
 
-namespace H4x2_Challenge_ORK.Helpers
+namespace H4x2_Node.Helpers
 {
     public static class EncodedPointHelper
     {

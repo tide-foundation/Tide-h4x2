@@ -3,10 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.3.32811.315
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "H4x2-Node", "H4x2-Challenge-ORK\H4x2-Node.csproj", "{C7C52942-4EA3-4CE8-BE67-25D4A94E8CA4}"
-	ProjectSection(ProjectDependencies) = postProject
-		{D34368FD-29C3-4E21-8331-BC9F53F0FC28} = {D34368FD-29C3-4E21-8331-BC9F53F0FC28}
-	EndProjectSection
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "H4x2-Node", "H4x2-Node\H4x2-Node.csproj", "{C7C52942-4EA3-4DE8-BE67-25D4A94E8CA4}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "H4x2-TinySDK", "..\H4x2-TinySDK\H4x2-TinySDK\H4x2-TinySDK.csproj", "{D34368FD-29C3-4E21-8331-BC9F53F0FC28}"
 EndProject
@@ -16,10 +13,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{C7C52942-4EA3-4CE8-BE67-25D4A94E8CA4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C7C52942-4EA3-4CE8-BE67-25D4A94E8CA4}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C7C52942-4EA3-4CE8-BE67-25D4A94E8CA4}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C7C52942-4EA3-4CE8-BE67-25D4A94E8CA4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C7C52942-4EA3-4DE8-BE67-25D4A94E8CA4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C7C52942-4EA3-4DE8-BE67-25D4A94E8CA4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C7C52942-4EA3-4DE8-BE67-25D4A94E8CA4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C7C52942-4EA3-4DE8-BE67-25D4A94E8CA4}.Release|Any CPU.Build.0 = Release|Any CPU
 		{D34368FD-29C3-4E21-8331-BC9F53F0FC28}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{D34368FD-29C3-4E21-8331-BC9F53F0FC28}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D34368FD-29C3-4E21-8331-BC9F53F0FC28}.Release|Any CPU.ActiveCfg = Release|Any CPU

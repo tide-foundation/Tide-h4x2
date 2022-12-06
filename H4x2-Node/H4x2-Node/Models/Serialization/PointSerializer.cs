@@ -3,7 +3,7 @@ using System.Text.Json.Serialization;
 using System.Text.Json;
 using H4x2_TinySDK.Ed25519;
 
-namespace H4x2_Challenge_ORK.Models.Serialization
+namespace H4x2_Node.Models.Serialization
 {
     public class PointSerializer : JsonConverter<Point>
     {

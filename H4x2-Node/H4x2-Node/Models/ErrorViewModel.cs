@@ -1,4 +1,4 @@
-namespace H4x2_Challenge_ORK.Models
+namespace H4x2_Node.Models
 {
     public class ErrorViewModel
     {

@@ -1,6 +1,6 @@
 ﻿using System.Numerics;
 
-namespace H4x2_Challenge_ORK
+namespace H4x2_Node
 {
     public class Settings
     {

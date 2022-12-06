@@ -1,9 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc.ModelBinding;
-using System.Buffers.Text;
-using H4x2_Challenge_ORK.Helpers;
 using H4x2_TinySDK.Ed25519;
+using H4x2_Node.Helpers;
 
-namespace H4x2_Challenge_ORK.Binders
+namespace H4x2_Node.Binders
 {
     public class PointBinder : IModelBinder
     {
