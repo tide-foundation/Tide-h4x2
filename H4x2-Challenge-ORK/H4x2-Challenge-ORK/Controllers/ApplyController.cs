@@ -14,9 +14,9 @@ namespace H4x2_Challenge_ORK.Controllers
             _settings = settings;
         }
 
-        public ActionResult<string> Prize([FromQuery] Point point) => Apply(point, _settings.PrizeKey);
+        public ActionResult<string> Prize([FromBody] Point point) => Apply(point, _settings.PrizeKey);
 
-        public ActionResult<string> Test([FromQuery] Point point) => Apply(point, _settings.TestKey);
+        public ActionResult<string> Test([FromBody] Point point) => Apply(point, _settings.TestKey);
 
         private ActionResult<string> Apply(Point toApply, BigInteger key)
         {
