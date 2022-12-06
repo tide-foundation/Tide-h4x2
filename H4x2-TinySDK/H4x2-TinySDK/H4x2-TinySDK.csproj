@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <RootNamespace>H4x2_TinySDK</RootNamespace>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Title>TinyTideSDK</Title>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <Authors>$(AssemblyName)</Authors>
+    <Company>Tide</Company>
+    <RepositoryUrl>https://github.com/tide-foundation/Tide-h4x2</RepositoryUrl>
+    <Version>0.1.0</Version>
+  </PropertyGroup>
+
+</Project>
