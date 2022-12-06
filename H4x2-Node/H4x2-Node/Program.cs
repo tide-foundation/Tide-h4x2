@@ -47,7 +47,7 @@ if (isPublic)
     app.MapGet("/prizeKey", () => prizeKey); // only show partial prize key on public node
 }
 
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
