@@ -41,7 +41,7 @@ if (isPublic)
 {
     app.MapGet("/prizeKey", () => prizeKey); // only show partial prize key on public node
 }
-
+app.UseCors(builder => builder.AllowAnyOrigin());
 //app.UseHttpsRedirection();
 app.UseStaticFiles();
 
