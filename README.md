@@ -16,8 +16,6 @@ The concept is simple.  A secret code is hidden…
 
 ## Installation
 
-![image](https://user-images.githubusercontent.com/50857914/206390761-145da071-17ac-4de3-baaa-8daa47cdac1c.png)
-
 ### More info
 [The Tide Website](https://tide.org)
 
