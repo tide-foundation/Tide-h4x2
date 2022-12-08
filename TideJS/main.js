@@ -1,3 +1,3 @@
-import { test2, test3, test4, test5, test6 }from "./tests.js";
+import { test2, test3, test4, test6, test7, test8 }from "./test/tests.js";
 
-document.getElementById("demo").addEventListener("click", test6);
+document.getElementById("demo").addEventListener("click", test7);

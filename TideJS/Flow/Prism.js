@@ -1,29 +1,39 @@
+// Tide Protocol - Infrastructure for the Personal Data economy
+// Copyright (C) 2019 Tide Foundation Ltd
+// 
+// This program is free software and is subject to the terms of 
+// the Tide Community Open Source License as published by the 
+// Tide Foundation Limited. You may modify it and redistribute 
+// it in accordance with and subject to the terms of that License.
+// This program is distributed WITHOUT WARRANTY of any kind, 
+// including without any implied warranty of MERCHANTABILITY or 
+// FITNESS FOR A PARTICULAR PURPOSE.
+// See the Tide Community Open Source License for more details.
+// You should have received a copy of the Tide Community Open 
+// Source License along with this program.
+// If not, see https://tide.org/licenses_tcosl-1-0-en
+
 import NodeClient from "../Clients/NodeClient.js"
 import Point from "../Ed25519/point.js"
-import { decryptData } from "../Tools/AES.js"
-import { RandomBigInt, mod, mod_inv } from "../Tools/Utils.js"
+import { decryptData, encryptData } from "../Tools/AES.js"
+import { SHA256_Digest } from "../Tools/Hash.js"
+import { RandomBigInt, mod, mod_inv, bytesToBase64 } from "../Tools/Utils.js"
 
 export default class PrismFlow{
     /**
      * Config should include key/value pairs of: 
      * @example
      * {
-     *  pass: string
      *  urls: string[]
-     *  encryptedData: string
+     *  encryptedData: string   <- Optional. Leave blank "" if not required.
      * }
      * @example
      * @param {object} config 
      */
     constructor(config){
-        if(!Object.hasOwn(config, 'pass')){ throw Error("Password has not been included in config")}
         if(!Object.hasOwn(config, 'urls')){ throw Error("Urls has not been included in config")}
         if(!Object.hasOwn(config, 'encryptedData')){ throw Error("EncryptedData has not been included in config")}
         
-        /**
-         * @type {string}
-         */
-        this.pass = config.pass
         /**
          * @type {string[]}
          */
@@ -36,38 +46,43 @@ export default class PrismFlow{
 
     /**
      * Starts the Prism Flow to attempt to decrypt the supplied data with the given password.
+     * NOTE: It will attempt to decrypt the data on both keyIds (Test and Prize)
+     * * Requires config object to include urls and encryptedData
+     * @param {string} pass The password to encrypt your data
      * @returns {Promise<string>}
      */
-    async start(){
-        const keyIds = ['Test', 'Prize'] // doing this because a toggle on the main page would look bad                                                                                                                                                                                                                                                                                     no it wouldn't. just add it
-        var i;
-        var success = false;
-        var decrypted;
-        for(i = 0; i < 2 && success == false; i++){ // twice so the password is tested on both endpoints
-            const random = RandomBigInt();
-            const passwordPoint_R = (await Point.fromString(this.pass)).times(random); // password point * random
-            const clients = this.urls.map(url => new NodeClient(url, keyIds[i])) // create node clients
-            const appliedPoints = clients.map(client => client.Apply(passwordPoint_R)); // get the applied points from clients
-            const authPoint_R = (await Promise.all(appliedPoints)).reduce((sum, next) => sum.add(next)); // sum all points returned from nodes
-            const authPoint = authPoint_R.times(mod_inv(random)); // remove the random to get the authentication point
+    async run(pass){                                                                                                                                                                                                                                                                                
+        const random = RandomBigInt();
+        const passwordPoint_R = (await Point.fromString(pass)).times(random); // password point * random
+        const clients = this.urls.map(url => new NodeClient(url, "Prism")) // create node clients
+        const appliedPoints = clients.map(client => client.Apply(passwordPoint_R)); // get the applied points from clients
+        const authPoint_R = (await Promise.all(appliedPoints)).reduce((sum, next) => sum.add(next)); // sum all points returned from nodes
+        const authPoint = authPoint_R.times(mod_inv(random)); // remove the random to get the authentication point
+        
+        const keyToEncrypt = await SHA256_Digest(authPoint.toBase64()); // Hash the authentication point for added security
 
-            decrypted = await decryptData(this.encryptedData, authPoint.toBase64()); // Attempt to decrypt the data with the authPoint as a base64 string (acting as password)
-            success = decrypted === "Decryption Failed" ? false : true; // determine if decryption worked
-        }
+        const decrypted = await decryptData(this.encryptedData, keyToEncrypt); // Attempt to decrypt the data with the authPoint as a base64 string (acting as password)
+        
         return decrypted;
     }
 
     /**
-     * @returns {Promise<string>}
+     * Encrypts the supplied data with the specified keyId held by the nodes.
+     * * Requires config object to include url. EncryptedData of this object will be set following this function.
+     * @param {string} pass The password to encrypt your data
+     * @param {string} keyId The keyId the flow will target (Test or Prize)
+     * @param {string} dataToEncrypt
      */
-    async getAuthPoint(){ // Exclusively for Prize Key
+    async setUp(pass, keyId, dataToEncrypt){
         const random = RandomBigInt();
-        const passwordPoint_R = (await Point.fromString(this.pass)).times(random); // password point * random
-        const clients = this.urls.map(url => new NodeClient(url, 'Prize')) // create node clients
+        const passwordPoint_R = (await Point.fromString(pass)).times(random); // password point * random
+        const clients = this.urls.map(url => new NodeClient(url, keyId)) // create node clients
         const appliedPoints = clients.map(client => client.Apply(passwordPoint_R)); // get the applied points from clients
         const authPoint_R = (await Promise.all(appliedPoints)).reduce((sum, next) => sum.add(next)); // sum all points returned from nodes
         const authPoint = authPoint_R.times(mod_inv(random)); // remove the random to get the authentication point
 
-        return authPoint.toBase64();
+        const keyToEncrypt = await SHA256_Digest(authPoint.toBase64()); // Hash the authentication point for added security
+
+        this.encryptedData = await encryptData(dataToEncrypt, keyToEncrypt); // Use the hashed point as a key to encrypt the data
     }
 }

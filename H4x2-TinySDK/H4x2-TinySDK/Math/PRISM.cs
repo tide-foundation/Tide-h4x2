@@ -5,6 +5,6 @@ namespace H4x2_TinySDK.Math
 {
     public class PRISM
     {
-        public static Point Apply(in Point toApply, BigInteger scalar) => toApply * scalar;
+        public static Point Apply(Point toApply, BigInteger scalar) => toApply * scalar;
     }
 }

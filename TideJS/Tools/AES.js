@@ -1,4 +1,4 @@
-import { base64ToBytes, bytesToBase64 } from "./Utils.js";
+import { base64ToBytes, bytesToBase64, ConcatUint8Arrays } from "./Utils.js";
 
 /**
  * Credits to https://github.com/bradyjoslin for the below AES implementation
@@ -26,53 +26,53 @@ const deriveKey = (passwordKey, salt, keyUsage) =>
 );
 
 /**
- * @param {string} secretData 
- * @param {string} password 
+ * 
+ * @param {Uint8Array} rawKey 
+ * @param {Iterable} keyUsage 
  * @returns 
  */
-export async function encryptData(secretData, password) {
-    try {
-        const salt = window.crypto.getRandomValues(new Uint8Array(16));
-        const iv = window.crypto.getRandomValues(new Uint8Array(12));
-        const passwordKey = await getPasswordKey(password);
-        const aesKey = await deriveKey(passwordKey, salt, ["encrypt"]);
-        const encryptedContent = await window.crypto.subtle.encrypt(
-        {
-            name: "AES-GCM",
-            iv: iv,
-        },
-        aesKey,
-        enc.encode(secretData)
-        );
+function importSecretKey(rawKey, keyUsage) {
+    return window.crypto.subtle.importKey(
+      "raw",
+      rawKey,
+      "AES-GCM",
+      true,
+      keyUsage
+    );
+  }
 
-        const encryptedContentArr = new Uint8Array(encryptedContent);
-        let buff = new Uint8Array(
-            salt.byteLength + iv.byteLength + encryptedContentArr.byteLength
-        );
-        buff.set(salt, 0);
-        buff.set(iv, salt.byteLength);
-        buff.set(encryptedContentArr, salt.byteLength + iv.byteLength);
-        const base64Buff = bytesToBase64(buff);
-        return base64Buff;
-    } catch (e) {
-        console.log(`Error - ${e}`);
-        return "";
-    }
+/**
+ * @param {string} secretData 
+ * @param {Uint8Array} key 
+ * @returns 
+ */
+export async function encryptData(secretData, key) {
+    const encoded = new TextEncoder().encode(secretData);
+    const AESKey = await importSecretKey(key, ["encrypt"]);
+    // iv will be needed for decryption
+    const iv = window.crypto.getRandomValues(new Uint8Array(12));
+    const encryptedBuffer = await window.crypto.subtle.encrypt(
+        { name: "AES-GCM", iv: iv },
+        AESKey,
+        encoded
+      );
+    const buff = ConcatUint8Arrays([iv, new Uint8Array(encryptedBuffer)])
+    return bytesToBase64(buff);
 }
+
 
 /**
  * @param {string} encryptedData 
- * @param {string} password 
+ * @param {Uint8Array} key 
  * @returns 
  */
-export async function decryptData(encryptedData, password) {
+export async function decryptData(encryptedData, key, num) {
     try {
         const encryptedDataBuff = base64ToBytes(encryptedData);
-        const salt = encryptedDataBuff.slice(0, 16);
-        const iv = encryptedDataBuff.slice(16, 16 + 12);
-        const data = encryptedDataBuff.slice(16 + 12);
-        const passwordKey = await getPasswordKey(password);
-        const aesKey = await deriveKey(passwordKey, salt, ["decrypt"]);
+
+        const iv = encryptedDataBuff.slice(0, 12);
+        const data = encryptedDataBuff.slice(12);
+        const aesKey = await importSecretKey(key, ["decrypt"]);
         const decryptedContent = await window.crypto.subtle.decrypt(
         {
             name: "AES-GCM",
