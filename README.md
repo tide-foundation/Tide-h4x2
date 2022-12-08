@@ -1,1 +1,19 @@
-# Tide-h4x2
+# Tide h4x challenge 2
+This [h4x2] (http://h4x2.tide.org) is part two of the original [h4x experiment] (https://github.com/tide-foundation/Tide-h4x-for-Privacy) which is a showcase of the new Tide Protocol's authentication technology true to its original purpose of inviting the community to learn, contribute and engage with the development of the Tide protocol.  
+
+## Challenge Mechanics
+The concept is simple.  A secret code is hidden…
+
+## User Flow Diagram
+![alt text](https://github.com/tide-foundation/Tide-h4x2/blob/main/diagrams/svg/H4X2_uxflow.svg "Flow Diagram")
+
+## Components
+1. **H4x2-Node** - Small version of the Tide node specific to this challenge.
+1. **H4x2-TinySDK** - Small SDK for frontend website integration.
+1. **H4x2-TideJS** - Tide Libraries including encryption
+1. **H4x2-front** - Frontend website for this challenge.
+1. **diagrams** -  diagrams for this challenge.
+
+## Installation
+
+![image](https://user-images.githubusercontent.com/50857914/206390761-145da071-17ac-4de3-baaa-8daa47cdac1c.png)
