@@ -49,12 +49,7 @@ if (PRISM correct?) then (yes)
         :display random message;  
 endif
 
-note 
-    Function returns 
-    number of seconds to 
-    throttle.
-    0 if not throttled.
-endnote
+
 stop 
 
 @enduml
