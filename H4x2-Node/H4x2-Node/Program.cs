@@ -26,6 +26,7 @@ builder.Services.AddSingleton(
     {
         PRISM = BigInteger.Parse(prism)
     });
+builder.Services.AddLazyCache();
 
 var app = builder.Build();
 
