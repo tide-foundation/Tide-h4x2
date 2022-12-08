@@ -1,5 +1,5 @@
 # Tide h4x challenge 2
-This [h4x2](http://h4x2.tide.org) is part two of the original [h4x experiment](https://github.com/tide-foundation/Tide-h4x-for-Privacy) which is a showcase of the new Tide Protocol's authentication technology true to its original purpose of inviting the community to learn, contribute and engage with the development of the Tide protocol.  
+This [h4x2](http://h4x2.tide.org) is part two of the original [h4x experiment](https://github.com/tide-foundation/Tide-h4x-for-Privacy) which is a showcase of the new Tide Protocol's authentication technology and true to its original purpose of inviting the community to learn, contribute and engage with the development of the Tide protocol.  
 
 ## Challenge Mechanics
 The concept is simple.  A secret code is hidden…
