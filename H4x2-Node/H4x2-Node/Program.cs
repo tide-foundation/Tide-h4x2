@@ -24,6 +24,7 @@ builder.Services.AddSingleton(
         TestKey = BigInteger.Parse(testKey),
         PrizeKey = BigInteger.Parse(prizeKey)
     });
+builder.Services.AddLazyCache();
 
 var app = builder.Build();
 
