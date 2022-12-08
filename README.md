@@ -5,7 +5,7 @@ This [h4x2](http://h4x2.tide.org) is part two of the original [h4x experiment](h
 The concept is simple.  A secret code is hidden…
 
 ## User Flow Diagram
-![alt text](https://github.com/tide-foundation/Tide-h4x2/blob/main/diagrams/svg/H4X2_uxflow.svg "Flow Diagram")
+![alt text](https://github.com/tide-foundation/Tide-h4x2/blob/main/diagrams/svg/H4x2 User Flow.svg"Flow Diagram")
 
 ## Components
 1. **H4x2-Node** - Small version of the Tide node specific to this challenge.
