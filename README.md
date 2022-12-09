@@ -2,7 +2,7 @@
 This [h4x2](http://h4x2.tide.org) is part two of the original [h4x experiment](https://github.com/tide-foundation/Tide-h4x-for-Privacy) which is a showcase of the new Tide Protocol's authentication technology and true to its original purpose of inviting the community to learn, contribute and engage with the development of the Tide protocol.  
 
 ## Challenge Mechanics
-The concept is simple.  A secret code is hidden…
+The concept is simple.  A secret code is hidden and can be unlock when the correct password is provided.  The password is obfuscated and broken into two parts using Tide's [PRISM](https://github.com/tide-foundation/Tide-h4x2/blob/main/diagrams/svg/H4x2_prism.svg) technology.  There are two nodes that holds a fragment of each shard.  One note will be completely open so it will provide the correct shard each time and the other node will be secured.  The user flow can be found below or the full technical diagram can be found [here](https://github.com/tide-foundation/Tide-h4x2/blob/main/diagrams/svg/H4x2_Challenge.svg).  
 
 ## User Flow Diagram
 ![alt text](https://github.com/tide-foundation/Tide-h4x2/blob/main/diagrams/svg/H4x2_userflow.svg "Flow Diagram")
