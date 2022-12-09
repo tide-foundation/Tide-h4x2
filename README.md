@@ -13,9 +13,9 @@ The concept is simple.  A secret code is hidden…
 1. **H4x2-TideJS** - Tide Libraries including encryption
 1. **H4x2-front** - Frontend website for this challenge.
 1. **diagrams** -  diagrams for this challenge.
-2. **H4x2_Challenge** - A technical diagram of the challenge.  
-2. **H4x2_prism** - The mathematical diagram of Tide's PRISM. 
-2. **H4x2_userflow** - User flow diagram. 
+    1. **H4x2_Challenge** - A technical diagram of the challenge.  
+    2. **H4x2_prism** - The mathematical diagram of Tide's PRISM. 
+    3. **H4x2_userflow** - User flow diagram. 
 
 ## Installation
 
