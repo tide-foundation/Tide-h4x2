@@ -19,9 +19,9 @@ namespace H4x2_Node.Controllers
 
         }
 
-        public async Task<long> Throttle(string id)
+        public async Task<int> Throttle(string id)
         {
-            var entry = await _cache.GetOrAddAsync<CacheEntry>(id, async () => new CacheEntry(), BuildPolicy(TimeSpan.FromSeconds(Lapse)));
+            var entry = await _cache.GetOrAddAsync<CacheEntry>(id, () => Task.Run(() => new CacheEntry()), BuildPolicy(TimeSpan.FromSeconds(Lapse)));
 
             if (entry is not null)
             {

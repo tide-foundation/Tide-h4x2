@@ -35,4 +35,12 @@ export default class NodeClient extends ClientBase {
         const response = await this._post(`/Apply/${this.keyID}`, data)
         return Point.fromB64(await response.text());
     }
+
+    /**
+     * @returns {Promise<number>}
+     */
+    async Throttle(){
+        const response = await this._get(`/Throttle`)
+        return parseInt(await response.text());
+    }
 }

@@ -23,9 +23,11 @@ namespace H4x2_Node.Controllers
     public class ApplyController : Controller
     {
         private Settings _settings { get; }
+        private ThrottlingManager _throttlingManager;
         public ApplyController(Settings settings)
         {
             _settings = settings;
+            _throttlingManager = new ThrottlingManager();
         }
 
         public ActionResult<string> Prism([FromBody] Point point) => Apply(point, _settings.PRISM);
@@ -41,6 +43,14 @@ namespace H4x2_Node.Controllers
             {
                 return BadRequest(ex);
             }
+        }
+        public ActionResult<int> Throttle()
+        {
+            var ip = Request.HttpContext.Connection.RemoteIpAddress; // Get client's IP
+            if(ip is not null)
+                return _throttlingManager.Throttle(ip.ToString()).GetAwaiter().GetResult(); 
+            else
+                return BadRequest("IP address is null !"); 
         }
     }
 }
