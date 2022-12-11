@@ -3,12 +3,10 @@
 	Preamble:
 	  The Tide Community Open Code License is a copyright License for 
 	software and other kinds of works designed to encourage the adoption 
-	of the Tide Protocol.  The aim of the Tide Protocol is to create the 
-	technological infrastructure to drive the new personal data economy, 
-	addressing the data sovereignty needs of consumers, the 
-	revenue-generating and cost minimization needs of vendors who collect 
-	data from consumers, and the data reliability needs of seekers of 
-	consumer data.
+	of the Tide Protocol.  The aim of the Tide Protocol is to be the technological
+	infrastructure of a true zero-trust paradigm, addressing the data-breach
+	protection needs of platform vendors, the self-sovereign authority needs of 
+	online users, and everyone's reliance on proofs rather blind trust..
 
 	  To that end, the Tide Community Open Code License gives you the 
 	freedom to modify and distribute copies of software and other works 
@@ -24,9 +22,9 @@
 		“our”) identified in the notice embedded in or provided with 
 		the source code, technical documentation or other material 
 		relating to the Tide Foundation Limited’s (ACN 630 011 371) 
-		(“Tide”) data encryption and exchange platform 
+		(“Tide”) data decryption and key management platform 
 		known as the “Tide Protocol” (“Tide Protocol”) and with which 
-		these terms are packaged (“Materials”)  and the person or 
+		these terms are packaged (“Materials”) and the person or 
 		entity (“you” and “your”) accessing and/or using the Materials.
 	  (b)	By using, modifying or publishing the Materials or any Modified
 		Materials (as defined in clause 2(c) below), you agree to be 
@@ -113,8 +111,8 @@
 				exchange of value to be made via Tide Tokens; or
 			(B)	in any other way which does not properly use, adopt 
 				and implement the Tide Protocol in its entirety, 
-				including for the purposes of both data encryption 
-				and data exchange;  
+				including for the purposes of both data decryption 
+				and key management;  
 		(iii)	violate any applicable laws or any rights of any person, 
 			or use or permit or facilitate the use of the Materials 
 			in any manner or for any purpose that is unlawful or is 
