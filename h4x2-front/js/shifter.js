@@ -179,15 +179,17 @@ S.UI = (function () {
     var action,
         current;
 
-    var config = {
-      urls: ["http://h4x2-ork1.azurewebsites.net", "http://h4x2-ork2.azurewebsites.net"],
-      encryptedData: document.getElementById("test").innerText
-    }
-  
-    const flow = new PrismFlow(config);
-    const decrypted = await flow.run(value);
+    if(value !== 'Welcome to h4x2 | Guess the secret and win!|Enter the secret below...|'){ // don't wanna try welcome msg
+      var config = {
+        urls: ["http://h4x2-ork1.azurewebsites.net", "http://h4x2-ork2.azurewebsites.net"],
+        encryptedData: [document.getElementById("test").innerText, document.getElementById("prize").innerText]
+      }
+    
+      const flow = new PrismFlow(config);
+      const decrypted = await flow.run(value);
 
-    value = decrypted;
+      value = decrypted;
+    }
 
     overlay.classList.remove('overlay--visible');
     sequence = typeof(value) === 'object' ? value : sequence.concat(value.split('|'));

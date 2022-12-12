@@ -25,7 +25,7 @@ export default class PrismFlow{
      * @example
      * {
      *  urls: string[]
-     *  encryptedData: string   <- Optional. Leave blank "" if not required.
+     *  encryptedData: string[] <- Can be [] for setUp or ["xxxx"] for signle decryption or ["xxxx", "yyyyy"] for multi decryption
      * }
      * @example
      * @param {object} config 
@@ -39,7 +39,7 @@ export default class PrismFlow{
          */
         this.urls = config.urls
         /**
-         * @type {string}
+         * @type {string[]}
          */
         this.encryptedData = config.encryptedData
     }
@@ -68,13 +68,15 @@ export default class PrismFlow{
         
         const keyToEncrypt = await SHA256_Digest(authPoint.toBase64()); // Hash the authentication point for added security
 
-        var decrypted;
-        try{
-            decrypted = await decryptData(this.encryptedData, keyToEncrypt); // Attempt to decrypt the data with the authPoint as a base64 string (acting as password)
-        }catch{
-            decrypted = null;
+        var decrypted = null;
+        var i;
+        for(i = 0; i< this.encryptedData.length && decrypted == null; i++){
+            try{
+                decrypted = await decryptData(this.encryptedData[i], keyToEncrypt); // Attempt to decrypt the data with the authPoint as a base64 string (acting as password)
+            }catch{
+                decrypted = null;
+            }
         }
-
         return this.responseString(decrypted);
     }
 
@@ -101,7 +103,8 @@ export default class PrismFlow{
 
         const keyToEncrypt = await SHA256_Digest(authPoint.toBase64()); // Hash the authentication point for added security
 
-        this.encryptedData = await encryptData(dataToEncrypt, keyToEncrypt); // Use the hashed point as a key to encrypt the data
+        // Add encrypted data to existing array
+        this.encryptedData.push(await encryptData(dataToEncrypt, keyToEncrypt)); // Use the hashed point as a key to encrypt the data
     }
 
     responseString(decryptedMessage, timeOut=null){

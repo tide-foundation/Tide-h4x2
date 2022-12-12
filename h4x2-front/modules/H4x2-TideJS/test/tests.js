@@ -53,7 +53,7 @@ export async function test4(){ // test AES encryptions
 export async function test6(){ // decryption test
   var config = {
     urls: ["http://h4x2-ork1.azurewebsites.net", "https://h4x2-ork2.azurewebsites.net"],
-    encryptedData: "zn7826Oa2t8VmPq0g0t5Amdsifve7uXm1JU/5p5TeQcE+jQ4N50dCkJpiJq++6qJA0Uo1w=="
+    encryptedData: ["zn7826Oa2t8VmPq0g0t5Amdsifve7uXm1JU/5p5TeQcE+jQ4N50dCkJpiJq++6qJA0Uo1w=="]
   }
 
   const flow = new PrismFlow(config);
@@ -66,7 +66,7 @@ export async function test7(){ // full set up and decryption test
   for(i = 0; i < 100; i++){
     var config = {
       urls: ["http://localhost:49156", "http://localhost:49156"],
-      encryptedData: ""
+      encryptedData: []
     }
 
     const flow = new PrismFlow(config);
@@ -90,13 +90,4 @@ export function test8(){
   var p2 = p1.times(rinv);
 
   console.log(p.getX());
-}
-
-export function test9(){
-  fetch('https://api.publicapis.org/entries')
-  .then((response) => {
-    console.log(response.headers.get("Access-Control-Allow-Origin"));
-    return response.text()
-  })
-  .then((data) => console.log(data));
 }
