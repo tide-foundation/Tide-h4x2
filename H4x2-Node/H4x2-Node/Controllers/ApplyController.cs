@@ -36,6 +36,10 @@ namespace H4x2_Node.Controllers
         {
             try
             {
+                var barredTime = Throttle().Value;
+                if (!barredTime.Equals(0)) 
+                    return StatusCode(429,barredTime.ToString());
+                
                 Point appliedPoint = PRISM.Apply(toApply, key);
                 return appliedPoint.ToBase64();
             }
@@ -44,13 +48,13 @@ namespace H4x2_Node.Controllers
                 return BadRequest(ex);
             }
         }
-        public ActionResult<int> Throttle()
+        private ActionResult<int> Throttle()
         {
             var ip = Request.HttpContext.Connection.RemoteIpAddress; // Get client's IP
             if(ip is not null)
                 return _throttlingManager.Throttle(ip.ToString()).GetAwaiter().GetResult(); 
             else
-                return BadRequest("IP address is null !"); 
+               throw new Exception("IP address is null !");// return BadRequest("IP address is null !"); 
         }
     }
 }
