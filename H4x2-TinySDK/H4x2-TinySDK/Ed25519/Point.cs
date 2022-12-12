@@ -63,6 +63,19 @@ namespace H4x2_TinySDK.Ed25519
         /// <returns>The actual y coordinate of this point.</returns>
         public BigInteger GetY() => Mod(Y * BigInteger.ModPow(Z, Curve.M - 2, Curve.M));
         /// <summary>
+        /// Determines if two points are equal to each other.
+        /// </summary>
+        /// <param name="other"></param>
+        /// <returns></returns>
+        public bool isEqual(Point other)
+        {
+            BigInteger X1Z2 = Mod(this.X * other.Z);
+            BigInteger X2Z1 = Mod(other.X * this.Z);
+            BigInteger Y1Z2 = Mod(this.Y * other.Z);
+            BigInteger Y2Z1 = Mod(other.Y * this.Z);
+            return (X1Z2 == X2Z1) && (Y1Z2 == Y2Z1);
+        }
+        /// <summary>
         /// Determines whether this point is a valid point on the Ed25519 Curve.
         /// </summary>
         /// <returns>A boolean whether the point it is or isn't on the curve.</returns>
@@ -73,6 +86,31 @@ namespace H4x2_TinySDK.Ed25519
             BigInteger y2 = Mod(y * y);
             BigInteger x2 = Mod(x * x);
             return Mod(y2 * Mod(1 + Curve.Not_Minus_D * x2)) == Mod(1 + x2);
+        }
+        /// <summary>
+        /// Determines if this point is safe for point multiplication.
+        /// </summary>
+        /// <returns></returns>
+        public bool IsSafePoint()
+        {
+            if (this.IsInfinity())
+                return false;
+            /*This check will be always pass since we use %M*/
+            if (this.GetX() < 0 || this.GetY() < 0 || this.GetX() >= Curve.M || this.GetY() >= Curve.M)
+                return false;
+            if (!this.IsValid())
+                return false;
+            if (!(this * Curve.N).IsInfinity())
+                return false;
+            return true;
+        }
+        /// <summary>
+        /// Determines if this point is the infinity point.
+        /// </summary>
+        /// <returns></returns>
+        public bool IsInfinity()
+        {
+            return this.isEqual(Curve.Infinity);
         }
         /// <summary>
         /// </summary>

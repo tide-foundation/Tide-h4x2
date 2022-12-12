@@ -22,7 +22,7 @@ namespace H4x2_Node.Models.Serialization
                 throw new JsonException($"Unable to convert \"{val}\" into a point");
             }
 
-            if (!point.IsValid())
+            if (!point.IsSafePoint())
             {
                 throw new JsonException($"Invalid point for \"{val}\"");
             }
