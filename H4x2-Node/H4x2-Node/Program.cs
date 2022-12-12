@@ -5,10 +5,13 @@ using System.Numerics;
 
 var builder = WebApplication.CreateBuilder(args);
 
-var testKey = Environment.GetEnvironmentVariable("PARTIAL_TEST_KEY");
-var prizeKey = Environment.GetEnvironmentVariable("PARTIAL_PRIZE_KEY");
+/*
+var prism = Environment.GetEnvironmentVariable("PRISM_VAL");
 var isPublic = Convert.ToBoolean(Environment.GetEnvironmentVariable("ISPUBLIC"));
+*/
 
+var prism = "1554967558028019017635266871044954225154957206644506058050707959306264304941";
+var isPublic = true;
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
@@ -21,8 +24,7 @@ builder.Services.AddControllers(options => options.ModelBinderProviders.Insert(0
 builder.Services.AddSingleton(
     new Settings
     {
-        TestKey = BigInteger.Parse(testKey),
-        PrizeKey = BigInteger.Parse(prizeKey)
+        PRISM = BigInteger.Parse(prism)
     });
 builder.Services.AddLazyCache();
 
@@ -35,12 +37,12 @@ if (!app.Environment.IsDevelopment())
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
-app.MapGet("/testKey", () => testKey); // public testKey will always be shown to client
+
 app.MapGet("/isPublic", () => isPublic);
 
 if (isPublic)
 {
-    app.MapGet("/prizeKey", () => prizeKey); // only show partial prize key on public node
+    app.MapGet("/prizeKey", () => prism); // only show partial prize key on public node
 }
 app.UseCors(builder => builder.AllowAnyOrigin());
 //app.UseHttpsRedirection();
