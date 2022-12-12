@@ -46,7 +46,7 @@ if (PRISM correct?) then (yes)
         :Display "Congratulation the code is ...";
     endif
     else (no)
-        :display random message;  
+        :display random message + \nYou have **Throttled time** left before you can try again.;  
 endif
 
 
