@@ -61,7 +61,7 @@ export default class PrismFlow{
         try{
             authPoint_R = (await Promise.all(appliedPoints)).reduce((sum, next) => sum.add(next)); // sum all points returned from nodes
         }catch(err){
-            return this.responseString(null, err) // catch on TimeOut. This is messy but we really wanted to show timeout length to user
+            return this.responseString("", err) // catch on TimeOut. This is messy but we really wanted to show timeout length to user
         }
         
         const authPoint = authPoint_R.times(mod_inv(random)); // remove the random to get the authentication point
@@ -105,10 +105,8 @@ export default class PrismFlow{
     }
 
     responseString(decryptedMessage, timeOut=null){
-        var message = ""
-        if(decryptedMessage == null){message = message + "Decryption failed"}
-        else{return message + `Congratulations! | The code is... | ${decryptedMessage}`}
-        if(timeOut != null){ message = message + ` | TimeOut: ${timeOut}s`}
-        return message;
+        if(decryptedMessage == null){return "Decryption failed"}
+        else if(decryptedMessage === ""){return `Blocked: ${Math.floor(parseInt(timeOut)/60)} min`}
+        else{return `Congratulations! | The code is... | ${decryptedMessage}`}
     }
 }

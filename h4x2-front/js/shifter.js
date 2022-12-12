@@ -180,7 +180,7 @@ S.UI = (function () {
         current;
 
     var config = {
-      urls: ["http://localhost:49158", "http://localhost:49158"],
+      urls: ["http://h4x2-ork1.azurewebsites.net", "http://h4x2-ork2.azurewebsites.net"],
       encryptedData: document.getElementById("test").innerText
     }
   

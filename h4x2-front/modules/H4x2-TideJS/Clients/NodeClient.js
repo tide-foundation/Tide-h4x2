@@ -37,7 +37,7 @@ export default class NodeClient extends ClientBase {
             return Point.fromB64(await response.text());
         }
         if(response.status == 429){
-            return Promise.reject(new Error(await response.text())); // Error's name will be timeout length.
+            throw await response.text(); // Error's name will be timeout length.
         }
         return Promise.reject(); // should never get here
     }

@@ -5,13 +5,10 @@ using System.Numerics;
 
 var builder = WebApplication.CreateBuilder(args);
 
-/*
+
 var prism = Environment.GetEnvironmentVariable("PRISM_VAL");
 var isPublic = Convert.ToBoolean(Environment.GetEnvironmentVariable("ISPUBLIC"));
-*/
 
-var prism = "1554967558028019017635266871044954225154957206644506058050707959306264304941";
-var isPublic = true;
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
