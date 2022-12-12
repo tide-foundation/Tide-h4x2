@@ -106,7 +106,7 @@ end note
 
 alt \nIsSafePoint == True \nand\nisIpThrottled == False ?\n
     note over mORKx
-        //<color orange>Apply the PRF on the hudden point</color>//
+        //<color orange>Apply the PRF on the hidden point</color>//
         gBlurPassPRISMi = **gBlurPass ⋅ PRISMi**
     end note
 else \nIsSafePoint == False \nor\nisIpThrottled == True ?\n
