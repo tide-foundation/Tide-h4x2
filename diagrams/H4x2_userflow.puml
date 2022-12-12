@@ -41,12 +41,12 @@ partition "**ORK Nodes**" {
 :Assemble and Test PRISM;
 if (PRISM correct?) then (yes)
     if (example) then 
-        :Display "This is an Example";
+        :Display //<color blue> "This is an Example"//;
         elseif(prize) then
-        :Display "Congratulation the code is ...";
+        :Display //<color blue> Secret Code//;
     endif
     else (no)
-        :display random message + \nYou have **Throttled time** left before you can try again.;  
+        :Decryption Failed + \nBlocked for: <color blue>//Throttled time//;  
 endif
 
 
