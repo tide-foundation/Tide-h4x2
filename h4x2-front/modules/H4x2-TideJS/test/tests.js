@@ -50,7 +50,7 @@ export async function test4(){ // test AES encryptions
   console.log(decrypted);
 }
 
-export async function test6(){ // decryption test FYI!!! This test will fail for anyone running it past the 10/12/2022. I changed the keys!
+export async function test6(){ // decryption test
   var config = {
     urls: ["http://h4x2-ork1.azurewebsites.net", "https://h4x2-ork2.azurewebsites.net"],
     encryptedData: "zn7826Oa2t8VmPq0g0t5Amdsifve7uXm1JU/5p5TeQcE+jQ4N50dCkJpiJq++6qJA0Uo1w=="

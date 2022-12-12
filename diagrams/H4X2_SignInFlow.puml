@@ -17,7 +17,7 @@ deactivate hOrk
 
 note over Consumer
     password1 = GeneratePassword()
-    password2 = "AA"
+    password2 = "AAA"
     r1 = random
     r2 = random
     //<color orange>Hash and convert password to EC point</color>//
@@ -35,7 +35,7 @@ activate mORKx
 
 note over mORKx
     PRISMi = random
-    //<color orange>Apply the PRF on the hudden point</color>//
+    //<color orange>Apply the PRF on the hidden point</color>//
     gBlurPassPRISM1i = **gBlurPass1 ⋅ PRISMi**
     gBlurPassPRISM2i = **gBlurPass2 ⋅ PRISMi**
     StoreLocally(PRISMi,exposedFlag)
@@ -106,7 +106,7 @@ end note
 
 alt \nIsSafePoint == True \nand\nisIpThrottled == False ?\n
     note over mORKx
-        //<color orange>Apply the PRF on the hudden point</color>//
+        //<color orange>Apply the PRF on the hidden point</color>//
         gBlurPassPRISMi = **gBlurPass ⋅ PRISMi**
     end note
 else \nIsSafePoint == False \nor\nisIpThrottled == True ?\n

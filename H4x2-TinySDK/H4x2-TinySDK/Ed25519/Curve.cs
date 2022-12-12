@@ -23,5 +23,8 @@ namespace H4x2_TinySDK.Ed25519
         private readonly static BigInteger gt = BigInteger.Parse("46827403850823179245072216630277197565144205554125654976674165829533817101731");
         private readonly static Point g = new Point(gx, gy, BigInteger.One, gt);
         public static ref readonly Point G => ref g;
+
+        public static readonly Point Infinity = new Point(BigInteger.Zero, BigInteger.One, BigInteger.One, BigInteger.Zero); //infinity also known as identity for ed25519
+
     }
 }

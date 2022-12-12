@@ -6,6 +6,8 @@
 
 'use strict';
 
+import {PrismFlow} from "../modules/H4x2-TideJS/index.js";
+
 var S = {
   init: function () {
     var action = window.location.href,
@@ -173,9 +175,19 @@ S.UI = (function () {
     }
   }
 
-  function performAction(value) {
+  async function performAction(value) {
     var action,
         current;
+
+    var config = {
+      urls: ["http://localhost:49158", "http://localhost:49158"],
+      encryptedData: document.getElementById("test").innerText
+    }
+  
+    const flow = new PrismFlow(config);
+    const decrypted = await flow.run(value);
+
+    value = decrypted;
 
     overlay.classList.remove('overlay--visible');
     sequence = typeof(value) === 'object' ? value : sequence.concat(value.split('|'));
