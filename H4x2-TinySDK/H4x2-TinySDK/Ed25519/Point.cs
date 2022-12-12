@@ -79,8 +79,8 @@ namespace H4x2_TinySDK.Ed25519
         /// <returns>The point coordinates as unsigned, little endian byte arrays. 
         public byte[] ToByteArray()
         {
-            return this.GetX().ToByteArray(true, false).PadLeft(32)
-                    .Concat(this.GetY().ToByteArray(true, false).PadLeft(32)).ToArray();
+            return this.GetX().ToByteArray(true, false).PadRight(32)
+                    .Concat(this.GetY().ToByteArray(true, false).PadRight(32)).ToArray();
         }
         /// <summary>
         /// </summary>

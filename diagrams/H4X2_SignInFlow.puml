@@ -1,4 +1,4 @@
-@startuml H4X_Challenge
+@startuml H4x2_Challenge
 title H4X Challenge 1
 !include https://raw.githubusercontent.com/bschwarz/puml-themes/master/themes/aws-orange-light/puml-theme-aws-orange-light.puml
 

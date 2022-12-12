@@ -1,4 +1,4 @@
-@startuml h4x_prism
+@startuml H4x2_prism
 title Tide PRISM authentication
 !include https://raw.githubusercontent.com/bschwarz/puml-themes/master/themes/aws-orange-light/puml-theme-aws-orange-light.puml
 
