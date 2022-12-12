@@ -181,7 +181,7 @@ S.UI = (function () {
 
     if(value !== 'Welcome to h4x2 | Guess the secret and win!|Enter the secret below...|'){ // don't wanna try welcome msg
       var config = {
-        urls: ["http://h4x2-ork1.azurewebsites.net", "http://h4x2-ork2.azurewebsites.net"],
+        urls: ["https://h4x2-ork1.azurewebsites.net", "https://h4x2-ork2.azurewebsites.net"],
         encryptedData: [document.getElementById("test").innerText, document.getElementById("prize").innerText]
       }
     
