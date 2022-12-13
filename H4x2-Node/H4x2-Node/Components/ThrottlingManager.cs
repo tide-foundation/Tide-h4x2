@@ -25,7 +25,7 @@ namespace H4x2_Node.Controllers
 
             if (entry is not null)
             {
-                if (entry.Times > 3 && DateTime.Compare(entry.Start.AddSeconds(entry.SlidingExpiration), DateTime.UtcNow) > 0)
+                if (entry.Times > Allow && DateTime.Compare(entry.Start.AddSeconds(entry.SlidingExpiration), DateTime.UtcNow) > 0)
                     return (int) Math.Floor((entry.Start.AddSeconds(entry.SlidingExpiration) - DateTime.UtcNow).TotalSeconds);
                     
                 var penalty = (int)Math.Min(Math.Floor(Math.Pow(2, entry.Times) * Lapse), MaxPenalty);
