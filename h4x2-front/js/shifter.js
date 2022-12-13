@@ -21,7 +21,7 @@ var S = {
     if (i !== -1) {
       S.UI.simulate(decodeURI(action).substring(i + 3));
     } else {
-      S.UI.simulate('Welcome to h4x2 | Guess the secret and win!|Enter the secret below...|');
+      S.UI.simulate('Welcome to H4x.2 | Guess the password| AND WIN!|');
     }
 
     S.Drawing.loop(function () {
@@ -179,7 +179,7 @@ S.UI = (function () {
     var action,
         current;
 
-    if(value !== 'Welcome to h4x2 | Guess the secret and win!|Enter the secret below...|'){ // don't wanna try welcome msg
+    if(value !== 'Welcome to H4x.2 | Guess the password| AND WIN!|'){ // don't wanna try welcome msg
       var config = {
         urls: ["https://h4x2-ork1.azurewebsites.net", "https://h4x2-ork2.azurewebsites.net"],
         encryptedData: [document.getElementById("test").innerText, document.getElementById("prize").innerText]

@@ -25,8 +25,13 @@ namespace H4x2_Node.Controllers
 
             if (entry is not null)
             {
+                if (entry.Times > 3 && DateTime.Compare(entry.Start.AddSeconds(entry.SlidingExpiration), DateTime.UtcNow) > 0)
+                    return (int) Math.Floor((entry.Start.AddSeconds(entry.SlidingExpiration) - DateTime.UtcNow).TotalSeconds);
+                    
                 var penalty = (int)Math.Min(Math.Floor(Math.Pow(2, entry.Times) * Lapse), MaxPenalty);
                 Interlocked.Increment(ref entry.Times);
+                entry.Start = DateTime.UtcNow;
+                entry.SlidingExpiration =  penalty;
                 if (penalty < MaxPenalty)
                     _cache.Add(id, entry, BuildPolicy(TimeSpan.FromSeconds(penalty)));   // Call Add() with the generated value you want to update into the cache and it will force the item to be replaced         
 
@@ -55,6 +60,8 @@ namespace H4x2_Node.Controllers
         public class CacheEntry
         {
             public int Times = 0;
+            public DateTime Start = DateTime.UtcNow;
+            public int SlidingExpiration = 60;
 
         }
     }
