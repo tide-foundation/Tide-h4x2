@@ -79,15 +79,27 @@ export async function test7(){ // full set up and decryption test
   }
 }
 
-export function test8(){
-  var r = BigInt("3140910109933614221592347532781209328214438396484525803322151119649026346873");
-  var p = Point.g.times(r).times(BigInt("1554967558028019017635266871044954225154957206644506058050707959306264304941"));
+export async function test8(){
+  var config = {
+    urls: ["http://localhost:6001", "http://localhost:5157"],
+    encryptedData: []
+  }
 
-  var p1 = p.times(r);
+  const flow = new PrismFlow(config);
 
-  var rinv = mod_inv(r);
+  await flow.setUp("AAA", "Prism", "Example")
 
-  var p2 = p1.times(rinv);
+  console.log(flow.encryptedData) // Dkmp1kaL3QKnmwXb6R2Al5+YcBN1KT3SP2Yx+iYimKw=
+}
 
-  console.log(p.getX());
+export async function test9(){
+  var config = {
+    urls: ["http://localhost:6001", "http://localhost:5157"],
+    encryptedData: ["G4GmY31zIa35tEwck14URCEAIjeTA8NV+DgjHpngxASGnTU="]
+  }
+
+  const flow = new PrismFlow(config)
+  const decrypted = await flow.run("AAA")
+
+  console.log(decrypted) // Test
 }

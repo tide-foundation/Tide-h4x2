@@ -51,6 +51,7 @@ namespace H4x2_Node.Controllers
         private ActionResult<int> Throttle()
         {
             var ip = Request.HttpContext.Connection.RemoteIpAddress; // Get client's IP
+            Console.WriteLine("IP address {0}", ip.ToString());
             if(ip is not null)
                 return _throttlingManager.Throttle(ip.ToString()).GetAwaiter().GetResult(); 
             else
