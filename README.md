@@ -101,24 +101,39 @@ Clicking the button will execute the test function specified in main.js. **The o
 
 ## Test
 ### Encrypting your own data
-In the H4x2-TideJS folder:
+In the H4x2-TideJS directory:
 1. Modify test8 in test/tests.js to point to the correct ORK URLs (e.g. http://localhost:6001).
-2. flow.setUp takes arguments as (password, keyID, dataToEncrypt) Replace them with your own password + data.
-3. Make sure main.js has connected test8 function to button.
-4. Start the server so you can access http://localhost:8000/test.html
+2. The function 'flow.setUp' takes arguments as (password, keyID, dataToEncrypt). Replace them with your own password + data.
+3. In the main.js file, ensure line 3 matches ```document.getElementById("demo").addEventListener("click", test8);```
+4. Start a server (same location as test.html) so you can access http://localhost:8000/test.html
 5. Visit the webpage and right-click -> inspect -> console
 6. Click the tiny button on the top left
 7. Should show a base64 encoded text in console
 
+### Decrypting your own data
+In the h4x2-front directory:
+1. Modify the index.html file:
+````
+Change this line: <p hidden id="test">G4GmY31zIa35tEwck14URCEAIjeTA8NV+DgjHpngxASGnTU=</p>
+
+To: <p hidden id="test">{Your base64 encrypted data from before}</p>
+````
+2. Start a server (same location as index.html) so you can access http://localhost:9000)
+3. You should see the page with the dots.
+4. Enter you password to see if it is able to decrypt!
+
 Question: *So what was the data encrypted with?*
 
-It was encrypted with a special point only known to the *user who knows the password + has access to the ORKs*. 
+It was encrypted with the hash of a 'key point' only known to the *user who knows the password + has access to the ORKs*. 
 
 In essence: ***key point = passwordPoint * (Prism1 + Prism2)***
 
 Where passwordPoint is a point derived from the user's password. 
 
-Even if someone knows Prism1, they still have to try every single possibilility for Prism2, which can get throttled by the ORK, hence lowering their probably of percent by a LOT.
+Even if someone knows Prism1, they still have to try every single possibilility for Prism2, which can get throttled by the ORK, hence lowering their probably of success by a LOT.
+
+## Troubleshooting
+Ask the discord for some help! The devs will be waiting.
 
 # More info
 [The Tide Website](https://tide.org)
