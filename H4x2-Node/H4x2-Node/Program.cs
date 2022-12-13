@@ -1,6 +1,7 @@
 using H4x2_Node;
 using H4x2_Node.Binders;
 using H4x2_Node.Models.Serialization;
+using Microsoft.AspNetCore.HttpOverrides;
 using System.Numerics;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -24,6 +25,11 @@ builder.Services.AddSingleton(
         PRISM = BigInteger.Parse(prism)
     });
 builder.Services.AddLazyCache();
+builder.Services.Configure<ForwardedHeadersOptions>(options =>
+{
+    options.ForwardedHeaders =
+        ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
+});
 
 var app = builder.Build();
 
@@ -52,5 +58,6 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+app.UseForwardedHeaders();
 
 app.Run();

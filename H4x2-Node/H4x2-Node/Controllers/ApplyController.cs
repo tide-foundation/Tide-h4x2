@@ -50,13 +50,11 @@ namespace H4x2_Node.Controllers
         }
         private ActionResult<int> Throttle()
         {
-            var ip = Request.HttpContext.Connection.RemoteIpAddress; // Get client's IP
-            System.Diagnostics.Trace.WriteLine("IP address {0}", ip.ToString());
-            Console.WriteLine("IP address {0}", ip.ToString());
-            if(ip is not null)
-                return _throttlingManager.Throttle(ip.ToString()).GetAwaiter().GetResult(); 
+            var Ip = (HttpContext.Request.Headers["X-Forwarded-For"].FirstOrDefault() ?? "").Split(new char[] { ':' }).FirstOrDefault();
+            if (!String.IsNullOrEmpty(Ip)) 
+                return _throttlingManager.Throttle(Ip.ToString()).GetAwaiter().GetResult();
             else
-               throw new Exception("IP address is null !");// return BadRequest("IP address is null !"); 
+                return _throttlingManager.Throttle(Request.HttpContext.Connection.RemoteIpAddress.ToString()).GetAwaiter().GetResult();
         }
     }
 }
