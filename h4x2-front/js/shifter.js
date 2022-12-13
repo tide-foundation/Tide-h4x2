@@ -8,6 +8,9 @@
 
 import {PrismFlow} from "../modules/H4x2-TideJS/index.js";
 
+var welcomeMsg = 'Welcome to H4x.2 | Guess the password| AND WIN!|';	
+var varSize = 13;
+
 var S = {
   init: function () {
     var action = window.location.href,
@@ -21,7 +24,7 @@ var S = {
     if (i !== -1) {
       S.UI.simulate(decodeURI(action).substring(i + 3));
     } else {
-      S.UI.simulate('Welcome to H4x.2 | Guess the password| AND WIN!|');
+      S.UI.simulate(welcomeMsg);
     }
 
     S.Drawing.loop(function () {
@@ -179,15 +182,19 @@ S.UI = (function () {
     var action,
         current;
 
-    if(value !== 'Welcome to H4x.2 | Guess the password| AND WIN!|'){ // don't wanna try welcome msg
+    if(value !== welcomeMsg){ // don't wanna try welcome msg
       var config = {
         urls: ["https://h4x2-ork1.azurewebsites.net", "https://h4x2-ork2.azurewebsites.net"],
         encryptedData: [document.getElementById("test").innerText, document.getElementById("prize").innerText]
       }
+
+      ui.classList.remove('ui');
     
       const flow = new PrismFlow(config);
       const decrypted = await flow.run(value);
 
+      ui.classList.add('ui');
+      
       value = decrypted;
     }
 
@@ -615,6 +622,9 @@ S.ShapeBuilder = (function () {
       s = Math.min(fontSize,
                   (shapeCanvas.width / shapeContext.measureText(l).width) * 0.8 * fontSize, 
                   (shapeCanvas.height / fontSize) * (isNumber(l) ? 1 : 0.45) * fontSize);
+      
+      varSize = Math.max(1,Math.floor(s / 85));
+      gap = Math.max(3,Math.floor(s / 32));
       setFontSize(s);
 
       shapeContext.clearRect(0, 0, shapeCanvas.width, shapeCanvas.height);
@@ -713,7 +723,7 @@ S.Shape = (function () {
           x: n.dots[i].x + cx,
           y: n.dots[i].y + cy,
           a: 1,
-          z: 5,
+          z: varSize,
           h: 0
         }));
 
