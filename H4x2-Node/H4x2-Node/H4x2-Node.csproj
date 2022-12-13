@@ -7,6 +7,12 @@
     <RootNamespace>H4x2_Node</RootNamespace>
     <UserSecretsId>faf8840c-74eb-4190-907d-6a7ab04f8163</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <Title>TinyTideORK</Title>
+    <Version>1.0.0</Version>
+    <Authors />
+    <Company>Tide</Company>
+    <RepositoryUrl>https://github.com/tide-foundation/Tide-h4x2</RepositoryUrl>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
   </PropertyGroup>
 
   <ItemGroup>
