@@ -100,7 +100,7 @@
   
   .ui-input:focus {
     outline: none;
-    border: none;
+    border: 4px solid rgb(254, 120, 3);
     border-bottom: 2px solid white;
   }
   
@@ -124,6 +124,7 @@
     width: 76%;
     margin-left: 12%;
     left: 0;
+    border: 4px solid rgb(254, 120, 3);
   }
   
   .ui--wide .ui-return {
