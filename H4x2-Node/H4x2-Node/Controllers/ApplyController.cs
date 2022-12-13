@@ -51,9 +51,10 @@ namespace H4x2_Node.Controllers
         private ActionResult<int> Throttle()
         {
             var ip = Request.HttpContext.Connection.RemoteIpAddress; // Get client's IP
-            System.Diagnostics.Trace.WriteLine("IP address {0}", ip.ToString());
-            Console.WriteLine("IP address {0}", ip.ToString());
-            if(ip is not null)
+            Console.WriteLine("IP address  {0}", ip.ToString());
+            Console.WriteLine("IP address IpV4 {0}", Request.HttpContext.Connection.RemoteIpAddress.MapToIPv4().ToString());
+            Console.WriteLine("IP address IPv6 {0}", Request.HttpContext.Connection.RemoteIpAddress.MapToIPv6().ToString());
+            if (ip is not null)
                 return _throttlingManager.Throttle(ip.ToString()).GetAwaiter().GetResult(); 
             else
                throw new Exception("IP address is null !");// return BadRequest("IP address is null !"); 
