@@ -33,7 +33,6 @@ The following components are required to be set up ahead of the deployment:
 
 ## Deployment
 ### ORKs
-Firstly, navigate to where you cloned the repo, then:
 ````
 cd folder_where_you_cloned_the_repo
 cd Tide-h4x2\H4x2-Node\H4x2-Node
@@ -49,16 +48,15 @@ set ISPUBLIC=false
 set PRISM_VAL=67890
 dotnet run --urls=http://localhost:7001
 ````
-Much like the ORKs that are running in the cloud, both of these local ORKs have:
+Much like the ORKs that are running in the cloud, both of these your ORKs have:
 1. Different visibilities
 2. Different PRISM values
 
-To test this, navigate to http://localhost:6001/prizeKey. Notice how a value appears. In contrast, navigating to http://localhost:7001/prizeKey will show nothing, as the environment variable ISPUBLIC set to false.
+To test this, navigate to http://localhost:6001/prizeKey. Notice how a value appears. In contrast, navigating to http://localhost:7001/prizeKey will show nothing, as the environment variable ISPUBLIC in the terminal set to false.
 
 ***NOTE: The reason we set one ORK to public is to show that even if one ORK is compromised, the user's key is still secure.***
 
 ### Static Web Page
-Navigate to where you cloned the repo, then:
 ````
 cd Tide-h4x2\h4x2-front\js
 ````
@@ -80,8 +78,6 @@ Navigating to http://localhost:9000 will take you with the Tide H4x2 welcome pag
 ### Debug Web Page 
 NOTE: This is only if you'd like to test your local ORKs with encryption/decryption of your own data with your own password
 
-
-Navigate to where you cloned the repo, then:
 ````
 cd Tide-h4x2\h4x2-front\modules\H4x2-TideJS
 ````
@@ -97,17 +93,15 @@ python -m http.server 8000
 
 Navigate to http://localhost:8000/test.html where you'll see a VERY simple webpage.
 
-Clicking the button will execute the test function specified in main.js. **The output of the function will be in the console.**
+Clicking each button will run the corresponding test in test.js. **The output of the function will be in the console.**
 
 ## Test
 ### Encrypting your own data
 In the H4x2-TideJS directory:
-1. Modify test8 in test/tests.js to point to the correct ORK URLs (e.g. http://localhost:6001).
-2. The function 'flow.setUp' takes arguments as (password, keyID, dataToEncrypt). Replace them with your own password + data.
-3. In the main.js file, ensure line 3 matches ```document.getElementById("demo").addEventListener("click", test8);```
+1. In test/test.js, change "AAA" to any password of your choosing. Also change "Example" to anything you would like to encrypt.
 4. Start a server (same location as test.html) so you can access http://localhost:8000/test.html
 5. Visit the webpage and right-click -> inspect -> console
-6. Click the tiny button on the top left
+6. Click the button 'Test 4'
 7. Should show a base64 encoded text in console
 
 ### Decrypting your own data
