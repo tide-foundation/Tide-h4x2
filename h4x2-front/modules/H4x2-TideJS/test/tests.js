@@ -17,28 +17,17 @@ import NodeClient from "../Clients/NodeClient.js";
 import Point from "../Ed25519/point.js";
 import PrismFlow from "../Flow/Prism.js";
 import { decryptData, encryptData } from "../Tools/AES.js";
-import { base64ToBytes, mod_inv } from "../Tools/Utils.js";
+import { RandomBigInt } from "../Tools/Utils.js";
 
 var tx = new TextEncoder();
 
-export function test(){ // point function testing
-  var b = 'uG7uZxtPjT+YBruVT3D/vml8kAs1yi713Mos/DcTbmN0GtOpZo3G1jQBRTIQz8JV2sMB3XT343U+LAsWk9b0Mw==';
-  var f = base64ToBytes(b);
-}
-
-export async function test2(){ // initial client testing
-  var nodeclient = new NodeClient('http://h4x2-ork2.azurewebsites.net', 'Test');
+export async function test1(){ // initial client testing
+  var nodeclient = new NodeClient('http://localhost:6001', 'Prism');
   var applied = await nodeclient.Apply(Point.fromB64('uG7uZxtPjT+YBruVT3D/vml8kAs1yi713Mos/DcTbmN0GtOpZo3G1jQBRTIQz8JV2sMB3XT343U+LAsWk9b0Mw=='));
   console.log(applied.toBase64());
-  return applied.toBase64();
 }
 
-export async function test3(){
-  var enc = await encryptData("Chickens", tx.encode("i2cxrwh+U+XGK6xOhqqbOHre2xTC6COAbwYBcuiOEW8D9tQSebQVSL932s7WTTPtXxPsvqx+fNJkvDBIPLSLFQ=="));
-  console.log(enc);
-}
-
-export async function test4(){ // test AES encryptions
+export async function test2(){ // test AES encryptions
   
   var pass = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
   var data = "Chickens"
@@ -50,38 +39,24 @@ export async function test4(){ // test AES encryptions
   console.log(decrypted);
 }
 
-export async function test6(){ // decryption test
+export async function test3(){ // full set up and decryption test
   var config = {
-    urls: ["http://h4x2-ork1.azurewebsites.net", "https://h4x2-ork2.azurewebsites.net"],
-    encryptedData: ["zn7826Oa2t8VmPq0g0t5Amdsifve7uXm1JU/5p5TeQcE+jQ4N50dCkJpiJq++6qJA0Uo1w=="]
+    urls: ["http://localhost:6001", "http://localhost:7001"],
+    encryptedData: []
   }
 
   const flow = new PrismFlow(config);
-  const decrypted = await flow.run("Julio's password");
+  await flow.setUp("Julio's Password", "Prism", "Encrypt My Chickens");
+  // At this point the message "Encrypt My Chickens" will be encrypted with the prismFlow using the password "Julio's Password"
+  // The strength of this is that no-one can offline attack the AES encrypted data, even if the password is very short. The attacker MUST 
+  // bruteforce by requesting the Test/Prize keys from the orks, which allows us to throttle and MAJORLY slow the attack.
+  const decrypted = await flow.run("Julio's Password");
   console.log(decrypted);
 }
 
-export async function test7(){ // full set up and decryption test
-  var i;
-  for(i = 0; i < 100; i++){
-    var config = {
-      urls: ["http://localhost:49156", "http://localhost:49156"],
-      encryptedData: []
-    }
-
-    const flow = new PrismFlow(config);
-    await flow.setUp("Julio's Password", "Prism", "Encrypt My Chickens");
-    // At this point the message "Encrypt My Chickens" will be encrypted with the prismFlow using the password "Julio's Password"
-    // The strength of this is that no-one can offline attack the AES encrypted data, even if the password is very short. The attacker MUST 
-    // bruteforce by requesting the Test/Prize keys from the orks, which allows us to throttle and MAJORLY slow the attack.
-    const decrypted = await flow.run("Julio's Password");
-    console.log(decrypted);
-  }
-}
-
-export async function test8(){
+export async function test4(){ // Test to encrypt data
   var config = {
-    urls: ["http://localhost:6001", "http://localhost:5157"],
+    urls: ["http://localhost:6001", "http://localhost:7001"],
     encryptedData: []
   }
 
@@ -89,17 +64,21 @@ export async function test8(){
 
   await flow.setUp("AAA", "Prism", "Example")
 
-  console.log(flow.encryptedData) // Dkmp1kaL3QKnmwXb6R2Al5+YcBN1KT3SP2Yx+iYimKw=
+  console.log(flow.encryptedData)
 }
 
-export async function test9(){
+export async function test5(){ // test to decrypt data
   var config = {
-    urls: ["http://localhost:6001", "http://localhost:5157"],
-    encryptedData: ["G4GmY31zIa35tEwck14URCEAIjeTA8NV+DgjHpngxASGnTU="]
+    urls: ["http://localhost:6001", "http://localhost:7001"],
+    encryptedData: ["G4GmY31zIa35tEwck14URCEAIjeTA8NV+DgjHpngxASGnTU="] // change this value
   }
 
   const flow = new PrismFlow(config)
   const decrypted = await flow.run("AAA")
 
-  console.log(decrypted) // Test
+  console.log(decrypted)
+}
+
+export async function getRandom(){
+  alert(RandomBigInt().toString()) // don't let anyone tell you alert() is bad
 }

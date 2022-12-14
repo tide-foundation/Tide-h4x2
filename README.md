@@ -33,9 +33,8 @@ The following components are required to be set up ahead of the deployment:
 
 ## Deployment
 ### ORKs
-Firstly, navigate to where you cloned the repo, then:
+Open a CMD terminal (not powershell)
 ````
-cd folder_where_you_cloned_the_repo
 cd Tide-h4x2\H4x2-Node\H4x2-Node
 set ISPUBLIC=true
 set PRISM_VAL=12345
@@ -43,25 +42,24 @@ dotnet run --urls=http://localhost:6001
 ````
 Open another terminal
 ````
-cd folder_where_you_cloned_the_repo
 cd Tide-h4x2\H4x2-Node\H4x2-Node
 set ISPUBLIC=false
 set PRISM_VAL=67890
 dotnet run --urls=http://localhost:7001
 ````
-Much like the ORKs that are running in the cloud, both of these local ORKs have:
+If would like to generate secure PRISM_VAL values, follow the [Debug Web Page](https://github.com/tide-foundation/Tide-h4x2#debug-web-page) steps to host the debug web page and click on the button 'Get Random'.
+
+Much like the ORKs that are running in the cloud, both of these your ORKs have:
 1. Different visibilities
 2. Different PRISM values
 
-To test this, navigate to http://localhost:6001/prizeKey. Notice how a value appears. In contrast, navigating to http://localhost:7001/prizeKey will show nothing, as the environment variable ISPUBLIC set to false.
+To test this, navigate to http://localhost:6001/prizeKey. Notice how a value appears. In contrast, navigating to http://localhost:7001/prizeKey will show PAGE NOT FOUND, as the environment variable ISPUBLIC in the terminal set to false.
 
 ***NOTE: The reason we set one ORK to public is to show that even if one ORK is compromised, the user's key is still secure.***
 
 ### Static Web Page
-Navigate to where you cloned the repo, then:
-````
-cd Tide-h4x2\h4x2-front\js
-````
+Go to Tide-h4x2\h4x2-front\js
+
 In shifter.js, modify line 184 so that the front page will contact your local ORKs:
 ````
 From this->  urls: ["https://h4x2-ork1.azurewebsites.net", "https://h4x2-ork2.azurewebsites.net"],
@@ -80,8 +78,6 @@ Navigating to http://localhost:9000 will take you with the Tide H4x2 welcome pag
 ### Debug Web Page 
 NOTE: This is only if you'd like to test your local ORKs with encryption/decryption of your own data with your own password
 
-
-Navigate to where you cloned the repo, then:
 ````
 cd Tide-h4x2\h4x2-front\modules\H4x2-TideJS
 ````
@@ -97,17 +93,15 @@ python -m http.server 8000
 
 Navigate to http://localhost:8000/test.html where you'll see a VERY simple webpage.
 
-Clicking the button will execute the test function specified in main.js. **The output of the function will be in the console.**
+Clicking each button will run the corresponding test in test.js. **The output of the function will be in the console.**
 
 ## Test
 ### Encrypting your own data
-In the H4x2-TideJS directory:
-1. Modify test8 in test/tests.js to point to the correct ORK URLs (e.g. http://localhost:6001).
-2. The function 'flow.setUp' takes arguments as (password, keyID, dataToEncrypt). Replace them with your own password + data.
-3. In the main.js file, ensure line 3 matches ```document.getElementById("demo").addEventListener("click", test8);```
-4. Start a server (same location as test.html) so you can access http://localhost:8000/test.html
-5. Visit the webpage and right-click -> inspect -> console
-6. Click the tiny button on the top left
+In the H4x2-TideJS directory (Tide-h4x2\h4x2-front\modules\H4x2-TideJS):
+1. In test4 function of test/test.js, change "AAA" to any password of your choosing. Also change "Example" to anything you would like to encrypt.
+4. Go to http://localhost:8000/test.html and press F5 (to reload the page)
+5. Right-click -> inspect -> console
+6. Click the button 'Test 4'
 7. Should show a base64 encoded text in console
 
 ### Decrypting your own data
@@ -118,7 +112,7 @@ Change this line: <p hidden id="test">G4GmY31zIa35tEwck14URCEAIjeTA8NV+DgjHpngxA
 
 To: <p hidden id="test">{Your base64 encrypted data from before}</p>
 ````
-2. Start a server (same location as index.html) so you can access http://localhost:9000)
+2. Go to http://localhost:9000) and press F5 (to reload the page)
 3. You should see the page with the dots.
 4. Enter you password to see if it is able to decrypt!
 
@@ -134,6 +128,9 @@ Even if someone knows Prism1, they still have to try every single possibilility 
 
 ## Troubleshooting
 Ask the discord for some help! The devs will be waiting.
+
+## A Quick Note on the Throttling
+You may notice that even if you get the password right, the ORKs will throttle. This is due to the fact that it is IMPOSSIBLE (unless you break Ed25519) for the ORKs to determine what password the user is trying. All they can do is apply their PRISM value to a point. Therefore, since the ORKs a. have no idea what the password is and b. the user is blurring their password point with a random number, it guarantees that the ORKs can 'authenticate' the user without knowing their password. Cool right?
 
 # More info
 [The Tide Website](https://tide.org)
