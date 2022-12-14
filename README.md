@@ -25,6 +25,8 @@ This guide aims to assist you to replicate the entire challenge environment loca
 
 While all the components of the this environment are cross-platform, this manual describes how to set it up in a Windows environment. Similar steps can be followed to achieve the same on Linux.
 
+There is also a [video](https://vimeo.com/780973408/d5df625214) to help you with the installation steps.
+
 ## Prerequisite
 
 The following components are required to be set up ahead of the deployment:
