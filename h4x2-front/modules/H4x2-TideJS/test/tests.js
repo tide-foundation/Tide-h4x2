@@ -17,6 +17,7 @@ import NodeClient from "../Clients/NodeClient.js";
 import Point from "../Ed25519/point.js";
 import PrismFlow from "../Flow/Prism.js";
 import { decryptData, encryptData } from "../Tools/AES.js";
+import { RandomBigInt } from "../Tools/Utils.js";
 
 var tx = new TextEncoder();
 
@@ -76,4 +77,8 @@ export async function test5(){ // test to decrypt data
   const decrypted = await flow.run("AAA")
 
   console.log(decrypted)
+}
+
+export async function getRandom(){
+  alert(RandomBigInt().toString()) // don't let anyone tell you alert() is bad
 }
