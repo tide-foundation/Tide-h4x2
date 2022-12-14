@@ -305,6 +305,9 @@ S.UI = (function () {
 
       if (e.keyCode === 13) {
         firstAction = false;
+        input.focus(function(){
+          this.blur();
+        });
         reset();
         performAction(input.value);
       }
