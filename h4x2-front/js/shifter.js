@@ -300,6 +300,14 @@ S.UI = (function () {
   }
 
   function bindEvents() {
+    document.body.addEventListener('keyup', (e) => {
+      const key = e.code || e.keyCode;
+      if (key === 'Enter' || key === 13) {
+          console.log('KeyUpEnter');
+          document.body.blur();
+      }
+    });
+    
     document.body.addEventListener('keydown', function (e) {
       input.focus();
 
