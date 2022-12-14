@@ -97,7 +97,7 @@ Clicking each button will run the corresponding test in test.js. **The output of
 
 ## Test
 ### Encrypting your own data
-In the H4x2-TideJS directory:
+In the H4x2-TideJS directory (Tide-h4x2\h4x2-front\modules\H4x2-TideJS):
 1. In test4 function of test/test.js, change "AAA" to any password of your choosing. Also change "Example" to anything you would like to encrypt.
 4. Go to http://localhost:8000/test.html and press F5 (to reload the page)
 5. Right-click -> inspect -> console
@@ -128,6 +128,9 @@ Even if someone knows Prism1, they still have to try every single possibilility 
 
 ## Troubleshooting
 Ask the discord for some help! The devs will be waiting.
+
+## A Quick Note on the Throttling
+You may notice that even if you get the password right, the ORKs will throttle. This is due to the fact that it is IMPOSSIBLE (unless you break E25519) for the ORKs to determine what password the user is trying. Therefore, since the ORKs a. have no idea what the password is and b. the user is blurring their password point with 'r', it guarantees that the ORKs can 'authenticate' the user without knowing their password. Cool right?
 
 # More info
 [The Tide Website](https://tide.org)
