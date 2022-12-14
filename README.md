@@ -108,12 +108,13 @@ In the H4x2-TideJS directory (Tide-h4x2\h4x2-front\modules\H4x2-TideJS):
 In the h4x2-front directory:
 1. Modify the index.html file:
 
-⋅⋅⋅Change this line: `<p hidden id="test">G4GmY31zIa35tEwck14URCEAIjeTA8NV+DgjHpngxASGnTU=</p>`
-⋅⋅⋅To: `<p hidden id="test">{Your base64 encrypted data from before}</p>`
+    Change this line: `<p hidden id="test">G4GmY31zIa35tEwck14URCEAIjeTA8NV+DgjHpngxASGnTU=</p>`
+    
+    To: `<p hidden id="test">{Your base64 encrypted data from before}</p>`
 
 2. Go to http://localhost:9000) and press F5 (to reload the page)
 3. You should see the page with the dots.
-4. Enter you password to see if it is able to decrypt!
+4. Enter your password to see if it is able to decrypt!
 
 Question: *So what was the data encrypted with?*
 
