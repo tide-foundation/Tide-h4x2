@@ -47,7 +47,7 @@ set ISPUBLIC=false
 set PRISM_VAL=67890
 dotnet run --urls=http://localhost:7001
 ````
-If would like to generate secure PRISM_VAL values, follow the 'Debug Web Page' steps to host the debug web page and click on the button 'Get Random'.
+If would like to generate secure PRISM_VAL values, follow the [Debug Web Page](https://github.com/tide-foundation/Tide-h4x2#debug-web-page) steps to host the debug web page and click on the button 'Get Random'.
 
 Much like the ORKs that are running in the cloud, both of these your ORKs have:
 1. Different visibilities
