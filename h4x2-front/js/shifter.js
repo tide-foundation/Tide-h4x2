@@ -303,11 +303,12 @@ S.UI = (function () {
     document.body.addEventListener('keyup', (e) => {
       const key = e.code || e.keyCode;
       if (key === 'Enter' || key === 13) {
-          console.log('KeyUpEnter');
-          document.body.blur();
+          console.log('beGONE');
+          input.focus();
+          input.blur();
       }
     });
-    
+
     document.body.addEventListener('keydown', function (e) {
       input.focus();
 
