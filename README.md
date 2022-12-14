@@ -130,7 +130,7 @@ Even if someone knows Prism1, they still have to try every single possibilility 
 Ask the discord for some help! The devs will be waiting.
 
 ## A Quick Note on the Throttling
-You may notice that even if you get the password right, the ORKs will throttle. This is due to the fact that it is IMPOSSIBLE (unless you break E25519) for the ORKs to determine what password the user is trying. Therefore, since the ORKs a. have no idea what the password is and b. the user is blurring their password point with 'r', it guarantees that the ORKs can 'authenticate' the user without knowing their password. Cool right?
+You may notice that even if you get the password right, the ORKs will throttle. This is due to the fact that it is IMPOSSIBLE (unless you break Ed25519) for the ORKs to determine what password the user is trying. Therefore, since the ORKs a. have no idea what the password is and b. the user is blurring their password point with 'r', it guarantees that the ORKs can 'authenticate' the user without knowing their password. Cool right?
 
 # More info
 [The Tide Website](https://tide.org)
