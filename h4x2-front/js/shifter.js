@@ -300,19 +300,14 @@ S.UI = (function () {
   }
 
   function bindEvents() {
-    document.body.addEventListener('keyup', (e) => {
-      const key = e.code || e.keyCode;
-      if (key === 'Enter' || key === 13) {
-          console.log('beGONE');
-          input.focus();
-          input.blur();
-      }
-    });
-
-    document.body.addEventListener('keydown', function (e) {
+    document.body.addEventListener('keydown', (e) => {
       input.focus();
-
-      if (e.keyCode === 13) {
+      const key = e.code || e.keyCode;
+      console.log(key);
+  
+      if (key === 'Enter' || key === 'NumpadEnter' || key === 13) {
+        console.log('blur!');
+        input.blur();
         firstAction = false;
         reset();
         performAction(input.value);
