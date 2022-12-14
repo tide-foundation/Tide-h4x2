@@ -103,7 +103,6 @@
   .ui-input:focus {
     outline: none;
     border: 4px solid rgb(254, 120, 3);
-    border-bottom: 2px solid white;
   }
   
   .ui-return {
