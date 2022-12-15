@@ -153,7 +153,7 @@ namespace H4x2_TinySDK.Ed25519
         /// <returns>A new point on the Ed25519 Curve.</returns>
         public static Point operator *(Point point, BigInteger num)
         {
-            if (num >= Curve.N) throw new Exception("Point Multiplication: Multipler is greater than curve order");
+            if (num > Curve.N) throw new Exception("Point Multiplication: Multipler is greater than curve order");
             Point newPoint = new Point(BigInteger.Zero, BigInteger.One, BigInteger.One, BigInteger.Zero);
             while (num > BigInteger.Zero)
             {
