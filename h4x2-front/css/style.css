@@ -160,7 +160,7 @@
   }
 
   .discord {
-    display: none;
+    display:inline;
     position: absolute;
     top: 40px;
     left: 40px;
@@ -171,7 +171,6 @@
     line-height: 27px;
     font-weight: bold;
     cursor: pointer;
-    background: #fff;
     color: #79a8ae;
     opacity: .9;
   
