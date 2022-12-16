@@ -132,18 +132,14 @@
   }
   
   .help {
-    display: none;
+    display: inline;
     position: absolute;
     top: 40px;
     right: 40px;
-    width: 25px;
-    height: 25px;
+    width: auto;
+    height: 40px;
     text-align: center;
-    font-size: 13px;
-    line-height: 27px;
-    font-weight: bold;
     cursor: pointer;
-    background: #fff;
     color: #79a8ae;
     opacity: .9;
   
@@ -158,7 +154,7 @@
     opacity: 1;
   }
 
-  .discord {
+  .social {
     display:inline;
     position: absolute;
     top: 40px;
@@ -177,7 +173,7 @@
     transition: opacity 0.1s cubic-bezier(0.694, 0.0482, 0.335, 1);
   }
   
-  .discord:hover {
+  .social:hover {
     opacity: 1;
   }
 
