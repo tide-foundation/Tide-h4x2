@@ -5,7 +5,7 @@ The [H4X challenge](http://h4x2.tide.org) is a showcase of the Tide Protocol's n
 This [H4X2](http://h4x2.tide.org) challenge is the second series of the community-engagement program by the [Tide Foundation](https://tide.org) with a specific focus on Tide's next-generation technology: A new technology that grants access using keys **NOBODY** holds. Not even Tide! In this series, the challenge will change and evolve according to the community engagement, and will gradually introduce additional facets of the technology.
 
 ## Challenge Mechanics
-The concept of the first challenge is simple.  A secret code is hidden and is only unlocked when the correct password is entered.  The first one to post the secret code on the Tide's [#general](https://discord.com/channels/968760660659953714/1039488732639801414) channel on its Discord server - wins!  The password authentication process is obfuscated and decentralized using Tide's [PRISM](https://github.com/tide-foundation/Tide-h4x2/blob/main/diagrams/svg/H4x2_prism.svg) cryptography - the world's most secure password authentication[^pwd].  In this challenge, only two ORKs[^ork] perform the authentication.  One ORK will be completely exposed and offers full transparancy to its internal data and processes while the other ORK remains private.  The entire source code for the challenge, together with full documentation, is offered herewith for those wishing to take a deeper look.  The user flow can be found below and the full technical diagram can be found [here](https://github.com/tide-foundation/Tide-h4x2/blob/main/diagrams/svg/H4x2_Challenge.svg).
+The concept of the first challenge is simple.  A secret code is hidden and is only unlocked when the correct password is entered.  The first one to post the secret code on Tide's [#general](https://discord.com/channels/968760660659953714/1039488732639801414) channel on its Discord server - wins!  The password authentication process is obfuscated and decentralized using Tide's [PRISM](https://github.com/tide-foundation/Tide-h4x2/blob/main/diagrams/svg/H4x2_prism.svg) cryptography - the world's most secure password authentication[^pwd].  In this challenge, only two ORKs[^ork] perform the authentication.  One ORK will be completely exposed and offers full transparency to its internal data and processes while the other ORK remains private.  The entire source code for the challenge, together with full documentation, is offered herewith for those wishing to take a deeper look.  The user flow can be found below and the full technical diagram can be found [here](https://github.com/tide-foundation/Tide-h4x2/blob/main/diagrams/svg/H4x2_Challenge.svg).
 
 ## User Flow Diagram
 ![alt text](https://github.com/tide-foundation/Tide-h4x2/blob/main/diagrams/svg/H4x2_userflow.svg "Flow Diagram")
@@ -21,9 +21,9 @@ The concept of the first challenge is simple.  A secret code is hidden and is on
     3. [**H4x2_userflow**](https://github.com/tide-foundation/Tide-h4x2/blob/main/diagrams/svg/H4x2_userflow.svg) - A user flow diagram. 
 
 # Installation
-This guide aims to assist you to replicate the entire challenge environment locally, with 2 ORKs - so you can run it yourself freely.
+This guide aims to assist you in replicating the entire challenge environment locally, with 2 ORKs - so you can run it yourself freely.
 
-While all the components of the this environment are cross-platform, this manual describes how to set it up in a Windows environment. Similar steps can be followed to achieve the same on Linux.
+While all the components of the environment are cross-platform, this manual describes how to set it up in a Windows environment. Similar steps can be followed to achieve the same on Linux.
 
 There is also a [video](https://vimeo.com/780973408/d5df625214) to help you with the installation steps.
 
@@ -124,7 +124,7 @@ In essence: ***key point = passwordPoint * (Prism1 + Prism2)***
 
 Where passwordPoint is a point derived from the user's password. 
 
-Even if someone knows Prism1, they still have to try virtaully infinite possibilities for Prism2, which will be throttled by the ORK, hence lowering their probably of success to virtually zero.
+Even if someone knows Prism1, they still have to try virtually infinite possibilities for Prism2, which will be throttled by the ORK, hence lowering their probably of success to virtually zero.
 
 ## Troubleshooting
 Ask for any help in the Discord channel! The community and our devs are there for you.
@@ -146,6 +146,6 @@ You may notice that regardless if you entered the right password or not, the ORK
   </a>
 </p>
 
-[^pwd]: Tide focussed on developing the world's most secure online password authentication mechanism because passwords still, unfortunately, are the most common online authentication mechanism used. In general, password authentication is a significantly inferior mechanism compared to its many alternatives. Most of the alternatives (e.g. MFA, passwordless, FIDO2, etc) also suffer from security risks which Tide's authentication helps alleviate. Tide's superior password protection mechanism isn't intended to discourage users from switching to a better alternatives, instead offers a better interim-measure until such inevitable switch occurs.
-[^ork]: Tide's decentralized network is made of many nodes named ORKs, which stands for Orchestrated Recluder of Keys. A single ORK operates more like a drone in a hive than a node in a network as it perform specific work that is vastly different than other ORKs and is unique to it, but is entirely incomprehensive by itself, even to itself. Meaning, the network perform a process where each ORK performs part of that process without knowing or understanding anything about the process itself. Only after the ORKs completed their parts (which is done in parallel), the network produces a meaningful result. This "incomprehensible partial processing", or as we call it "Blind Secret Processing" is done using Tide's groundbreaking new Threshold Cryptography done in Multi-Party Computation.
+[^pwd]: Tide's focus on developing the world's most secure online password authentication mechanism is because passwords still, unfortunately, are the most common online authentication mechanism used. In general, password authentication is a significantly inferior mechanism compared to its many alternatives. Most of the alternatives (e.g. MFA, passwordless, FIDO2, etc) also suffer from security risks which Tide's authentication helps alleviate. Tide's superior password protection mechanism isn't intended to discourage users from switching to a better alternative, instead offers a better interim-measure until such inevitable switch occurs.
+[^ork]: Tide's decentralized network is made of many nodes named ORKs, which stands for Orchestrated Recluder of Keys. A single ORK operates more like a drone in a hive than a node in a network as it performs work that's unique to it and is vastly different than other ORKs. That work is entirely incomprehensive by itself, even to itself. Meaning, the network perform a process where each ORK performs part of that process without knowing or understanding anything about the process itself. Only after the ORKs complete their parts (which is done in parallel), the network produces a meaningful result. This "incomprehensible partial processing", or as we call it "Blind Secret Processing" is done using Tide's groundbreaking new Threshold Cryptography done in Multi-Party Computation.
 [^key]: Tide's specific 'key point' is a representation of a cryptographic key as a point on an Edward25519 Elliptic Curve.
