@@ -166,13 +166,10 @@
     left: 40px;
     width: 40px;
     height: 40px;
-    text-align: center;
-    font-size: 13px;
-    line-height: 27px;
-    font-weight: bold;
     cursor: pointer;
     color: #79a8ae;
     opacity: .9;
+    border: none;
   
     -webkit-transition: opacity 0.1s cubic-bezier(0.694, 0.0482, 0.335, 1);
     -moz-transition: opacity 0.1s cubic-bezier(0.694, 0.0482, 0.335, 1);
@@ -183,13 +180,6 @@
   
   .discord:hover {
     opacity: 1;
-  }
-
-  img.discord{
-    width: auto !important; /*override the width below*/
-    width: 100%;
-    float: left;
-    clear: both;
   }
 
   .overlay {
