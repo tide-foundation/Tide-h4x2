@@ -163,7 +163,7 @@
     position: absolute;
     top: 40px;
     left: 40px;
-    width: 40px;
+    width: auto;
     height: 40px;
     cursor: pointer;
     color: #79a8ae;
