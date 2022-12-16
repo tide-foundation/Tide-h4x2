@@ -183,7 +183,15 @@
   
   .discord:hover {
     opacity: 1;
-  }  
+  }
+
+  img.discord{
+    width: auto !important; /*override the width below*/
+    width: 100%;
+    float: left;
+    clear: both;
+  }
+
   .overlay {
     position: absolute;
     top: 50%;
