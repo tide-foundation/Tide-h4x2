@@ -158,7 +158,33 @@
   .help:hover {
     opacity: 1;
   }
+
+  .discord {
+    display: none;
+    position: absolute;
+    top: 40px;
+    left: 40px;
+    width: 40px;
+    height: 40px;
+    text-align: center;
+    font-size: 13px;
+    line-height: 27px;
+    font-weight: bold;
+    cursor: pointer;
+    background: #fff;
+    color: #79a8ae;
+    opacity: .9;
   
+    -webkit-transition: opacity 0.1s cubic-bezier(0.694, 0.0482, 0.335, 1);
+    -moz-transition: opacity 0.1s cubic-bezier(0.694, 0.0482, 0.335, 1);
+    -ms-transition: opacity 0.1s cubic-bezier(0.694, 0.0482, 0.335, 1);
+    -o-transition: opacity 0.1s cubic-bezier(0.694, 0.0482, 0.335, 1);
+    transition: opacity 0.1s cubic-bezier(0.694, 0.0482, 0.335, 1);
+  }
+  
+  .discord:hover {
+    opacity: 1;
+  }  
   .overlay {
     position: absolute;
     top: 50%;
