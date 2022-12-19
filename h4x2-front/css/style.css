@@ -12,21 +12,33 @@
   }
   
   h1 {
-    color: #111;
+    color: rgb(252, 252, 252);
     margin: 0 0 12px 0;
     font-size: 24px;
     line-height: 1.5em;
   }
   
+  h2 {
+    color: rgb(252, 252, 252);
+    margin: 0 0 12px 0;
+    font-size: 18px;
+    line-height: 1.5em;
+  }
+
   p {
     margin: 0 0 10x 0;
   }
   
   a {
-    color: #888;
+    color: rgb(255, 255, 255);
     text-decoration: none;
   }
-  
+  a:link {
+    color: rgb(255, 119, 0);
+    background-color: transparent;
+    text-decoration: none;
+  }
+
   a:hover {
     border-bottom-color: #888;
   }
@@ -207,7 +219,7 @@
   .ui-share,
   .ui-details {
     opacity: .9;
-    background: #fff;
+    background: rgb(18, 1, 93);
     z-index: 2;
   }
   
