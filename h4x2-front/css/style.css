@@ -225,11 +225,11 @@
   .ui-details {
     opacity: .9;
     z-index: 2;
-    background: -webkit-linear-gradient(top,  rgb(1, 1, 59) 100%, rgba(1,1,2,1) 69%);
-    background: -moz-linear-gradient(top,  rgb(1, 1, 59) 100%, rgba(1,1,2,1) 69%);
-    background: -o-linear-gradient(top,  rgb(1, 1, 59) 100%, rgba(1,1,2,1) 69%);
-    background: -ms-linear-gradient(  rgb(1, 1, 59) 100%, rgba(1,1,2,1) 69%);
-    background: linear-gradient(top,   rgb(1, 1, 59) 100%, rgba(1,1,2,1) 69%);
+    background: -webkit-linear-gradient(top,  rgb(1, 1, 59) 10%, rgba(1,1,2,1) 69%);
+    background: -moz-linear-gradient(top,  rgb(1, 1, 59) 10%, rgba(1,1,2,1) 69%);
+    background: -o-linear-gradient(top,  rgb(1, 1, 59) 10%, rgba(1,1,2,1) 69%);
+    background: -ms-linear-gradient(  rgb(1, 1, 59) 10%, rgba(1,1,2,1) 69%);
+    background: linear-gradient(top,   rgb(1, 1, 59) 10%, rgba(1,1,2,1) 69%);
   }
   
   .ui-details-content,
