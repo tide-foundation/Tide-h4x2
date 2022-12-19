@@ -66,10 +66,10 @@
     */
   
     background: -webkit-linear-gradient(top, rgba(1,1,2,1) 69%, rgb(1, 1, 59) 100%);
-    background: -moz-linear-gradient(top, rgb(203, 235, 219) 0%, rgb(55, 148, 192) 120%);
-    background: -o-linear-gradient(top, rgb(203, 235, 219) 0%, rgb(55, 148, 192) 120%);
-    background: -ms-linear-gradient(top, rgb(203, 235, 219) 0%, rgb(55, 148, 192) 120%);
-    background: linear-gradient(top, rgb(203, 235, 219) 0%, rgb(55, 148, 192) 120%);
+    background: -moz-linear-gradient(top, rgba(1,1,2,1) 69%, rgb(1, 1, 59) 100%);
+    background: -o-linear-gradient(top,  rgba(1,1,2,1) 69%, rgb(1, 1, 59) 100%);
+    background: -ms-linear-gradient( rgba(1,1,2,1) 69%, rgb(1, 1, 59) 100%);
+    background: linear-gradient(top,  rgba(1,1,2,1) 69%, rgb(1, 1, 59) 100%);
   }
   
   .body--ready .overlay {
@@ -224,8 +224,12 @@
   .ui-share,
   .ui-details {
     opacity: .9;
-    background: rgb(18, 1, 93);
     z-index: 2;
+    background: -webkit-linear-gradient(top, rgba(1,1,2,1) 69%, rgb(1, 1, 59) 100%);
+    background: -moz-linear-gradient(top, rgba(1,1,2,1) 69%, rgb(1, 1, 59) 100%);
+    background: -o-linear-gradient(top,  rgba(1,1,2,1) 69%, rgb(1, 1, 59) 100%);
+    background: -ms-linear-gradient( rgba(1,1,2,1) 69%, rgb(1, 1, 59) 100%);
+    background: linear-gradient(top,  rgba(1,1,2,1) 69%, rgb(1, 1, 59) 100%);
   }
   
   .ui-details-content,
