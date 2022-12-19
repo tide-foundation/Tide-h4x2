@@ -30,7 +30,7 @@
   }
   
   a {
-    color: rgb(255, 255, 255);
+    color: rgb(255, 119, 0);
     text-decoration: none;
   }
   a:link {
@@ -38,7 +38,12 @@
     background-color: transparent;
     text-decoration: none;
   }
-
+  a:visited {
+    color: rgb(255, 119, 0);
+    background-color: transparent;
+    text-decoration: none;
+  }
+ 
   a:hover {
     border-bottom-color: #888;
   }
@@ -97,7 +102,7 @@
     bottom: 5%;
     width: 300px;
     margin-left: -150px;
-    z-index:100; 
+    
   }
   
   .ui-input {
@@ -385,7 +390,7 @@
      ========================================================================== */
 
 
-  @media screen and (max-height: 600px) {
+  @media screen and (max-width: 600px) {
     .ui-input {
       color: #111; 
       border: 2px solid rgb(254, 120, 3);
@@ -394,4 +399,20 @@
     .ui-input:focus {
       border: 2px solid rgb(254, 120, 3);;
     }
+  
+    body {
+      font-size: 10px;
+      line-height: 1.5em;
+    }
+    
+    h1 {
+      font-size: 16px;
+      line-height: 1.5em;
+    }
+    
+    h2 {
+      font-size: 14px;
+      line-height: 1.5em;
+    }
+    
   }
