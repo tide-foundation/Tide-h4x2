@@ -138,7 +138,7 @@ You may notice that regardless if you entered the right password or not, the ORK
 ## Get in touch!
 
 [Tide Discord](https://discord.gg/42UCeW4smw)
-[Tide Twitter]([https://discord.gg/42UCeW4smw](https://twitter.com/tidefoundation))
+[Tide Twitter](https://twitter.com/tidefoundation)
 
   <a href="https://tide.org/licenses_tcoc2-0-0-en">
     <img src="https://img.shields.io/badge/license-TCOC-green.svg" alt="license">
