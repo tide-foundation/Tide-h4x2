@@ -26,11 +26,9 @@ namespace H4x2_Node.Controllers
     public class ApplyController : Controller
     {
         private Settings _settings { get; }
-        private ThrottlingManager _throttlingManager;
         public ApplyController(Settings settings)
         {
             _settings = settings;
-            _throttlingManager = new ThrottlingManager();
         }
 
         public ActionResult<string> Prism([FromBody] Point point) => Apply(point, _settings.PRISM);
@@ -39,10 +37,6 @@ namespace H4x2_Node.Controllers
         {
             try
             {
-                var barredTime = Throttle().Value;
-                if (!barredTime.Equals(0)) 
-                    return StatusCode(429,barredTime.ToString());
-                
                 Point appliedPoint = PRISM.Apply(toApply, key);
                 return appliedPoint.ToBase64();
             }
@@ -50,14 +44,6 @@ namespace H4x2_Node.Controllers
             {
                 return BadRequest(ex);
             }
-        }
-        private ActionResult<int> Throttle()
-        {
-            var Ip = (HttpContext.Request.Headers["X-Forwarded-For"].FirstOrDefault() ?? "").Split(new char[] { ':' }).FirstOrDefault();
-            if (!String.IsNullOrEmpty(Ip)) 
-                return _throttlingManager.Throttle(Ip.ToString()).GetAwaiter().GetResult();
-            else
-                return _throttlingManager.Throttle(Request.HttpContext.Connection.RemoteIpAddress.ToString()).GetAwaiter().GetResult();
         }
     }
 }
