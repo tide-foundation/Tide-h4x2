@@ -17,7 +17,7 @@
 
 using H4x2_Node;
 using H4x2_Node.Binders;
-using H4x2_Node.Models.Serialization;
+
 using Microsoft.AspNetCore.HttpOverrides;
 using System.Numerics;
 using H4x2_Node.Middleware;
@@ -27,16 +27,9 @@ var builder = WebApplication.CreateBuilder(args);
 
 var prism = Environment.GetEnvironmentVariable("PRISM_VAL");
 var isThrottled = Convert.ToBoolean(Environment.GetEnvironmentVariable("IS_THROTTLED"));
+var insightsKey = Environment.GetEnvironmentVariable("INSIGHT_KEY");
 
-
-// Add services to the container.
-builder.Services.AddControllersWithViews(); // consider removing this
-
-builder.Services.AddControllers(options => options.ModelBinderProviders.Insert(0, new BinderProvider()))
-        .AddJsonOptions(opt =>
-        {
-            opt.JsonSerializerOptions.Converters.Add(new PointSerializer());   // consider removing this
-        });
+builder.Services.AddControllers(options => options.ModelBinderProviders.Insert(0, new BinderProvider()));
 
 builder.Services.AddSingleton(
     new Settings
@@ -45,12 +38,18 @@ builder.Services.AddSingleton(
     });
 
 builder.Services.AddLazyCache();
+
 builder.Services.Configure<ForwardedHeadersOptions>(options =>
 {
     options.ForwardedHeaders =
         ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
 });
-builder.Services.AddApplicationInsightsTelemetry(builder.Configuration["APPLICATIONINSIGHTS_CONNECTION_STRING"]);  // consider adding this to demo statement?
+
+if(insightsKey != null)
+{
+    builder.Services.AddApplicationInsightsTelemetry(insightsKey);  
+
+}
 
 var app = builder.Build();
 

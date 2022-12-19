@@ -31,18 +31,19 @@ namespace H4x2_Node.Controllers
             _settings = settings;
         }
 
-        public ActionResult<string> Prism([FromBody] Point point) => Apply(point, _settings.PRISM);
+        public ActionResult Prism([FromBody] Point point) => Apply(point, _settings.PRISM);
 
-        private ActionResult<string> Apply(Point toApply, BigInteger key)
+        private ActionResult Apply(Point toApply, BigInteger key)
         {
             try
             {
+                if (toApply == null) throw new Exception("Apply Controller: Point supplied is not valid and/or safe");
                 Point appliedPoint = PRISM.Apply(toApply, key);
-                return appliedPoint.ToBase64();
+                return Ok(appliedPoint.ToBase64());
             }
             catch (Exception ex)
             {
-                return BadRequest(ex);
+                return BadRequest(new {message = ex.Message});
             }
         }
     }
