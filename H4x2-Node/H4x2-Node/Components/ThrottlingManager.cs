@@ -43,7 +43,7 @@ namespace H4x2_Node.Controllers
 
             if (entry is not null)
             {
-                int penalty = (int)Math.Min(Math.Floor(Math.Pow(2, entry.Times) * Lapse), MaxPenalty);
+                int penalty = (int)Math.Min(Math.Ceiling(Math.Pow(2, entry.Times - Allow)) * Lapse, MaxPenalty);
                 Interlocked.Increment(ref entry.Times);
                 if (penalty < MaxPenalty)
                     _cache.Add(id, entry, BuildPolicy(TimeSpan.FromSeconds(penalty)));   // Call Add() with the generated value you want to update into the cache and it will force the item to be replaced         
