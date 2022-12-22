@@ -145,6 +145,28 @@ namespace H4x2_TinySDK.Ed25519
             return Convert.ToBase64String(this.ToByteArray());
         }
         /// <summary>
+        /// Compresses the point into a 32 byte array.
+        /// </summary>
+        /// <returns></returns>
+        public byte[] Compress()
+        {
+            var x_lsb = this.GetX() & 1;
+            // Encode the y-coordinate as a little-endian string of 32 octets.
+            byte[] yByteArray = this.GetY().ToByteArray(true, false).PadRight(32);
+            int new_msb = 0;
+            if (x_lsb == 1)
+            {
+                new_msb = yByteArray[31] | 128;
+            }
+            if (x_lsb == 0)
+            {
+                new_msb = yByteArray[31] & 127;
+            }
+            // Copy the least significant bit of the x - coordinate to the most significant bit of the final octet.
+            yByteArray[31] = (byte)new_msb;
+            return yByteArray;
+        }
+        /// <summary>
         /// Multiplies a point by a scalar using double and add algorithm on the Ed25519 Curve.
         /// Does not perform safety checks on scalar or the point, yet.
         /// </summary>

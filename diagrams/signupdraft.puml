@@ -1,0 +1,46 @@
+@startuml H4x2_prism
+title Tide PRISM authentication
+!include https://raw.githubusercontent.com/bschwarz/puml-themes/master/themes/aws-orange-light/puml-theme-aws-orange-light.puml
+
+actor "User" as usr
+collections "Servers" as ork
+
+group Precondition
+note over usr
+    username
+    password
+end note 
+
+note over ork
+    ORKPriv
+    ORKPub = G * ORKPriv
+end note
+end
+
+note over usr
+a = Point(password)
+userID = hash(username)
+r = random()
+endnote
+
+usr -> ork: a * r, userID
+note over ork
+[CHECK] userID does not exist
+Create entry for new random Prism for userID
+endnote
+ork -> usr: a * r * Prism, ORKPub
+
+note over usr
+keyPoint = (a * r * Prism) * r^-1  (remove r)
+
+PrismPub = G * hash(a * Prism)
+endnote
+
+usr -> ork: PrismPub, userID
+
+note over ork
+PrismAuth = hash( ORKPriv * PrismPub )
+Store(PrismAuth + userID)
+endnote
+
+@enduml
