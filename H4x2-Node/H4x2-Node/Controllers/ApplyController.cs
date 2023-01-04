@@ -53,11 +53,7 @@ namespace H4x2_Node.Controllers
         }
         private ActionResult<int> Throttle()
         {
-            var Ip = (HttpContext.Request.Headers["X-Forwarded-For"].FirstOrDefault() ?? "").Split(new char[] { ':' }).FirstOrDefault();
-            if (!String.IsNullOrEmpty(Ip)) 
-                return _throttlingManager.Throttle(Ip.ToString()).GetAwaiter().GetResult();
-            else
-                return _throttlingManager.Throttle(Request.HttpContext.Connection.RemoteIpAddress.ToString()).GetAwaiter().GetResult();
+           return _throttlingManager.Throttle(Request.HttpContext.Connection.RemoteIpAddress.ToString()).GetAwaiter().GetResult();
         }
     }
 }
