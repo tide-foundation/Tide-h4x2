@@ -202,7 +202,7 @@ S.UI = (function () {
 
     if(value !== welcomeMsg){ // don't wanna try welcome msg
       var config = {
-        urls: ["https://h4x2-ork1.azurewebsites.net", "https://h4x2-ork2.azurewebsites.net"],
+        urls: ["https://ork1.westus2.cloudapp.azure.com", "https://ork2.westus2.cloudapp.azure.com"],
         encryptedData: [document.getElementById("test").innerText, document.getElementById("prize").innerText]
       }
 
