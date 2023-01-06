@@ -172,29 +172,6 @@
     opacity: 1;
   }
   
-  .winners {
-    display: inline;
-    position: absolute;
-    top: 40px;
-    right: 40px;
-    width: auto;
-    height: 40px;
-    text-align: center;
-    cursor: pointer;
-    color: #79a8ae;
-    opacity: .9;
-  
-    -webkit-transition: opacity 0.1s cubic-bezier(0.694, 0.0482, 0.335, 1);
-    -moz-transition: opacity 0.1s cubic-bezier(0.694, 0.0482, 0.335, 1);
-    -ms-transition: opacity 0.1s cubic-bezier(0.694, 0.0482, 0.335, 1);
-    -o-transition: opacity 0.1s cubic-bezier(0.694, 0.0482, 0.335, 1);
-    transition: opacity 0.1s cubic-bezier(0.694, 0.0482, 0.335, 1);
-  }
-  
-  .winners:hover {
-    opacity: 1;
-  }
-
   .social {
     display:inline;
     position: absolute;
