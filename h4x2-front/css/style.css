@@ -244,7 +244,7 @@
     transform: rotateY(0);
   }
   
-  .ui-share,
+  .ui-winners,
   .ui-details {
     opacity: .9;
     z-index: 2;
@@ -256,7 +256,7 @@
   }
   
   .ui-details-content,
-  .ui-share-content {
+  .ui-winners-content {
     padding: 100px 50px;
   }
   
