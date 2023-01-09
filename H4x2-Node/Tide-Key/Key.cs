@@ -14,7 +14,7 @@ namespace H4x2_TinySDK.Ed25519
         public PrivateKey(string base64Bytes)
         {
             Digest = HashAndPrune(Convert.FromBase64String(base64Bytes));
-            Priv = Utils.Mod(new BigInteger(Digest.Take(32).ToArray(), true, false), Curve.N);
+            Priv = new BigInteger(Digest.Take(32).ToArray(), true, false);
         }
         public byte[] HashAndPrune(byte[] data)
         {
