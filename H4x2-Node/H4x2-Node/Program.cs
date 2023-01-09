@@ -21,13 +21,19 @@ using H4x2_Node.Binders;
 using Microsoft.AspNetCore.HttpOverrides;
 using System.Numerics;
 using H4x2_Node.Middleware;
+using H4x2_TinySDK.Ed25519;
 
 var builder = WebApplication.CreateBuilder(args);
 
 
+/*
 var prism = Environment.GetEnvironmentVariable("PRISM_VAL");
 var isThrottled = Convert.ToBoolean(Environment.GetEnvironmentVariable("IS_THROTTLED"));
 var insightsKey = Environment.GetEnvironmentVariable("INSIGHT_KEY");
+*/
+var prism = "2";
+var isThrottled = false;
+var publicKey = Point.FromBytes(Convert.FromBase64String(args[0]));
 
 builder.Services.AddControllers(options => options.ModelBinderProviders.Insert(0, new BinderProvider()));
 
@@ -39,21 +45,10 @@ builder.Services.AddSingleton(
 
 builder.Services.AddLazyCache();
 
-builder.Services.Configure<ForwardedHeadersOptions>(options =>
-{
-    options.ForwardedHeaders =
-        ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
-});
-
-if(insightsKey != null)
-{
-    builder.Services.AddApplicationInsightsTelemetry(insightsKey);  
-
-}
-
 var app = builder.Build();
 
 app.MapGet("/isThrottled", () => isThrottled);
+app.MapGet("/public", () => publicKey.ToBase64());
 
 if (isThrottled)
 {
