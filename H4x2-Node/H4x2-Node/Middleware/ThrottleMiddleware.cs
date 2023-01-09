@@ -30,15 +30,7 @@ public class ThrottleMiddleware
     }
     private ActionResult<int> GetBarredTime(HttpContext context)
     {
-        var Ip = (context.Request.Headers["X-Forwarded-For"].FirstOrDefault() ?? "").Split(new char[] { ':' }).FirstOrDefault(); // in case you're using proxy or load balancer
-        if (!String.IsNullOrEmpty(Ip))
-            return _throttlingManager.Throttle(Ip.ToString()).GetAwaiter().GetResult();
-        else
-        {
-            Console.WriteLine("Throttled IP address (NOT Forwarded): " + context.Connection.RemoteIpAddress.ToString());
-            return _throttlingManager.Throttle(context.Connection.RemoteIpAddress.ToString()).GetAwaiter().GetResult();
-
-        }
+        return _throttlingManager.Throttle(context.Connection.RemoteIpAddress.ToString()).GetAwaiter().GetResult();
     }
 }
 
