@@ -16,6 +16,7 @@
 //
 
 using System.Numerics;
+using System.Text;
 using H4x2_TinySDK.Tools;
 
 namespace H4x2_TinySDK.Ed25519
@@ -69,6 +70,7 @@ namespace H4x2_TinySDK.Ed25519
             var point = new Point(x, y);
             return point;
         }
+        public static Point FromBase64(string data) => Point.FromBytes(Encoding.ASCII.GetBytes(data));
         /// <summary>
         /// Performs ( X * modular_inverse(Z) ) % M to get the actual x coordinate.
         /// </summary>
