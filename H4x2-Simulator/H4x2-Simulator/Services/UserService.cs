@@ -10,7 +10,7 @@ public interface IUserService
 {
     IEnumerable<User> GetAll();
     User GetById(string id);
-    void Create(CreateRequest model);
+    void Create(User user);
     void Update(string id, UpdateRequest model);
     void Delete(string id);
 }
@@ -38,12 +38,11 @@ public class UserService : IUserService
         return getUser(id);
     }
 
-    public void Create(CreateRequest model)
+    public void Create(User user)
     {
         // validate
-        if (_context.Users.Any(x => x.UserId == model.UserId))
-            throw new Exception("User with the Id '" + model.UserId + "' already exists");
-        var user = _mapper.Map<User>(model);
+        if (_context.Users.Any(x => x.UserId == user.UserId))
+            throw new Exception("User with the Id '" + user.UserId + "' already exists");
         // save user
         _context.Users.Add(user);
         _context.SaveChanges();
