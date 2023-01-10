@@ -32,10 +32,18 @@ public class OrksController : ControllerBase
     }
 
     [HttpPost]
-    public IActionResult Create(Ork ork)
+    public async Task<IActionResult> Create([FromForm] string orkUrl, [FromForm] string signedOrkUrl)
     {
-        _orkService.Create(ork);
-        return Ok(new { message = "Ork created" });
+        try
+        {
+            Ork ork = await _orkService.ValidateOrk(orkUrl, signedOrkUrl);
+            _orkService.Create(ork);
+            return Ok(new { message = "Ork created" });
+        }
+        catch(Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
     }
 }
 

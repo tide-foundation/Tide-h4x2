@@ -22,4 +22,7 @@
     <Folder Include="Models\" />
     <Folder Include="Models\Users\" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\H4x2-TinySDK\H4x2-TinySDK\H4x2-TinySDK.csproj" />
+  </ItemGroup>
 </Project>
