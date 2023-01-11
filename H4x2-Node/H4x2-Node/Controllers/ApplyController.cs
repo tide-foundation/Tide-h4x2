@@ -34,15 +34,16 @@ namespace H4x2_Node.Controllers
             _userService = userService;
         }
 
-        public ActionResult Prism([FromBody] Point point) => Apply(point, _settings.PRISM);
+        [HttpPost("Apply/Prism/{uid}")]
+        public ActionResult Prism([FromRoute] string uid, [FromBody] Point point) => Apply(uid, point, _settings.PRISM);
 
-        private ActionResult Apply(Point toApply, BigInteger key)
+        private ActionResult Apply(string uid, Point toApply, BigInteger key)
         {
             try
             {
                 if (toApply == null) throw new Exception("Apply Controller: Point supplied is not valid and/or safe");
-
-                var user = _userService.GetById("4442asdasdasd323213dase3asd233ddse23ed"); // The UId will be passed in the api call
+                Console.WriteLine(uid);
+                var user = _userService.GetById(uid); // The UId will be passed in the api call
                 Console.WriteLine(user.UId);
 
                 Point appliedPoint = PRISM.Apply(toApply, key);
