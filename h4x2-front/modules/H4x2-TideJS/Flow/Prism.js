@@ -52,13 +52,14 @@ export default class PrismFlow{
      * NOTE: It will attempt to decrypt the data on both keyIds (Test and Prize)
      * * Requires config object to include urls and encryptedData
      * @param {string} pass The password to encrypt your data
+     * @param {string} user
      * @returns {Promise<string>}
      */
-    async run(pass){                                                                                                                                                                                                                                                                                
+    async run(user, pass){                                                                                                                                                                                                                                                                                
         const random = RandomBigInt();
         const passwordPoint_R = (await Point.fromString(pass)).times(random); // password point * random
         const clients = this.urls.map(url => new NodeClient(url, "Prism")) // create node clients
-        const appliedPoints = clients.map(client => client.Apply(passwordPoint_R)); // get the applied points from clients
+        const appliedPoints = clients.map(client => client.Apply("4442asdasdasd323213dase3asd233ddse23ed", passwordPoint_R)); // get the applied points from clients
 
         var authPoint_R;
         try{

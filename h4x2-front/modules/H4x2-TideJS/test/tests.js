@@ -26,7 +26,7 @@ var tx = new TextEncoder();
 
 export async function test1(){ // initial client testing
   var nodeclient = new NodeClient('http://localhost:6001', 'Prism');
-  var applied = await nodeclient.Apply(Point.fromB64('uG7uZxtPjT+YBruVT3D/vml8kAs1yi713Mos/DcTbmN0GtOpZo3G1jQBRTIQz8JV2sMB3XT343U+LAsWk9b0Mw=='));
+  var applied = await nodeclient.Apply("", Point.fromB64('uG7uZxtPjT+YBruVT3D/vml8kAs1yi713Mos/DcTbmN0GtOpZo3G1jQBRTIQz8JV2sMB3XT343U+LAsWk9b0Mw=='));
   console.log(applied.toBase64());
 }
 
@@ -44,7 +44,7 @@ export async function test2(){ // test AES encryptions
 
 export async function test3(){ // full set up and decryption test
   var config = {
-    urls: ["http://localhost:6001", "http://localhost:7001"],
+    urls: ["http://localhost:6001", "http://localhost:5157"],
     encryptedData: []
   }
 
@@ -53,7 +53,7 @@ export async function test3(){ // full set up and decryption test
   // At this point the message "Encrypt My Chickens" will be encrypted with the prismFlow using the password "Julio's Password"
   // The strength of this is that no-one can offline attack the AES encrypted data, even if the password is very short. The attacker MUST 
   // bruteforce by requesting the Test/Prize keys from the orks, which allows us to throttle and MAJORLY slow the attack.
-  const decrypted = await flow.run("Julio's Password");
+  const decrypted = await flow.run("Julio's UserName","Julio's Password");
   console.log(decrypted);
 }
 
@@ -77,7 +77,7 @@ export async function test5(){ // test to decrypt data
   }
 
   const flow = new PrismFlow(config)
-  const decrypted = await flow.run("AAA")
+  const decrypted = await flow.run("Julio's UserName","AAA")
 
   console.log(decrypted)
 }
