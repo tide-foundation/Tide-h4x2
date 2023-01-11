@@ -20,15 +20,18 @@ using Microsoft.AspNetCore.Mvc;
 using H4x2_TinySDK.Ed25519;
 using H4x2_TinySDK.Math;
 using System.Numerics;
+using H4x2_Node.Services;
 
 namespace H4x2_Node.Controllers
 {
     public class ApplyController : Controller
     {
         private Settings _settings { get; }
-        public ApplyController(Settings settings)
+        private IUserService _userService;
+        public ApplyController(Settings settings, IUserService userService)
         {
             _settings = settings;
+            _userService = userService;
         }
 
         public ActionResult Prism([FromBody] Point point) => Apply(point, _settings.PRISM);
@@ -38,6 +41,10 @@ namespace H4x2_Node.Controllers
             try
             {
                 if (toApply == null) throw new Exception("Apply Controller: Point supplied is not valid and/or safe");
+
+                var user = _userService.GetById("4442asdasdasd323213dase3asd233ddse23ed"); // The UId will be passed in the api call
+                Console.WriteLine(user.UId);
+
                 Point appliedPoint = PRISM.Apply(toApply, key);
                 return Ok(appliedPoint.ToBase64());
             }

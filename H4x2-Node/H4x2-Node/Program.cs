@@ -22,6 +22,8 @@ using Microsoft.AspNetCore.HttpOverrides;
 using System.Numerics;
 using H4x2_Node.Middleware;
 using H4x2_TinySDK.Ed25519;
+using H4x2_Node.Helpers;
+using H4x2_Node.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -45,6 +47,14 @@ builder.Services.AddSingleton(
 
 builder.Services.AddLazyCache();
 
+builder.Services.AddControllersWithViews();
+
+var services = builder.Services;
+
+services.AddDbContext<DataContext>();
+services.AddScoped<IUserService, UserService>();
+
+
 var app = builder.Build();
 
 app.MapGet("/isThrottled", () => isThrottled);
@@ -66,5 +76,15 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 app.UseForwardedHeaders();
+app.MapControllers();
+
+if(app.Environment.IsDevelopment()) // To create table if not exists
+{
+    using(var scope = app.Services.CreateScope())
+    {
+        var dataContext = scope.ServiceProvider.GetRequiredService<DataContext>();
+        dataContext.Database.EnsureCreated();
+    }
+}
 
 app.Run();
