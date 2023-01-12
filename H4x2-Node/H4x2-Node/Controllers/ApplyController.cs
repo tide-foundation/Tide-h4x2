@@ -42,9 +42,8 @@ namespace H4x2_Node.Controllers
             try
             {
                 if (toApply == null) throw new Exception("Apply Controller: Point supplied is not valid and/or safe");
-                Console.WriteLine(uid);
-                var user = _userService.GetById(uid); // The UId will be passed in the api call
-                Console.WriteLine(user.UId);
+                
+                var user = _userService.GetById(uid); 
 
                 Point appliedPoint = PRISM.Apply(toApply, key);
                 return Ok(appliedPoint.ToBase64());
