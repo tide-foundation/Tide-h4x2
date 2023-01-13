@@ -19,7 +19,7 @@ internal class Program
         {
             if (args.Length < 2) { throw new ArgumentException("Must provide message to sign and private key"); }
             var priv = new PrivateKey(args[1]);
-            Console.WriteLine(priv.Public().ToUID());
+            Console.WriteLine(priv.Public().ToUID().ToLower());
         }
         if (args[0].Equals("private-key"))
         {

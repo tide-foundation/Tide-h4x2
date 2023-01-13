@@ -39,7 +39,7 @@ public class OrkService : IOrkService
     public async Task<Ork> ValidateOrk(string orkUrl, string signedOrkUrl)
     {
         // Query ORK public
-        string orkPub = await _client.GetStringAsync(orkUrl);
+        string orkPub = await _client.GetStringAsync(orkUrl + "/public");
 
         // Verify signature
 
