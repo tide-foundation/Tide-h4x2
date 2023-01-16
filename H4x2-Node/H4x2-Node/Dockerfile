@@ -4,8 +4,8 @@ FROM mcr.microsoft.com/dotnet/aspnet:6.0-alpine3.17 AS base
 WORKDIR /app
 COPY ./startup.sh .
 RUN apk add --no-cache --upgrade bash \
-	&& apk add --no-cache screen \
-	&& apk add --no-cache curl 
+	&& apk add --no-cache curl \
+	&& apk add --no-cache screen
 
 FROM mcr.microsoft.com/dotnet/sdk:6.0-alpine3.17 AS build
 WORKDIR /src
@@ -21,9 +21,11 @@ FROM build AS publish
 RUN dotnet publish "H4x2-Node.csproj" -c Release -o /app/publish /p:UseAppHost=false
 
 FROM base AS final
-WORKDIR /keys
-RUN touch key.txt \
-	&& chmod 600 key.txt \
+WORKDIR /ork
+RUN mkdir priv \
+	&& mkdir db \
+	&& touch priv/key.txt \
+	&& chmod 600 priv/key.txt \
 	&& chmod 700 /app/startup.sh
 WORKDIR /app
 COPY --from=publish /app/publish .
