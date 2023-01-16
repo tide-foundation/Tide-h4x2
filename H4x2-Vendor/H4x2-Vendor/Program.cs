@@ -14,14 +14,12 @@ var app = builder.Build();
 
 app.MapControllers();
 
-if(app.Environment.IsDevelopment()) // To create table if not exists
+using(var scope = app.Services.CreateScope()) // Create table if does not exist
 {
-    using(var scope = app.Services.CreateScope())
-    {
-        var dataContext = scope.ServiceProvider.GetRequiredService<DataContext>();
-        dataContext.Database.EnsureCreated();
-    }
+    var dataContext = scope.ServiceProvider.GetRequiredService<DataContext>();
+    dataContext.Database.EnsureCreated();
 }
+
 
 app.Run();
 
