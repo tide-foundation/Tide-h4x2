@@ -13,7 +13,7 @@ public class DataContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder options)
     {
-        options.UseSqlServer(Configuration.GetConnectionString("WebApiDatabase"));
+        options.UseSqlite(Configuration.GetConnectionString("LocalDbConnectionString"));
     }
 
     public DbSet<User> Users { get; set; }
