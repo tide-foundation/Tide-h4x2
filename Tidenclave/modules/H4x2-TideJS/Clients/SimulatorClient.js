@@ -18,7 +18,7 @@
 import Point from "../Ed25519/point.js"
 import ClientBase from "./ClientBase.js"
 
-export default class NodeClient extends ClientBase {
+export default class SimulatorClient extends ClientBase {
     /**
      * @param {string} url 
      * @param {string} keyID
@@ -29,28 +29,13 @@ export default class NodeClient extends ClientBase {
     }
 
     /**
-     * @param {Point} point
-     * @param {string} uid 
-     * @returns {Promise<Point>}
      */
-    async Apply(uid, point){
-        const data = this._createFormData({'point': point.toBase64()})
-        const response = await this._post(`/Apply/${this.keyID}/${uid}`, data)
+    async getTideOrk(){
+        const response = await this._get(`/orks/${"TideOrk"}`)
         if(response.ok){
-            return Point.fromB64(await response.text());
+            return await response.text();
         }
-        if(response.status == 429){
-            throw await response.text(); // Error's name will be timeout length.
-        }
+        
         return Promise.reject(); // should never get here
     }
-
-    /**
-     * @returns {Promise<number>}
-     */
-    async Throttle(){
-        const response = await this._get(`/Throttle`)
-        return parseInt(await response.text());
-    }
-
 }

@@ -17,6 +17,7 @@
 
 
 import NodeClient from "../Clients/NodeClient.js"
+import VendorClient from "../Clients/VendorClient.js"
 import Point from "../Ed25519/point.js"
 import { decryptData, encryptData } from "../Tools/AES.js"
 import { SHA256_Digest } from "../Tools/Hash.js"
@@ -114,6 +115,49 @@ export default class PrismFlow{
         // Add encrypted data to existing array
         this.encryptedData.push(await encryptData(dataToEncrypt, keyToEncrypt)); // Use the hashed point as a key to encrypt the data
     }
+
+    /**
+     * @param {string} user
+     * @param {string} pass
+     */
+    async singup(user, pass){
+        const random = RandomBigInt();
+        const uid = BigIntFromByteArray(await SHA256_Digest(user)).toString();
+        const passwordPoint_R = (await Point.fromString(pass)).times(random); // password point * random
+        const clients = this.urls.map(url => new NodeClient(url, "Prism")) // create node clients
+        const appliedPoints = clients.map(client => client.Apply(uid, passwordPoint_R)); // get the applied points from clients
+
+        var authPoint_R;
+        try{
+            authPoint_R = (await Promise.all(appliedPoints)).reduce((sum, next) => sum.add(next)); // sum all points returned from nodes
+        }catch(err){
+            return this.responseString("", err) // catch on TimeOut. This is messy but we really wanted to show timeout length to user
+        }
+        
+        const authPoint = authPoint_R.times(mod_inv(random)); // remove the random to get the authentication point
+        
+        const authPointHash = await SHA256_Digest(authPoint.toBase64()); // Hash the authentication point for added security
+        
+        const prismPub = Point.g.times(BigIntFromByteArray(authPointHash)) ;
+
+      
+        //const appli = clients.map(client => client.AddUser(uid, prismPub)); 
+
+    }
+    /**
+     * @param {string} user
+     * @param {string} secret
+     */
+    async storeToVender(user, secret){
+      
+        const uid = BigIntFromByteArray(await SHA256_Digest(user)).toString();
+       
+        const clients = this.urls.map(url => new VendorClient(url, "Prism")) // create node clients
+        const res = clients.map(client => client.AddToVendor(uid, secret)); // get the applied points from clients
+        
+
+    }
+
 
     responseString(decryptedMessage, timeOut=null){
         if(decryptedMessage == null){return "Decryption failed"}
