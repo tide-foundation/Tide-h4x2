@@ -3,19 +3,30 @@ title Tide PRISM authentication
 !include https://raw.githubusercontent.com/bschwarz/puml-themes/master/themes/aws-orange-light/puml-theme-aws-orange-light.puml
 
 actor "User" as usr
-collections "Servers" as ork
+participant "Vendor" as vendor
+collections "ORKs" as ork
+database "Simulator" as sim
 
 group Precondition
 note over usr
     username
     password
+    secretCode
 end note 
 
 note over ork
     ORKPriv
     ORKPub = G * ORKPriv
 end note
+
+note over sim
+    ORK Public
+    ORK URL
+end note
 end
+
+usr -> vendor: GET Vendor Login Page
+vendor -> usr: Redirect to ORK enclave (specifcally Tide ORK for now)
 
 note over usr
 a = Point(password)
@@ -24,23 +35,46 @@ r = random()
 endnote
 
 usr -> ork: a * r, userID
+activate usr
+
 note over ork
-[CHECK] userID does not exist
-Create entry for new random Prism for userID
+Prism = random()
+EncryptedState = Encrypt(Prism | userID, ORKPriv)
 endnote
-ork -> usr: a * r * Prism, ORKPub
+ork -> usr: a * r * Prism, EncryptedState, ORKPub
 
 note over usr
 keyPoint = (a * r * Prism) * r^-1  (remove r)
-
-PrismPub = G * hash(a * Prism)
+PrismPub = G * hash(keyPoint)
+PrismAuth = hash(ORKPub * PrismPub)
 endnote
 
-usr -> ork: PrismPub, userID
-
+usr -> ork: PrismPub, EncryptedState
 note over ork
+Prism, userID = Decrypt(EncryptedState)
+end note
+
+ork -> sim: Check userID does not exist
+note over ork
+CVK = random()
 PrismAuth = hash( ORKPriv * PrismPub )
-Store(PrismAuth + userID)
+EncryptedCVK = Encrypt(CVK, PrismAuth)
+Store(PrismAuth, userID, Prism)
 endnote
+
+ork -> usr: EncryptedCVK
+
+note over usr
+CVK = Decrypt(EncryptedCVK, PrismAuth)
+EncryptedCode = Encrypt(SecretCode, CVK)
+end note
+
+usr -> vendor: EncryptedCode, userID
+vendor -> ork: Check user exists
+
+note over vendor
+Store(EncryptedCode, userID)
+end note
+deactivate usr
 
 @enduml

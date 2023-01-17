@@ -1,7 +1,8 @@
-namespace H4x2_Node.Helpers;
+namespace H4x2_Vendor.Helpers;
 
 using Microsoft.EntityFrameworkCore;
-using H4x2_Node.Entities;
+using H4x2_Vendor.Entities;
+
 public class DataContext : DbContext
 {
     protected readonly IConfiguration Configuration;
@@ -13,9 +14,8 @@ public class DataContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder options)
     {
-        options.UseSqlite(Configuration.GetConnectionString("LocalDbConnectionString"));
+        options.UseSqlServer(Configuration.GetConnectionString("WebApiDatabase"));
     }
 
-    public DbSet<User> Users { get; set; }
-
+    public DbSet<User> UserSecrets { get; set; }
 }

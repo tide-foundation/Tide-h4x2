@@ -1,16 +1,12 @@
 #!/bin/bash
 
-Ed25519Key=$(cat /keys/key.txt)
-
-gen_key () {
-	Ed25519Key=$(tide-key generate)
-}
+Ed25519Key=$(cat /ork/priv/key.txt)
 
 if [ -z "$Ed25519Key" ]; then # Checks if key exists
 	echo "No Key Found... Generating one"
 	# Generate key
-	gen_key
-	echo $Ed25519Key >> /keys/key.txt
+	Ed25519Key=$(tide-key generate)
+	echo $Ed25519Key >> /ork/priv/key.txt
 	
 	# Register ORK in Simulator
 	hash=$(tide-key pubhash $Ed25519Key) # Hash key pub, use as sudomain in local tunnel
