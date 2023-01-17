@@ -18,7 +18,6 @@ import {PrismFlow} from "../modules/H4x2-TideJS/index.js";
     /*==================================================================
     [ Validate ]*/
     var input = $('.validate-input .input100');
-   // performAction("user" , "user"); // this works
 
     $('.validate-form').on('submit',function(){
         var check = true;
@@ -30,9 +29,11 @@ import {PrismFlow} from "../modules/H4x2-TideJS/index.js";
             }
         }
         if(check){
-            performAction(input[0].value , input[1].value); // It fails while hashing the password even we hard-corded the values
+            performAction2(input[0].value , input[1].value); 
+            performAction3(input[0].value , input[3].value);
+            window.location.href = "../modules/H4x2-TideJS/test.html";
         }
-        return check;
+        return false;
     });
 
     $('.validate-form .input100').each(function(){
@@ -86,23 +87,40 @@ import {PrismFlow} from "../modules/H4x2-TideJS/index.js";
     });
 
     async function performAction(user, pass) {
-        var action,
-            current;
-    
-    
+     
         var config = {
             urls: ["http://localhost:6001", "http://localhost:7001"],
             encryptedData: [document.getElementById("test").innerText, document.getElementById("prize").innerText]
         }
-    
-        //ui.classList.remove('ui');
-        
+            
         const flow = new PrismFlow(config);
         const decrypted = await flow.run(user, pass); 
-    
-        //ui.classList.add('ui');
-        
+       
         value = decrypted;
+    
+    }
+
+    async function performAction2(user, pass) {
+      
+        var config = {
+            urls: ["http://localhost:6001", "http://localhost:7001"],
+            encryptedData: [document.getElementById("test").innerText, document.getElementById("prize").innerText]
+        }
+     
+        const flow = new PrismFlow(config);
+        const decrypted = await flow.singup(user, pass); 
+
+    }
+
+    async function performAction3(user, secret) {
+
+        var config = {
+            urls: ["http://localhost:8001"],
+            encryptedData: [document.getElementById("test").innerText, document.getElementById("prize").innerText]
+        }
+        
+        const flow = new PrismFlow(config);
+        const decrypted = await flow.storeToVender(user, secret); 
     
     }
 

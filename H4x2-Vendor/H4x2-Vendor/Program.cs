@@ -12,6 +12,8 @@ services.AddScoped<IUserService, UserService>();
 
 var app = builder.Build();
 
+app.UseCors(builder => builder.AllowAnyOrigin()); // change this when ORKs host enclave themselves
+
 app.MapControllers();
 
 using(var scope = app.Services.CreateScope()) // Create table if does not exist
