@@ -47,7 +47,7 @@ ork -> usr: a * r * Prism, EncryptedState, ORKPub
 note over usr
 keyPoint = (a * r * Prism) * r^-1  (remove r)
 PrismPub = G * hash(keyPoint)
-PrismAuth = hash(ORKPub * PrismPub)
+PrismAuth = hash(ORKPub * hash(keyPoint))
 endnote
 
 usr -> ork: PrismPub, EncryptedState
