@@ -45,5 +45,11 @@ public class OrksController : ControllerBase
             return BadRequest(ex.Message);
         }
     }
+
+    [HttpGet("TideOrk")]
+    public  IActionResult GetTideOrkUrl(){
+        var tideOrkUrl = _orkService.GetTideOrk();
+        return  Ok(tideOrkUrl);
+    }
 }
 

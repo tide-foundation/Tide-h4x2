@@ -29,10 +29,13 @@ public class UsersController : ControllerBase
         return Ok(user);
     }
 
-    [HttpPost]
-    public IActionResult Create(User user)
+    [HttpPost("{uid}")]
+    public IActionResult Create([FromRoute] string uid, [FromForm] string secret)
     {
-        _userService.Create(user);
+         User newUser = new User();
+         newUser.UId =uid ;
+         newUser.Secret = secret;
+        _userService.Create(newUser);
         return Ok(new { message = "Entry created" });
     }
 

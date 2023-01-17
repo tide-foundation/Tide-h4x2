@@ -13,6 +13,8 @@ public interface IOrkService
     Ork GetById(string id);
     void Create(Ork ork);
     Task<Ork> ValidateOrk(string OrkUrl, string SignedOrkUrl);
+
+    string GetTideOrk();
 }
 
 public class OrkService : IOrkService
@@ -69,6 +71,13 @@ public class OrkService : IOrkService
         var ork = _context.Orks.Find(id);
         if (ork == null) throw new KeyNotFoundException("Ork not found");
         return ork;
+    }
+
+    public string GetTideOrk(){
+        var orks = _context.Orks;
+        var tideOrk = orks.First();
+        if(tideOrk != null) return tideOrk.OrkUrl;
+        return string.Empty;
     }
 
 }
