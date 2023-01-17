@@ -48,7 +48,7 @@ const deriveKey = (passwordKey, salt, keyUsage) =>
  * @param {Iterable} keyUsage 
  * @returns 
  */
-function importSecretKey(rawKey, keyUsage) {
+export function createAESKey(rawKey, keyUsage) {
     return window.crypto.subtle.importKey(
       "raw",
       rawKey,
@@ -65,7 +65,7 @@ function importSecretKey(rawKey, keyUsage) {
  */
 export async function encryptData(secretData, key) {
     const encoded = new TextEncoder().encode(secretData);
-    const AESKey = await importSecretKey(key, ["encrypt"]);
+    const AESKey = await createAESKey(key, ["encrypt"]);
     // iv will be needed for decryption
     const iv = window.crypto.getRandomValues(new Uint8Array(12));
     const encryptedBuffer = await window.crypto.subtle.encrypt(
@@ -83,13 +83,13 @@ export async function encryptData(secretData, key) {
  * @param {Uint8Array} key 
  * @returns 
  */
-export async function decryptData(encryptedData, key, num) {
+export async function decryptData(encryptedData, key) {
     
     const encryptedDataBuff = base64ToBytes(encryptedData);
 
     const iv = encryptedDataBuff.slice(0, 12);
     const data = encryptedDataBuff.slice(12);
-    const aesKey = await importSecretKey(key, ["decrypt"]);
+    const aesKey = await createAESKey(key, ["decrypt"]);
     const decryptedContent = await window.crypto.subtle.decrypt(
     {
         name: "AES-GCM",

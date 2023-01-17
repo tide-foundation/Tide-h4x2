@@ -18,61 +18,41 @@
 
 import NodeClient from "../Clients/NodeClient.js"
 import Point from "../Ed25519/point.js"
-import { decryptData, encryptData } from "../Tools/AES.js"
+import { createAESKey, decryptData, encryptData } from "../Tools/AES.js"
 import { SHA256_Digest } from "../Tools/Hash.js"
 import { BigIntFromByteArray } from "../Tools/Utils.js"
 import { RandomBigInt, mod, mod_inv, bytesToBase64 } from "../Tools/Utils.js"
 
 export default class PrismFlow{
-    /**
-     * Config should include key/value pairs of: 
-     * @example
-     * {
-     *  urls: string[]
-     *  encryptedData: string[] <- Can be [] for setUp or ["xxxx"] for signle decryption or ["xxxx", "yyyyy"] for multi decryption
-     * }
-     * @example
-     * @param {object} config 
-     */
-    constructor(config){
-        if(!Object.hasOwn(config, 'urls')){ throw Error("Urls has not been included in config")}
-        if(!Object.hasOwn(config, 'encryptedData')){ throw Error("EncryptedData has not been included in config")}
-        
+
+    constructor(orks){
         /**
-         * @type {string[]}
+         * @type {[string, Point][]}  // everything about orks of this user
          */
-        this.urls = config.urls
-        /**
-         * @type {string[]}
-         */
-        this.encryptedData = config.encryptedData
+        this.orks = orks
     }
 
     /**
      * Starts the Prism Flow to attempt to decrypt the supplied data with the given password.
      * NOTE: It will attempt to decrypt the data on both keyIds (Test and Prize)
      * * Requires config object to include urls and encryptedData
-     * @param {string} pass The password to encrypt your data
-     * @param {string} user
+     * @param {Point} passwordPoint The password of a user
+     * @param {string} uid The username of a user
      * @returns {Promise<string>}
      */
-    async run(user, pass){                                                                                                                                                                                                                                                                                
+    async run(uid, passwordPoint){                                                                                                                                                                                                                                                                                
         const random = RandomBigInt();
-        const uid = BigIntFromByteArray(await SHA256_Digest(user)).toString();
-        const passwordPoint_R = (await Point.fromString(pass)).times(random); // password point * random
-        const clients = this.urls.map(url => new NodeClient(url, "Prism")) // create node clients
+        const passwordPoint_R = passwordPoint.times(random); // password point * random
+        const clients = this.orks.map(ork => new NodeClient(ork[0])) // create node clients
         const appliedPoints = clients.map(client => client.Apply(uid, passwordPoint_R)); // get the applied points from clients
 
-        var authPoint_R;
-        try{
-            authPoint_R = (await Promise.all(appliedPoints)).reduce((sum, next) => sum.add(next)); // sum all points returned from nodes
-        }catch(err){
-            return this.responseString("", err) // catch on TimeOut. This is messy but we really wanted to show timeout length to user
-        }
+        const authPoint_R = (await Promise.all(appliedPoints)).reduce((sum, next) => sum.add(next)); // sum all points returned from nodes
         
-        const authPoint = authPoint_R.times(mod_inv(random)); // remove the random to get the authentication point
+        const hashed_keyPoint = BigIntFromByteArray(await SHA256_Digest(authPoint_R.times(mod_inv(random)).toBase64())); // remove the random to get the authentication point
+        const pre_prismAuthi = this.orks.map(async ork => createAESKey(await SHA256_Digest(ork[1].times(hashed_keyPoint).toBase64()), ["encrypt", "decrypt"])) // create a prismAuthi for each ork
+        const prismAuthi = await Promise.all(pre_prismAuthi); // wait for all async functions to finish
+        const prismPub = Point.g.times(hashed_keyPoint);
         
-        const keyToEncrypt = await SHA256_Digest(authPoint.toBase64()); // Hash the authentication point for added security
 
         var decrypted = null;
         var i;
@@ -89,16 +69,14 @@ export default class PrismFlow{
     /**
      * Encrypts the supplied data with the specified keyId held by the nodes.
      * * Requires config object to include url. EncryptedData of this object will be set following this function.
-     * @param {string} user
-     * @param {string} pass The password to encrypt your data
-     * @param {string} keyId The keyId the flow will target (Test or Prize)
+     * @param {Point} passwordPoint The password of a user
+     * @param {string} uid The username of a user
      * @param {string} dataToEncrypt
      */
-    async setUp(user, pass, keyId, dataToEncrypt){
+    async setUp(uid, passwordPoint, dataToEncrypt){
         const random = RandomBigInt();
-        const uid = BigIntFromByteArray(await SHA256_Digest(user)).toString();
-        const passwordPoint_R = (await Point.fromString(pass)).times(random); // password point * random
-        const clients = this.urls.map(url => new NodeClient(url, keyId)) // create node clients
+        const passwordPoint_R = passwordPoint.times(random); // password point * random
+        const clients = this.urls.map(url => new NodeClient(url)) // create node clients
         const appliedPoints = clients.map(client => client.Apply(uid, passwordPoint_R)); // get the applied points from clients
 
         var authPoint_R;

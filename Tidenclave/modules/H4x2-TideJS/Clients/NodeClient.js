@@ -20,12 +20,10 @@ import ClientBase from "./ClientBase.js"
 
 export default class NodeClient extends ClientBase {
     /**
-     * @param {string} url 
-     * @param {string} keyID
+     * @param {string} url
      */
-    constructor(url, keyID){
+    constructor(url){
         super(url)
-        this.keyID = keyID
     }
 
     /**
@@ -35,7 +33,7 @@ export default class NodeClient extends ClientBase {
      */
     async Apply(uid, point){
         const data = this._createFormData({'point': point.toBase64()})
-        const response = await this._post(`/Apply/${this.keyID}/${uid}`, data)
+        const response = await this._post(`/Apply/Prism?userID=${uid}`, data)
         if(response.ok){
             return Point.fromB64(await response.text());
         }
@@ -43,13 +41,5 @@ export default class NodeClient extends ClientBase {
             throw await response.text(); // Error's name will be timeout length.
         }
         return Promise.reject(); // should never get here
-    }
-
-    /**
-     * @returns {Promise<number>}
-     */
-    async Throttle(){
-        const response = await this._get(`/Throttle`)
-        return parseInt(await response.text());
     }
 }
