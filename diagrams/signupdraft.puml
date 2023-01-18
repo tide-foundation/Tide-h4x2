@@ -38,6 +38,7 @@ endnote
 usr -> ork: a * r, userID
 activate usr
 
+ork -> sim: Check userID does not exist
 note over ork
 Prism = random()
 EncryptedState = Encrypt(Prism | userID, ORKPriv)
@@ -55,7 +56,6 @@ note over ork
 Prism, userID = Decrypt(EncryptedState)
 end note
 
-ork -> sim: Check userID does not exist
 note over ork
 CVK = random()
 PrismAuth = hash( ORKPriv * PrismPub )
@@ -72,7 +72,7 @@ EncryptedCode = Encrypt(SecretCode, CVK)
 SignedEntry = Sum( SignedUID )
 end note
 
-usr -> sim: SignedEntry, ORK URLs
+usr -> sim: userID, SignedEntry, ORK URLs
 note over sim
 Verify SignedEntry was signed by all ORKs specified in ORK URLs
 end note
