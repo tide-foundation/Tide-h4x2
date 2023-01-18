@@ -37,4 +37,16 @@ export default class SimulatorClient extends ClientBase {
         const returnedResponse = formattedResponse.map(orkEntry => [orkEntry.orkID, orkEntry.orkName, orkEntry.orkUrl, Point.fromB64(orkEntry.orkPub)]);
         return returnedResponse;
     }
+
+    async AddUserEntry(userID, signedEntry, orkUrls){
+        var user = {
+            userId: userID,
+            orkUrls: orkUrls,
+            signedUID: signedEntry
+        }
+        const response = await this._postJSON('', user);
+        if(!response.ok){
+            return Promise.reject("Adding user to simulator failed.")
+        }
+    }
 }

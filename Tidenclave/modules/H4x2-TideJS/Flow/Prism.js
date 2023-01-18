@@ -21,7 +21,7 @@ import VendorClient from "../Clients/VendorClient.js"
 import Point from "../Ed25519/point.js"
 import { createAESKey, decryptData, encryptData } from "../Tools/AES.js"
 import { SHA256_Digest } from "../Tools/Hash.js"
-import { BigIntFromByteArray } from "../Tools/Utils.js"
+import { BigIntFromByteArray, BigIntToByteArray } from "../Tools/Utils.js"
 import { RandomBigInt, mod, mod_inv, bytesToBase64 } from "../Tools/Utils.js"
 
 export default class PrismFlow{
@@ -74,66 +74,28 @@ export default class PrismFlow{
      * @param {string} uid The username of a user
      * @param {string} dataToEncrypt
      */
-    async setUp(uid, passwordPoint, dataToEncrypt){
+    async SetUp(uid, passwordPoint, dataToEncrypt){
         const random = RandomBigInt();
         const passwordPoint_R = passwordPoint.times(random); // password point * random
-        const clients = this.urls.map(url => new NodeClient(url)) // create node clients
-        const appliedPoints = clients.map(client => client.Apply(uid, passwordPoint_R)); // get the applied points from clients
+        const clients = this.orks.map(ork => new NodeClient(ork[0])) // create node clients
+        const createPRISMResponses = clients.map(client => client.Apply(uid, passwordPoint_R)); // appllied responses consist of [encryptedState, appliedPoint][]
 
-        var authPoint_R;
-        try{
-            authPoint_R = (await Promise.all(appliedPoints)).reduce((sum, next) => sum.add(next)); // sum all points returned from nodes
-        }catch(err){
-            return this.responseString(null, err) // catch on TimeOut. This is messy but we really wanted to show timeout length to user
-        }
-        const authPoint = authPoint_R.times(mod_inv(random)); // remove the random to get the authentication point
-
-        const keyToEncrypt = await SHA256_Digest(authPoint.toBase64()); // Hash the authentication point for added security
-
-        // Add encrypted data to existing array
-        this.encryptedData.push(await encryptData(dataToEncrypt, keyToEncrypt)); // Use the hashed point as a key to encrypt the data
-    }
-
-    /**
-     * @param {string} user
-     * @param {string} pass
-     */
-    async singup(user, pass){
-        const random = RandomBigInt();
-        const uid = BigIntFromByteArray(await SHA256_Digest(user)).toString();
-        const passwordPoint_R = (await Point.fromString(pass)).times(random); // password point * random
-        const clients = this.urls.map(url => new NodeClient(url, "Prism")) // create node clients
-        const appliedPoints = clients.map(client => client.Apply(uid, passwordPoint_R)); // get the applied points from clients
-
-        var authPoint_R;
-        try{
-            authPoint_R = (await Promise.all(appliedPoints)).reduce((sum, next) => sum.add(next)); // sum all points returned from nodes
-        }catch(err){
-            return this.responseString("", err) // catch on TimeOut. This is messy but we really wanted to show timeout length to user
-        }
+        const authPoint_R = (await Promise.all(createPRISMResponses)).map(p => p[1]).reduce((sum, next) => sum.add(next)); // sum all points returned from nodes
         
-        const authPoint = authPoint_R.times(mod_inv(random)); // remove the random to get the authentication point
+        const hashed_keyPoint = BigIntFromByteArray(await SHA256_Digest(authPoint_R.times(mod_inv(random)).toBase64())); // remove the random to get the authentication point
+        const pre_prismAuthi = this.orks.map(async ork => createAESKey(await SHA256_Digest(ork[1].times(hashed_keyPoint).toBase64()), ["encrypt", "decrypt"])) // create a prismAuthi for each ork
         
-        const authPointHash = await SHA256_Digest(authPoint.toBase64()); // Hash the authentication point for added security
-        
-        const prismPub = Point.g.times(BigIntFromByteArray(authPointHash)) ;
+        const prismAuthi = await Promise.all(pre_prismAuthi); // wait for all async functions to finish
+        const prismPub = Point.g.times(hashed_keyPoint);
 
-      
-        //const appli = clients.map(client => client.AddUser(uid, prismPub)); 
+        const encryptedStateList = createPRISMResponses.map(resp => resp[0]);
+        const createAccountResponses = clients.map((client, i) => client.CreateAccount(prismPub, encryptedStateList[i]))
 
-    }
-    /**
-     * @param {string} user
-     * @param {string} secret
-     */
-    async storeToVender(user, secret){
-      
-        const uid = BigIntFromByteArray(await SHA256_Digest(user)).toString();
-       
-        const clients = this.urls.map(url => new VendorClient(url, "Prism")) // create node clients
-        const res = clients.map(client => client.AddToVendor(uid, secret)); // get the applied points from clients
-        
-
+        const pre_CVKs = createAccountResponses.map(async (resp, i) => await decryptData(resp[0], prismAuthi[i]));
+        const CVK = (await Promise.all(pre_CVKs)).map(cvk => BigInt(cvk)).reduce((sum, next) => mod(sum + next));
+        const encryptedCode = await encryptData(dataToEncrypt, BigIntToByteArray(CVK));
+        const signedEntry = createAccountResponses.map(sig => BigInt(sig[1])).reduce((sum, next) => mod(sum, next));
+        return [encryptedCode, signedEntry];
     }
 
 

@@ -1,24 +1,18 @@
+import SimulatorClient from "../Clients/SimulatorClient"
 
 export default class EntryFlow{
     /**
-     * Config should include key/value pairs of: 
-     * @example
-     * {
-     *  url: string[]
-     * }
-     * @example
-     * @param {object} config 
+     * @param {string} url
      */
-    constructor(config){
-        if(!Object.hasOwn(config, 'url')){ throw Error("EntryFlow: Url has not been included in config")}
-        
+    constructor(url){
         /**
-         * @type {string[]}
+         * @type {string}
          */
-        this.url = config.url
+        this.url = url
     }
 
-    async SubmitEntry(SignedEntry, ORKUrls){
-
+    async SubmitEntry(userID, signedEntry, ORKUrls){
+        const client = new SimulatorClient(this.url);
+        await client.AddUserEntry(userID, signedEntry, ORKUrls);
     }
 }

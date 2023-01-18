@@ -20,24 +20,22 @@ import ClientBase from "./ClientBase.js"
 export default class VendorClient extends ClientBase {
     /**
      * @param {string} url 
-     * @param {string} keyID
+     * @param {string} userID
      */
-    constructor(url, keyID){
+    constructor(url, userID){
         super(url)
-        this.keyID = keyID
+        this.userID = userID
     }
 
     /**
      * @param {string} secret
-     * @param {string} uid 
-     * @returns {Promise<string>}
+     * @returns {Promise}
      */
-    async AddToVendor(uid, secret){
+    async AddToVendor(secret){
         const data = this._createFormData({'secret' : secret})
-        const response = await this._post(`/users/${uid}` ,data)
-        if(response.ok){
-            return await response.text();
+        const response = await this._post(`/users/${this.userID}` ,data)
+        if(!response.ok){
+            return Promise.reject("Adding user to vendor failed"); // check this works
         }
-        return Promise.reject(); // should never get here
     }
 }

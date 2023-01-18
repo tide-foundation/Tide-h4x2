@@ -80,16 +80,21 @@ export async function encryptData(secretData, key) {
 
 /**
  * @param {string} encryptedData 
- * @param {Uint8Array} key 
+ * @param {Uint8Array|CryptoKey} key 
  * @returns 
  */
 export async function decryptData(encryptedData, key) {
+    var aesKey; 
+    if(key instanceof Uint8Array){
+        aesKey = await createAESKey(key, ["decrypt"]);
+    }else if(key instanceof CryptoKey){
+        aesKey = key;
+    }
     
     const encryptedDataBuff = base64ToBytes(encryptedData);
 
     const iv = encryptedDataBuff.slice(0, 12);
     const data = encryptedDataBuff.slice(12);
-    const aesKey = await createAESKey(key, ["decrypt"]);
     const decryptedContent = await window.crypto.subtle.decrypt(
     {
         name: "AES-GCM",

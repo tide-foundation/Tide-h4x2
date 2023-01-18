@@ -1,9 +1,10 @@
 import Point from "../Ed25519/point"
-import EncryptionFlow from "../Flow/EncryptionFlow"
+import EncryptionFlow from "../Flow/VendorFlow"
 import EntryFlow from "../Flow/EntryFlow"
 import PrismFlow from "../Flow/Prism"
 import { SHA256_Digest } from "../Tools/Hash"
 import { BigIntFromByteArray } from "../Tools/Utils"
+import VendorFlow from "../Flow/VendorFlow"
 
 export default class SignUp{
     /**
@@ -43,12 +44,12 @@ export default class SignUp{
         const passwordPoint = (await Point.fromString(password));
         
         const prismFlow = new PrismFlow(this.orkUrls);
-        const [encryptedCode, signedEntry] = await prismFlow.setUp(uid, passwordPoint, secretCode);
+        const [encryptedCode, signedEntry] = await prismFlow.SetUp(uid, passwordPoint, secretCode);
         
         const entryFlow = new EntryFlow(this.simulatorUrl);
-        await entryFlow.SubmitEntry(signedEntry, this.orkUrls)
+        await entryFlow.SubmitEntry(uid, signedEntry, this.orkUrls)
 
-        const encryptionFlow = new EncryptionFlow(this.vendorUrl);
-        await encryptionFlow.AddUserEntry(encryptedCode, uid);
+        const encryptionFlow = new VendorFlow(this.vendorUrl);
+        await encryptionFlow.AddUserEntry(uid, encryptedCode);
     }
 }
