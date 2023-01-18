@@ -8,9 +8,7 @@ public class AutoMapperProfile : Profile
 {
     public AutoMapperProfile()
     {
-        // CreateRequest -> User
-        CreateMap<CreateRequest, User>();
-
+        
         //UpdateRequest->User
         CreateMap<UpdateRequest, User>()
             .ForAllMembers(x => x.Condition(

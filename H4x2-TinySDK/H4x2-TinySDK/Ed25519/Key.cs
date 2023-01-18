@@ -18,7 +18,7 @@
 using System.Numerics;
 using H4x2_TinySDK.Tools;
 using H4x2_TinySDK.Math;
-
+using System.Text;
 
 namespace H4x2_TinySDK.Ed25519
 {
@@ -38,7 +38,7 @@ namespace H4x2_TinySDK.Ed25519
             X = x;
             Y = y;
         }
-
+        public Key(byte[] data) { SetBytes(data); }
         public Key(Point y) => Y = y;
 
         public static Key Public(BigInteger x, BigInteger y) => new Key(new Point(x, y));
@@ -47,8 +47,21 @@ namespace H4x2_TinySDK.Ed25519
             new Key(x, noPublic ? Curve.G : Curve.G * x);
 
         public Key GetPublic() => new Key(this.Y);
- 
-        
+        public static Key ParsePublic(byte[] data) => new Key(data);
+        public static Key ParsePublic(string data) => new Key(Convert.FromBase64String(data));
+        public static Key Parse(string data) => Parse(Convert.FromBase64String(data));
+        public static Key Parse(byte[] data)
+        {
+            var x  = new BigInteger(data.Take(32).ToArray(), true, true);
+            var y = Curve.G * x;
+            return new Key(x,y); 
+        } 
+        private void SetBytes(IReadOnlyList<byte> bytes)
+        {
+            X = new BigInteger(bytes.Take(32).ToArray(), true, true);
+            Y = Point.FromBytes(bytes.Skip(32).ToArray());
+        }
+
         /// <summary>
         /// EdDSA signing with point Ed25519
         /// </summary>
@@ -82,6 +95,12 @@ namespace H4x2_TinySDK.Ed25519
 
             return EdDSA.Ed25519Verify(message, rPoint, s, this);
         }
+
+        public bool EdDSAVerifyStr(string message, string signature)
+        {
+           return EdDSAVerify(Encoding.UTF8.GetBytes(message), Encoding.UTF8.GetBytes(signature));
+        }
+     
      
     }
 }
