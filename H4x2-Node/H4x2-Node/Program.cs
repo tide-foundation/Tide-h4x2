@@ -33,16 +33,15 @@ var prism = Environment.GetEnvironmentVariable("PRISM_VAL");
 var isThrottled = Convert.ToBoolean(Environment.GetEnvironmentVariable("IS_THROTTLED"));
 var insightsKey = Environment.GetEnvironmentVariable("INSIGHT_KEY");
 */
-var prism = "2";
 var isThrottled = false;
-var publicKey = Point.FromBytes(Convert.FromBase64String(args[0]));
+var key = new Key(BigInteger.Parse(args[0]));
 
 builder.Services.AddControllers(options => options.ModelBinderProviders.Insert(0, new BinderProvider()));
 
 builder.Services.AddSingleton(
     new Settings
     {
-        PRISM = BigInteger.Parse(prism)
+        Key = key
     });
 
 builder.Services.AddLazyCache();
@@ -58,7 +57,7 @@ services.AddScoped<IUserService, UserService>();
 var app = builder.Build();
 
 app.MapGet("/isThrottled", () => isThrottled);
-app.MapGet("/public", () => publicKey.ToBase64());
+app.MapGet("/public", () => key.Y.ToBase64());
 
 if (isThrottled)
 {

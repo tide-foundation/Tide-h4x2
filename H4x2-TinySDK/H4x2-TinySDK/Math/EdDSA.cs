@@ -18,65 +18,39 @@
 using H4x2_TinySDK.Ed25519;
 using System.Numerics;
 using H4x2_TinySDK.Tools;
+using System.Security.Cryptography.X509Certificates;
+using System.Text;
+using System.Security.Cryptography;
 
-namespace H4x2_TinySDK.Math;
+namespace H4x2_TinySDK.Math
+{
     public class EdDSA
     {
-
+        public static (Point R, BigInteger s) Sign(string message, Key key) => Sign(Encoding.ASCII.GetBytes(message), key);
+        public static (Point R, BigInteger s) Sign(byte[] message, BigInteger priv) => Sign(message, new Key(priv));
         /// <summary>
         /// EdDSA signing with point Ed25519
         /// </summary>
         /// <param name="message"></param>
         /// <param name="key"></param>
         /// <returns>A Point R and BigInteger s.</returns>
-        public static (Point R, BigInteger S) Ed25519Sign(byte[] message, Key key)
+        public static (Point R, BigInteger s) Sign(byte[] message, Key key)
         {
-            BigInteger r, s;
-            Point R;
-            do
-            {   
-                // Random r instead of hash(hash(privateKey) + msg) mod q
-                r = Utils.RandomBigInt(Curve.N);
-                R = (Curve.G * r);
-            } while (R.GetX() % Curve.N == BigInteger.Zero);
-                
-            byte[] encodedR = EncodeEd25519Point(R);
-            byte[] encodedPubKey = EncodeEd25519Point(key.Y);
-            byte[] rv = encodedR.Concat(encodedPubKey).Concat(message).ToArray();
-            // h = hash(R + pubKey + msg) mod q
-            var h = GetM(rv) % Curve.N;
-            // s = (r + h * privKey) mod q
-            s = (r + (key.X * h) % Curve.N) % Curve.N;
-            
-            return (new Point(R.GetX(), R.GetY()), s);
+            BigInteger r = Utils.RandomBigInt();
+            Point R = Curve.G * r;
+
+            byte[] encodedR = R.Compress();
+            byte[] encodedPubKey = key.Y.Compress();
+            byte[] toHash = encodedR.Concat(encodedPubKey).Concat(message).ToArray();
+            // h = hash(R + pubKey + msg) mod n
+            var h = HashMessage(toHash) % Curve.N;
+            // s = (r + h * privKey) mod n
+            BigInteger s = (r + (key.Priv * h) ) % Curve.N;
+
+            return (R, s);
         }
 
-        /// <summary>
-        /// Encoding a Ed25519 point
-        /// </summary>
-        /// <param name="point"></param>
-        /// <returns>A byte[] of encoded point.</returns>
-        public static byte[] EncodeEd25519Point(Point point)
-        {
-            var x_lsb = point.GetX() & 1;
-            // Encode the y-coordinate as a little-endian string of 32 octets.
-            byte[] yByteArray = point.GetY().ToByteArray(true, false).PadRight(32);
-            int new_msb = 0;
-            if (x_lsb == 1)
-            {
-                int mask = 128;
-                new_msb = yByteArray[31] | mask;
-            }
-            if (x_lsb == 0)
-            {
-                int mask = 127;
-                new_msb = yByteArray[31] & mask;
-            }
-            // Copy the least significant bit of the x - coordinate to the most significant bit of the final octet.
-            yByteArray[31] = (byte)new_msb;
-            return yByteArray;
-        }
-
+        public static bool Verify(string message, string signature, Point pub) => Verify(Encoding.ASCII.GetBytes(message), Encoding.ASCII.GetBytes(signature), pub);
         /// <summary>
         /// EdDSA verification with point Ed25519
         /// </summary>
@@ -85,17 +59,21 @@ namespace H4x2_TinySDK.Math;
         /// <param name="s"></param>
         /// <param name="key"></param>
         /// <returns>A Boolean : True if the verification is successful , else => false.</returns>
-        public static bool Ed25519Verify(byte[] message, Point R, BigInteger s, Key key)
+        public static bool Verify(byte[] message, byte[] signature, Point pub)
         {
-            byte[] encodedR = EncodeEd25519Point(R);
-            byte[] encodedPubKey = EncodeEd25519Point(key.Y);
-            byte[] rv = encodedR.Concat(encodedPubKey).Concat(message).ToArray();
-            // h = hash(R + pubKey + msg) mod q
-            var h = GetM(rv) % Curve.N;
-            var p1 = Curve.G * s;
-            var p2 = R + (key.Y * h);
+            if (signature == null || signature.Length != 96)
+                return false;
 
-            return p1.GetX() == p2.GetX();
+            Point R = Point.FromBytes(signature.Take(64).ToArray());
+            BigInteger s = new BigInteger(signature.Skip(64).ToArray());
+
+            byte[] encodedR = R.Compress();
+            byte[] encodedPubKey = pub.Compress();
+            byte[] toHash = encodedR.Concat(encodedPubKey).Concat(message).ToArray();
+            // h = hash(R + pubKey + msg) mod q
+            var h = HashMessage(toHash) % Curve.N;
+
+            return (Curve.G * s).isEqual(R + (pub * h));
         }
 
         /// <summary>
@@ -103,8 +81,9 @@ namespace H4x2_TinySDK.Math;
         /// </summary>
         /// <param name="message"></param>
         /// <returns>A BigInteger.</returns>
-        public static BigInteger GetM(byte[] message)
+        public static BigInteger HashMessage(byte[] message)
         {
-            return new BigInteger(Utils.HashSHA512(message).ToArray(), true, false);
+            return new BigInteger(SHA512.HashData(message).ToArray(), true, false);
         }
     }
+}

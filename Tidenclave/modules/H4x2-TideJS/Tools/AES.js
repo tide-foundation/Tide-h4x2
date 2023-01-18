@@ -59,12 +59,12 @@ export function createAESKey(rawKey, keyUsage) {
   }
 
 /**
- * @param {string} secretData 
+ * @param {string|Uint8Array} secretData 
  * @param {Uint8Array} key 
  * @returns 
  */
 export async function encryptData(secretData, key) {
-    const encoded = new TextEncoder().encode(secretData);
+    const encoded = typeof(secretData) === 'string' ? new TextEncoder().encode(secretData) : secretData;
     const AESKey = await createAESKey(key, ["encrypt"]);
     // iv will be needed for decryption
     const iv = window.crypto.getRandomValues(new Uint8Array(12));

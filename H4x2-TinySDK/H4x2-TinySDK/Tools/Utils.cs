@@ -40,19 +40,10 @@ namespace H4x2_TinySDK.Tools
             BigInteger res = a % modulus;
             return res >= BigInteger.Zero ? res : modulus + res;
         }
-
+        public static BigInteger RandomBigInt() => RandomBigInt(Curve.N);
         public static BigInteger RandomBigInt(BigInteger maxSize)
         {
             return Mod(new BigInteger(RandomNumberGenerator.GetBytes(32), true, false), maxSize);
-        }
-
-        public static byte[] HashSHA512(byte[] message)
-        {
-            using (var hasher = new SHA512Managed())
-            {
-                return hasher.ComputeHash(message);
-            }
-
         }
     }
 }

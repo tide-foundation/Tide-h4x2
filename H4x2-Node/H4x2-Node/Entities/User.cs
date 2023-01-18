@@ -4,8 +4,9 @@ using System.ComponentModel.DataAnnotations;
 public class User
 {
     [Key]
-    public string UId {get; set;}
+    public string UID {get; set;}
     public string Prismi { get; set; }
-    public string Cvki { get; set; }
+    public string CVKi { get; set; }
+    public string PrismAuthi { get; set; }
 
 }
