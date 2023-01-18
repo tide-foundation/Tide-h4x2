@@ -72,10 +72,10 @@ public class UserService : IUserService
     }
 
     public User ValidateUser(string uid, string pubKey, string signedUID)
-    {
+    {    
         // Verify signature
         var EdKey = Key.ParsePublic(pubKey);
-        if(!EdKey.EdDSAVerifyStr(uid, signedUID))
+        if(!EdKey.Verify(uid, signedUID))
             throw new Exception("Invalid signed UId !");
 
         // Gel all the ork urls from Ork table
