@@ -61,7 +61,7 @@ public class OrkService : IOrkService
 
         // Verify signature
         var EdKey = Key.ParsePublic(orkPub);
-        if(!EdKey.EdDSAVerifyStr(orkUrl, signedOrkUrl))
+        if(!EdKey.Verify(orkUrl, signedOrkUrl))
             throw new Exception("Invalid signed ork !");
 
         //  Generate ID
