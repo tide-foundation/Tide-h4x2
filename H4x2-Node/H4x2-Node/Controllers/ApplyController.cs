@@ -21,6 +21,12 @@ using H4x2_TinySDK.Ed25519;
 using H4x2_TinySDK.Math;
 using System.Numerics;
 using H4x2_Node.Services;
+using H4x2_TinySDK.Tools;
+using System.Text.Json;
+using H4x2_Node.Classes;
+using System.Security.Cryptography;
+using System.Text;
+using H4x2_Node.Entities;
 
 namespace H4x2_Node.Controllers
 {
@@ -34,8 +40,62 @@ namespace H4x2_Node.Controllers
             _userService = userService;
         }
 
+        [HttpPost("Create/Prism/{uid}")]
+        public ActionResult CreatePrism([FromRoute] string uid, [FromBody] Point point){
+            // call to simulater checking uid does not exist
+
+            BigInteger prism = Utils.RandomBigInt();
+            Point applied = PRISM.Apply(point, prism);
+
+            State state = new State
+            {
+                Prism = prism.ToString(),
+                UID = uid
+            };
+
+            string encryptedState = AES.Encrypt(JsonSerializer.Serialize(state), _settings.Key.Priv);
+
+            var response = new
+            {
+                point = applied.ToBase64(),
+                encryptedState = encryptedState,
+            };
+            return Ok(response);
+        }
+
+        [HttpPost("Create/Account")]
+        public ActionResult CreateAccount([FromForm] string encryptedState, [FromForm] Point prismPub) // check from form works here
+        {
+            State? state = JsonSerializer.Deserialize<State>(AES.Decrypt(encryptedState, _settings.Key.Priv));
+
+            BigInteger CVK = Utils.RandomBigInt();
+            byte[] prismAuthi = SHA256.HashData((prismPub * _settings.Key.Priv).ToByteArray());
+            string encryptedCVK = AES.Encrypt(CVK.ToString(), prismAuthi);
+
+            byte[] toSign = Encoding.ASCII.GetBytes(state.UID);
+
+            string signedUID = _settings.Key.Sign(toSign);
+
+            User user = new User
+            {
+                UID = state.UID,
+                Prismi = state.Prism,
+                CVKi = CVK.ToString(),
+                PrismAuthi = Convert.ToBase64String(prismAuthi)
+            };
+
+            _userService.Create(user);
+
+            var response = new
+            {
+                encryptedCVK = encryptedCVK,
+                signedUID = signedUID
+            };
+            return Ok(response);
+        }
+
         [HttpPost("Apply/Prism/{uid}")]
-        public ActionResult Prism([FromRoute] string uid, [FromBody] Point point) => Apply(uid, point, _settings.PRISM);
+        public ActionResult Prism([FromRoute] string uid, [FromBody] Point point) => Apply(uid, point, _settings.Key.Priv);
 
         private ActionResult Apply(string uid, Point toApply, BigInteger key)
         {
