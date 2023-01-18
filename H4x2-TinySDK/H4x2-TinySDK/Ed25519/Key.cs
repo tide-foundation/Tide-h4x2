@@ -24,42 +24,41 @@ namespace H4x2_TinySDK.Ed25519
 {
     public class Key 
     {
-        public BigInteger X { get; private set; }
+        public BigInteger Priv { get; private set; }
         public Point Y { get; private set; }
 
         public Key()
         {
-            X = Utils.RandomBigInt(Curve.N);
-            Y = Curve.G * X;             
+            Priv = Utils.RandomBigInt(Curve.N);
+            Y = Curve.G * Priv;             
         }
 
-        public Key(BigInteger x, Point y)
+        public Key(BigInteger priv)
         {
-            X = x;
+            Priv = priv;
+            Y = Curve.G * Priv;
+        }
+
+        public Key(BigInteger priv, Point y)
+        {
+            Priv = priv;
             Y = y;
         }
 
         public Key(Point y) => Y = y;
-
-        public static Key Public(BigInteger x, BigInteger y) => new Key(new Point(x, y));
-
-        public static Key Private(BigInteger x, bool noPublic = false) =>
-            new Key(x, noPublic ? Curve.G : Curve.G * x);
-
-        public Key GetPublic() => new Key(this.Y);
  
         
         /// <summary>
         /// EdDSA signing with point Ed25519
         /// </summary>
         /// <param name="message"></param>
-        /// <returns>A byte[] signature with the combination of R and s.</returns>
-        public byte[] EdDSASign(byte[] message)
+        /// <returns>A base64 signature with the combination of R and s.</returns>
+        public string Sign(byte[] message)
         {
-            var (R, s) = EdDSA.Ed25519Sign(message, this);
+            var (R, s) = EdDSA.Sign(message, this);
             
-            return R.GetX().ToByteArray(true, false).PadRight(32).Concat(R.GetY().ToByteArray(true, false).PadRight(32))
-               .Concat(s.ToByteArray(true, false).PadRight(32)).ToArray();
+            return Convert.ToBase64String(R.ToByteArray()
+               .Concat(s.ToByteArray(true, false).PadRight(32)).ToArray());
 
         }
 
@@ -69,18 +68,9 @@ namespace H4x2_TinySDK.Ed25519
         /// <param name="message"></param>
         /// <param name="signature"></param>
         /// <returns>Boolean : True if the varification is successful.</returns>
-        public bool EdDSAVerify(byte[] message, byte[] signature)
+        public bool Verify(string message, string signature_p)
         {
-            if (signature == null || signature.Length != 96)
-                return false;
-
-            byte[] rByteArray = signature.Take(64).ToArray();
-            var r_x = new BigInteger(rByteArray.Take(32).ToArray(), true, false);
-            var r_y = new BigInteger(rByteArray.Skip(32).ToArray(), true, false);
-            var s = new BigInteger(signature.Skip(64).ToArray(), true, false);
-            Point rPoint = new Point(r_x, r_y);
-
-            return EdDSA.Ed25519Verify(message, rPoint, s, this);
+            return EdDSA.Verify(message, signature_p, this.Y);
         }
      
     }
