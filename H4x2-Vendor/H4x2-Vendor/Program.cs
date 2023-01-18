@@ -11,7 +11,7 @@ services.AddDbContext<DataContext>();
 services.AddScoped<IUserService, UserService>();
 
 var app = builder.Build();
-
+app.UseStaticFiles();
 app.UseCors(builder => builder.AllowAnyOrigin()); // change this when ORKs host enclave themselves
 
 app.MapControllers();
