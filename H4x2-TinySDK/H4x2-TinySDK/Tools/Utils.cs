@@ -45,5 +45,14 @@ namespace H4x2_TinySDK.Tools
         {
             return Mod(new BigInteger(RandomNumberGenerator.GetBytes(32), true, false), maxSize);
         }
+
+        public static byte[] HashSHA512(byte[] message)
+        {
+            using (var hasher = new SHA512Managed())
+            {
+                return hasher.ComputeHash(message);
+            }
+
+        }
     }
 }
