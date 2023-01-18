@@ -16,12 +16,11 @@
 //
 
 /**
- * @param {string} message 
+ * @param {string|Uint8Array} message 
  * @returns 
  */
 export async function SHA256_Digest(message) {
-  const encoder = new TextEncoder();
-  const data = encoder.encode(message);
+  const data = typeof(message) === 'string' ? new TextEncoder().encode(message) : message;
   const hash = await crypto.subtle.digest('SHA-256', data);
   return new Uint8Array(hash);
  

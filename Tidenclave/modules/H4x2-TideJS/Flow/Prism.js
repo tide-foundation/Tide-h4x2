@@ -83,7 +83,7 @@ export default class PrismFlow{
         const authPoint_R = (await Promise.all(createPRISMResponses)).map(p => p[1]).reduce((sum, next) => sum.add(next)); // sum all points returned from nodes
         
         const hashed_keyPoint = BigIntFromByteArray(await SHA256_Digest(authPoint_R.times(mod_inv(random)).toBase64())); // remove the random to get the authentication point
-        const pre_prismAuthi = this.orks.map(async ork => createAESKey(await SHA256_Digest(ork[1].times(hashed_keyPoint).toBase64()), ["encrypt", "decrypt"])) // create a prismAuthi for each ork
+        const pre_prismAuthi = this.orks.map(async ork => createAESKey(await SHA256_Digest(ork[1].times(hashed_keyPoint).toArray()), ["encrypt", "decrypt"])) // create a prismAuthi for each ork
         
         const prismAuthi = await Promise.all(pre_prismAuthi); // wait for all async functions to finish
         const prismPub = Point.g.times(hashed_keyPoint);

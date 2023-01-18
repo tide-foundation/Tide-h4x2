@@ -3,7 +3,7 @@ import EncryptionFlow from "../Flow/VendorFlow"
 import EntryFlow from "../Flow/EntryFlow"
 import PrismFlow from "../Flow/Prism"
 import { SHA256_Digest } from "../Tools/Hash"
-import { BigIntFromByteArray } from "../Tools/Utils"
+import { BigIntFromByteArray, Bytes2Hex } from "../Tools/Utils"
 import VendorFlow from "../Flow/VendorFlow"
 
 export default class SignUp{
@@ -39,7 +39,7 @@ export default class SignUp{
 
     async start(username, password, secretCode){
         //hash username
-        const uid = BigIntFromByteArray(await SHA256_Digest(username)).toString();
+        const uid = Bytes2Hex(await SHA256_Digest(username)).toString();
         //convert password to point
         const passwordPoint = (await Point.fromString(password));
         
