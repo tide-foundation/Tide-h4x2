@@ -23,7 +23,6 @@ using System.Numerics;
 using H4x2_Node.Services;
 using H4x2_TinySDK.Tools;
 using System.Text.Json;
-using H4x2_Node.Classes;
 using System.Security.Cryptography;
 using System.Text;
 using H4x2_Node.Entities;
@@ -43,59 +42,31 @@ namespace H4x2_Node.Controllers
         [HttpPost("Create/Prism/{uid}")]
         public ActionResult CreatePrism([FromRoute] string uid, [FromBody] Point point){
             // call to simulater checking uid does not exist
-
-            BigInteger prism = Utils.RandomBigInt();
-            Point applied = PRISM.Apply(point, prism);
-
-            State state = new State
-            {
-                Prism = prism.ToString(),
-                UID = uid
-            };
-
-            string encryptedState = AES.Encrypt(JsonSerializer.Serialize(state), _settings.Key.Priv);
-
-            var response = new
-            {
-                point = applied.ToBase64(),
-                encryptedState = encryptedState,
-            };
+            var response = Flows.Prism.CreatePrism(uid, point, _settings.Key.Priv);
             return Ok(response);
         }
 
         [HttpPost("Create/Account")]
         public ActionResult CreateAccount([FromForm] string encryptedState, [FromForm] Point prismPub) // check from form works here
         {
-            State? state = JsonSerializer.Deserialize<State>(AES.Decrypt(encryptedState, _settings.Key.Priv));
-
-            BigInteger CVK = Utils.RandomBigInt();
-            byte[] prismAuthi = SHA256.HashData((prismPub * _settings.Key.Priv).ToByteArray());
-            string encryptedCVK = AES.Encrypt(CVK.ToString(), prismAuthi);
-
-            byte[] toSign = Encoding.ASCII.GetBytes(state.UID);
-
-            string signedUID = _settings.Key.Sign(toSign);
-
-            User user = new User
+            try
             {
-                UID = state.UID,
-                Prismi = state.Prism,
-                CVKi = CVK.ToString(),
-                PrismAuthi = Convert.ToBase64String(prismAuthi)
-            };
-
-            _userService.Create(user);
-
-            var response = new
+                var (user, response) = Flows.Prism.CreateAccount(encryptedState, prismPub, _settings.Key);
+                _userService.Create(user);
+                return Ok(response);
+            }
+            catch(InvalidOperationException ie)
             {
-                encryptedCVK = encryptedCVK,
-                signedUID = signedUID
-            };
-            return Ok(response);
+                return StatusCode(409, ie.Message);
+            }
+            catch
+            {
+                return BadRequest();
+            }
         }
 
         [HttpPost("Apply/Prism/{uid}")]
-        public ActionResult Prism([FromRoute] string uid, [FromBody] Point point) => Apply(uid, point, _settings.Key.Priv);
+        public ActionResult Prismm([FromRoute] string uid, [FromBody] Point point) => Apply(uid, point, _settings.Key.Priv);
 
         private ActionResult Apply(string uid, Point toApply, BigInteger key)
         {
@@ -113,5 +84,11 @@ namespace H4x2_Node.Controllers
                 return BadRequest(new {message = ex.Message});
             }
         }
+    }
+
+    public class State
+    {
+        public string Prism { get; set; }
+        public string UID { get; set; }
     }
 }

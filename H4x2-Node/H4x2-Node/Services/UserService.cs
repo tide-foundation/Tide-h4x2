@@ -33,7 +33,7 @@ public class UserService : IUserService
     {
         // validate
         if (_context.Users.Any(x => x.UID == user.UID))
-            throw new Exception("User with the Id '" + user.UID + "' already exists");
+            throw new InvalidOperationException("User with the Id '" + user.UID + "' already exists");
         // save user
         _context.Users.Add(user);
         _context.SaveChanges();
