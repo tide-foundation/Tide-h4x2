@@ -60,17 +60,22 @@ export function createAESKey(rawKey, keyUsage) {
 
 /**
  * @param {string|Uint8Array} secretData 
- * @param {Uint8Array} key 
+ * @param {Uint8Array|CryptoKey} key 
  * @returns 
  */
 export async function encryptData(secretData, key) {
+    var aesKey; 
+    if(key instanceof Uint8Array){
+        aesKey = await createAESKey(key, ["encrypt"]);
+    }else if(key instanceof CryptoKey){
+        aesKey = key;
+    }
     const encoded = typeof(secretData) === 'string' ? new TextEncoder().encode(secretData) : secretData;
-    const AESKey = await createAESKey(key, ["encrypt"]);
     // iv will be needed for decryption
     const iv = window.crypto.getRandomValues(new Uint8Array(12));
     const encryptedBuffer = await window.crypto.subtle.encrypt(
         { name: "AES-GCM", iv: iv },
-        AESKey,
+        aesKey,
         encoded
       );
     const buff = ConcatUint8Arrays([iv, new Uint8Array(encryptedBuffer)])

@@ -33,9 +33,17 @@ export default class VendorClient extends ClientBase {
      */
     async AddToVendor(secret){
         const data = this._createFormData({'secret' : secret})
-        const response = await this._post(`/users/${this.userID}` ,data)
+        const response = await this._post(`/users/${this.userID}`, data)
         if(!response.ok){
             return Promise.reject("Adding user to vendor failed"); // check this works
         }
+    }
+
+    async GetUserCode(){
+        const response = await this._get(`/code/${this.userID}`);
+        if(response.ok){
+            return await response.text();
+        }
+        return Promise.reject('Vendor Client: Cannot retrieve user code');
     }
 }
