@@ -11,9 +11,10 @@ namespace H4x2_TinySDK.Tools
 {
     public class AES
     {
-        public static string Encrypt(string plaintext, string key) => Encrypt(plaintext, Convert.FromBase64String(key));
-        public static string Encrypt(string plaintext, BigInteger key) => Encrypt(plaintext, key.ToByteArray(true, false));
-        public static string Encrypt(string plaintext, byte[] key_p) // check this works with JS
+        public static string Encrypt(string plaintext, string key) => Encrypt(Encoding.ASCII.GetBytes(plaintext), Convert.FromBase64String(key));
+        public static string Encrypt(string plaintext, BigInteger key) => Encrypt(Encoding.ASCII.GetBytes(plaintext), key.ToByteArray(true, false));
+        public static string Encrypt(string plaintext, byte[] key) => Encrypt(Encoding.ASCII.GetBytes(plaintext), key);
+        public static string Encrypt(byte[] plainbytes, byte[] key_p) // check this works with JS
         {
             var paddedKey = Utils.PadRight(key_p, 32);
             using (var aes = new AesGcm(paddedKey))
@@ -23,10 +24,9 @@ namespace H4x2_TinySDK.Tools
 
                 var tag = new byte[AesGcm.TagByteSizes.MaxSize];
 
-                var plaintextBytes = Encoding.UTF8.GetBytes(plaintext);
-                var ciphertext = new byte[plaintextBytes.Length];
+                var ciphertext = new byte[plainbytes.Length];
 
-                aes.Encrypt(nonce, plaintextBytes, ciphertext, tag);
+                aes.Encrypt(nonce, plainbytes, ciphertext, tag);
 
                 var encryptedData = Convert.ToBase64String(nonce.Concat(ciphertext).Concat(tag).ToArray());
 
