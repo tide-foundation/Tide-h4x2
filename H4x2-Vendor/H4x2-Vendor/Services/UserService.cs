@@ -9,7 +9,7 @@ public interface IUserService
     IEnumerable<User> GetAll();
     User GetById(string id);
     void Create(User user);
-    Task<bool> GetEntryAsync(string url);
+    Task GetEntryAsync(string url);
 }
 
 public class UserService : IUserService
@@ -41,13 +41,11 @@ public class UserService : IUserService
         _context.SaveChanges();   
     }
 
-    public async Task<bool> GetEntryAsync(string url)
+    public async Task GetEntryAsync(string url)
     {
         string entry = await _client.GetStringAsync(url);
         if(String.IsNullOrEmpty(entry))
-            throw new Exception("Entry does not exist.");  
-        return true;    
-       
+            throw new Exception("Entry does not exist.");     
     }
 
     private User getUserRecord(string id)
