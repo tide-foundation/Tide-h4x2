@@ -50,7 +50,7 @@ namespace H4x2_TinySDK.Math
             return (R, s);
         }
 
-        public static bool Verify(string message, string signature, Point pub) => Verify(Encoding.ASCII.GetBytes(message), Encoding.ASCII.GetBytes(signature), pub);
+        public static bool Verify(string message, string signature, Point pub) => Verify(Encoding.ASCII.GetBytes(message), Convert.FromBase64String(signature), pub);
         /// <summary>
         /// EdDSA verification with point Ed25519
         /// </summary>
