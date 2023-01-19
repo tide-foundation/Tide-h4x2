@@ -21,11 +21,6 @@ using H4x2_TinySDK.Ed25519;
 using H4x2_TinySDK.Math;
 using System.Numerics;
 using H4x2_Node.Services;
-using H4x2_TinySDK.Tools;
-using System.Text.Json;
-using System.Security.Cryptography;
-using System.Text;
-using H4x2_Node.Entities;
 
 namespace H4x2_Node.Controllers
 {
@@ -40,7 +35,7 @@ namespace H4x2_Node.Controllers
         }
 
         [HttpPost("Create/Prism/{uid}")]
-        public ActionResult CreatePrism([FromRoute] string uid, [FromBody] Point point){
+        public ActionResult CreatePrism([FromRoute] string uid, Point point){
             // call to simulater checking uid does not exist
             var response = Flows.Prism.CreatePrism(uid, point, _settings.Key.Priv);
             return Ok(response);
@@ -55,7 +50,7 @@ namespace H4x2_Node.Controllers
                 _userService.Create(user);
                 return Ok(response);
             }
-            catch(InvalidOperationException ie)
+            catch(InvalidDataException ie) // if user exists
             {
                 return StatusCode(409, ie.Message);
             }
