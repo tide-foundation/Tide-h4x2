@@ -44,6 +44,13 @@ public class DataContext : DbContext
                 v => string.Join(',', v),
                 v => v.Split(',', StringSplitOptions.RemoveEmptyEntries));
 
+        modelBuilder.Entity<User>()
+            .Property(e => e.SignedEntries)
+            .HasConversion(
+                v => string.Join(',', v),
+                v => v.Split(',', StringSplitOptions.RemoveEmptyEntries));
+
+
     }
 
     public DbSet<User> Users { get; set; }

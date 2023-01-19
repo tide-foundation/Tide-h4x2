@@ -20,34 +20,27 @@ namespace H4x2_Simulator.Services;
 
 using H4x2_Simulator.Entities;
 using H4x2_Simulator.Helpers;
-using AutoMapper;
-using H4x2_Simulator.Models.Users;
 using H4x2_TinySDK.Ed25519;
+using H4x2_TinySDK.Math;
+using System.Text;
 
 public interface IUserService
 {
     IEnumerable<User> GetAll();
     User GetById(string id);
     void Create(User user);
-    void Update(string id, UpdateRequest model);
     void Delete(string id);
-    User ValidateUser(string uid, string pubKey, string signedUID);
+    Task<User> ValidateUser(string uid, string[] orkUrls, string[] signedEntries);
 }
 
 public class UserService : IUserService
 {
     private DataContext _context;
+    static readonly HttpClient _client = new HttpClient();
 
-    private readonly IMapper _mapper;
-
-    private IOrkService _orkService;
-
-    public UserService(DataContext context, IMapper mapper, IOrkService orkService)
+    public UserService(DataContext context)
     {
         _context = context;
-        _mapper = mapper;
-        _orkService = orkService;
-
     }
 
     public IEnumerable<User> GetAll()
@@ -71,37 +64,29 @@ public class UserService : IUserService
         _context.SaveChanges();
     }
 
-    public User ValidateUser(string uid, string pubKey, string signedUID)
+    public async Task<User> ValidateUser(string uid, string[] orkUrls, string[] signedEntries)
     {    
-        // Verify signature
-        var EdKey = Key.ParsePublic(pubKey);
-        if(!EdKey.Verify(uid, signedUID))
-            throw new Exception("Invalid signed UId !");
+        List<string> orkPubList = new List<string>();
+        // Query ORK public
+        foreach(string orkUrl in orkUrls)
+            orkPubList.Add(await _client.GetStringAsync(orkUrl + "/public"));
+        
+        String[] orksPubs = orkPubList.ToArray();
 
-        // Gel all the ork urls from Ork table
-        var orks =  _orkService.GetAll();
-        List<string> list = new List<string>();
-        foreach(Ork e in orks){
-            list.Add(e.OrkUrl);
+        // Verify signature
+        for(int i = 0 ; i < orkUrls.Length ; i++){
+            var edPoint = Point.FromBase64(orksPubs[i]);
+            Console.WriteLine(orksPubs[i]);
+            if(!EdDSA.Verify(orkUrls[i], signedEntries[i], edPoint))
+                throw new Exception("Invalid signed entry for ork url '" + orkUrls[i] + "' !");
         }
-        String[] orksUrl = list.ToArray();
 
         return new User{
             UserId = uid,
-            PubKey = pubKey,
-            OrkUrls = orksUrl,
-            SignedUID = signedUID
+            OrkUrls = orkUrls,
+            SignedEntries = signedEntries
         };
         
-    }
-
-    public void Update(string id, UpdateRequest model)
-    {
-        var user = getUser(id);
-
-        _mapper.Map(model, user);
-        _context.Users.Update(user);
-        _context.SaveChanges();
     }
 
     private User getUser(string id)

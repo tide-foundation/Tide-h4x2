@@ -20,6 +20,7 @@ using System.Numerics;
 using H4x2_Simulator.Entities;
 using H4x2_Simulator.Helpers;
 using H4x2_TinySDK.Ed25519;
+using H4x2_TinySDK.Math;
 
 
 namespace H4x2_Simulator.Services;
@@ -60,8 +61,8 @@ public class OrkService : IOrkService
         string orkPub = await _client.GetStringAsync(orkUrl + "/public");
 
         // Verify signature
-        var EdKey = Key.ParsePublic(orkPub);
-        if(!EdKey.Verify(orkUrl, signedOrkUrl))
+        var edPoint = Point.FromBase64(orkPub);
+        if(!EdDSA.Verify(orkUrl, signedOrkUrl, edPoint))
             throw new Exception("Invalid signed ork !");
 
         //  Generate ID

@@ -20,7 +20,6 @@ namespace H4x2_Simulator.Controllers;
 using Microsoft.AspNetCore.Mvc;
 using H4x2_Simulator.Services;
 using H4x2_Simulator.Entities;
-using H4x2_Simulator.Models.Users;
 
 [ApiController]
 [Route("[controller]")]
@@ -48,10 +47,10 @@ public class UsersController : ControllerBase
     }
 
     [HttpPost("{uid}")]
-    public IActionResult Create([FromRoute] string uid, [FromForm] string pubKey,[FromForm] string signedUID)
+    public async Task<IActionResult> Create([FromRoute] string uid, IFormCollection formData)
     {
         try {
-            User newUser = _userService.ValidateUser(uid, pubKey, signedUID);
+            User newUser = await _userService.ValidateUser(uid, formData["OrkUrls"].ToArray(), formData["SignedEntries"].ToArray());
             _userService.Create(newUser);
             return Ok(new { message = "User created" });
         }
@@ -59,13 +58,6 @@ public class UsersController : ControllerBase
         {
             return BadRequest(ex.Message);
         }
-    }
-
-    [HttpPut("{id}")]
-    public IActionResult Update(string id, UpdateRequest model)
-    {
-        _userService.Update(id, model);
-        return Ok(new { message = "User updated" });
     }
 
     [HttpDelete("{id}")]
