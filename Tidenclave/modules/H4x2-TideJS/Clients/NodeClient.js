@@ -31,14 +31,25 @@ export default class NodeClient extends ClientBase {
      * @param {string} uid 
      * @returns {Promise<Point>}
      */
-    async Apply(uid, point){
+    async ApplyPRISM(uid, point){
         const data = this._createFormData({'point': point.toBase64()})
         const response = await this._post(`/Apply/Prism/${uid}`, data)
         if(response.ok){
             return Point.fromB64(await response.text());
         }
-        if(response.status == 429){
-            return Promise.reject("Too many requests")
+        return Promise.reject("Node client: " + response.status); // should never get here
+    }
+
+    /**
+     * @param {string} authData
+     * @param {string} uid 
+     * @returns {Promise<string>}
+     */
+    async ApplyCVK(uid, authData){
+        const data = this._createFormData({'authData': authData})
+        const response = await this._post(`/Apply/CVK/${uid}`, data)
+        if(response.ok){
+            return await response.text();
         }
         return Promise.reject("Node client: " + response.status); // should never get here
     }

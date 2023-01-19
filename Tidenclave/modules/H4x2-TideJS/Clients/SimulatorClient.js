@@ -49,4 +49,19 @@ export default class SimulatorClient extends ClientBase {
             return Promise.reject("Adding user to simulator failed.")
         }
     }
+
+    /**
+     * 
+     * @param {string} uid 
+     * @returns {Promise<[string, Point][]>}
+     */
+    async GetUserORKs(uid){
+        const response = await this._get(`users/orks/${uid}`);
+        if(response.ok){
+            const resp_obj = JSON.parse(await response.text());
+            const pubs = resp_obj.orkPubs.map(pub => Point.fromB64(pub));
+            return [resp_obj.orkUrls, pubs]
+        }
+        return Promise.reject("Simulator Client: Failed to get user's orks");
+    }
 }
