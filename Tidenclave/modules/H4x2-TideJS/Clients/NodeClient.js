@@ -33,7 +33,7 @@ export default class NodeClient extends ClientBase {
      */
     async ApplyPRISM(uid, point){
         const data = this._createFormData({'point': point.toBase64()})
-        const response = await this._post(`/Apply/Prism?uid=${uid}`, data)
+        const response = await this._post(`/Apply/Prism/${uid}`, data)
         if(response.ok){
             return Point.fromB64(await response.text());
         }
@@ -47,7 +47,7 @@ export default class NodeClient extends ClientBase {
      */
     async ApplyCVK(uid, authData){
         const data = this._createFormData({'authData': authData})
-        const response = await this._post(`/Apply/CVK?uid=${uid}`, data)
+        const response = await this._post(`/Apply/CVK/${uid}`, data)
         if(response.ok){
             return await response.text();
         }
@@ -61,7 +61,7 @@ export default class NodeClient extends ClientBase {
      */
     async CreatePRISM(uid, point){
         const data = this._createFormData({'point': point.toBase64()})
-        const response = await this._post(`/Create/Prism?uid=${uid}`, data)
+        const response = await this._post(`/Create/Prism/${uid}`, data)
         if(response.ok){
             const resp_obj = JSON.parse(await response.text());
             return [resp_obj.encryptedState, Point.fromB64(resp_obj.point)];
