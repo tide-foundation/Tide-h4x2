@@ -33,16 +33,18 @@ export async function test1(){ // initial client testing
   console.log(applied.toBase64());
 }
 
-export async function test2(){ // test AES encryptions
+export async function test2(){ // test Prism flow
   
-  var pass = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-  var data = "Chickens"
-  var encrypted = await encryptData(data, tx.encode(pass));
+  var orkUrls = [['http://localhost', Point.fromB64('Ds5DKE6hxYNfpNcVRY4NCKznMxh9OwQ9bARan0w4qzbJo/hqrkZfDlZROGRRDzmXVh+iyeheoh3CKSMJ881gIg==')]];
 
-  console.log(encrypted)
+  var pflow = new PrismFlow(orkUrls);
+  var pass = "pass1";
+  var pPoint = await Point.fromString(pass);
 
-  var decrypted = await decryptData(encrypted, tx.encode(pass));
-  console.log(decrypted);
+  var [state, sig] = await pflow.SetUp('myfirstuidd', pPoint, "encryptThis");
+
+  console.log(state)
+  console.log(sig)
 }
 
 export async function test3(){ // full set up and decryption test

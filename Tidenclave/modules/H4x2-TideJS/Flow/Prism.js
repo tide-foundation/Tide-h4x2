@@ -55,15 +55,7 @@ export default class PrismFlow{
         const prismPub = Point.g.times(hashed_keyPoint);
         
 
-        var decrypted = null;
-        var i;
-        for(i = 0; i< this.encryptedData.length && decrypted == null; i++){
-            try{
-                decrypted = await decryptData(this.encryptedData[i], keyToEncrypt); // Attempt to decrypt the data with the authPoint as a base64 string (acting as password)
-            }catch{
-                decrypted = null;
-            }
-        }
+        var decrypted = "h";
         return this.responseString(decrypted);
     }
 
@@ -73,29 +65,33 @@ export default class PrismFlow{
      * @param {Point} passwordPoint The password of a user
      * @param {string} uid The username of a user
      * @param {string} dataToEncrypt
+     * @returns {Promise<[string, string[]]>}
      */
     async SetUp(uid, passwordPoint, dataToEncrypt){
         const random = RandomBigInt();
         const passwordPoint_R = passwordPoint.times(random); // password point * random
         const clients = this.orks.map(ork => new NodeClient(ork[0])) // create node clients
-        const createPRISMResponses = clients.map(client => client.Apply(uid, passwordPoint_R)); // appllied responses consist of [encryptedState, appliedPoint][]
+        const pre_createPRISMResponses = clients.map(client => client.CreatePRISM(uid, passwordPoint_R)); // appllied responses consist of [encryptedState, appliedPoint][]
+        const createPRISMResponses = await Promise.all(pre_createPRISMResponses);
 
-        const authPoint_R = (await Promise.all(createPRISMResponses)).map(p => p[1]).reduce((sum, next) => sum.add(next)); // sum all points returned from nodes
+        const authPoint_R = createPRISMResponses.map(p => p[1]).reduce((sum, next) => sum.add(next)); // sum all points returned from nodes
         
         const hashed_keyPoint = BigIntFromByteArray(await SHA256_Digest(authPoint_R.times(mod_inv(random)).toBase64())); // remove the random to get the authentication point
+
         const pre_prismAuthi = this.orks.map(async ork => createAESKey(await SHA256_Digest(ork[1].times(hashed_keyPoint).toArray()), ["encrypt", "decrypt"])) // create a prismAuthi for each ork
         
         const prismAuthi = await Promise.all(pre_prismAuthi); // wait for all async functions to finish
         const prismPub = Point.g.times(hashed_keyPoint);
 
         const encryptedStateList = createPRISMResponses.map(resp => resp[0]);
-        const createAccountResponses = clients.map((client, i) => client.CreateAccount(prismPub, encryptedStateList[i]))
+        const pre_createAccountResponses = clients.map((client, i) => client.CreateAccount(prismPub, encryptedStateList[i]))
+        const createAccountResponses = await Promise.all(pre_createAccountResponses);
 
         const pre_CVKs = createAccountResponses.map(async (resp, i) => await decryptData(resp[0], prismAuthi[i]));
         const CVK = (await Promise.all(pre_CVKs)).map(cvk => BigInt(cvk)).reduce((sum, next) => mod(sum + next));
         const encryptedCode = await encryptData(dataToEncrypt, BigIntToByteArray(CVK));
-        const signedEntry = createAccountResponses.map(sig => BigInt(sig[1])).reduce((sum, next) => mod(sum, next));
-        return [encryptedCode, signedEntry];
+        const signedEntries = createAccountResponses.map(sig => sig[1]);
+        return [encryptedCode, signedEntries];
     }
 
 
