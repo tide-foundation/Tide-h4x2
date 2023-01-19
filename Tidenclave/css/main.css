@@ -148,6 +148,14 @@ iframe {
   line-height: 1.5;
 }
 
+.txt2 {
+  font-family: NG-Bold;
+  font-size: 16px;
+  color: #0e52fe;
+  line-height: 1.5;
+  
+}
+
 
 /*//////////////////////////////////////////////////////////////////
 [ login ]*/

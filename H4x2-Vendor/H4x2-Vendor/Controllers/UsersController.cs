@@ -37,7 +37,7 @@ public class UsersController : ControllerBase
         {
             // check user exists in simulator first
             string Baseurl = _config.GetValue<string>("Endpoints:Simulator:Api");
-            bool check = await _userService.GetEntryAsync(Baseurl + uid);
+            await _userService.GetEntryAsync(Baseurl + uid);
             User newUser = new User();
             newUser.UId =uid ;
             newUser.Secret = secret;
