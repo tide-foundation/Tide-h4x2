@@ -46,14 +46,14 @@ namespace H4x2_TinySDK.Ed25519
 
             var r_bytes = SHA512.HashData(prefix.Concat(message_bytes).ToArray());
             var r = Utils.Mod(new BigInteger(r_bytes, true, false), Curve.N);
-            var R = (Curve.G * r).Compress();
+            var R = (Curve.G * r);
 
-            var k_bytes = SHA512.HashData(R.Concat(A).Concat(message_bytes).ToArray());
+            var k_bytes = SHA512.HashData(R.Compress().Concat(A).Concat(message_bytes).ToArray());
             var k = Utils.Mod(new BigInteger(k_bytes, true, false), Curve.N);
 
             var S = Utils.Mod(r + (k * Priv), Curve.N);
 
-            var encoding = R.Concat(S.ToByteArray(true, false));
+            var encoding = R.ToByteArray().Concat(S.ToByteArray(true, false)); // R is not compressed in signature
             return Convert.ToBase64String(encoding.ToArray());
         }
         public static string Generate() => Convert.ToBase64String(RandomNumberGenerator.GetBytes(32));

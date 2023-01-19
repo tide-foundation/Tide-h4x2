@@ -9,12 +9,13 @@ public interface IUserService
     IEnumerable<User> GetAll();
     User GetById(string id);
     void Create(User user);
-
+    Task GetEntryAsync(string url);
 }
 
 public class UserService : IUserService
 {
     private DataContext _context;
+    static readonly HttpClient _client = new HttpClient();
 
     public UserService(DataContext context)
     {
@@ -37,7 +38,14 @@ public class UserService : IUserService
             throw new Exception("Entry with the UId '" + user.UId + "' already exists");
         // save user secret
         _context.UserSecrets.Add(user);
-        _context.SaveChanges();
+        _context.SaveChanges();   
+    }
+
+    public async Task GetEntryAsync(string url)
+    {
+        string entry = await _client.GetStringAsync(url);
+        if(String.IsNullOrEmpty(entry))
+            throw new Exception("Entry does not exist.");     
     }
 
     private User getUserRecord(string id)

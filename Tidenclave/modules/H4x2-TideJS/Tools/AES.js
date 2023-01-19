@@ -48,7 +48,7 @@ const deriveKey = (passwordKey, salt, keyUsage) =>
  * @param {Iterable} keyUsage 
  * @returns 
  */
-function importSecretKey(rawKey, keyUsage) {
+export function createAESKey(rawKey, keyUsage) {
     return window.crypto.subtle.importKey(
       "raw",
       rawKey,
@@ -59,18 +59,23 @@ function importSecretKey(rawKey, keyUsage) {
   }
 
 /**
- * @param {string} secretData 
- * @param {Uint8Array} key 
+ * @param {string|Uint8Array} secretData 
+ * @param {Uint8Array|CryptoKey} key 
  * @returns 
  */
 export async function encryptData(secretData, key) {
-    const encoded = new TextEncoder().encode(secretData);
-    const AESKey = await importSecretKey(key, ["encrypt"]);
+    var aesKey; 
+    if(key instanceof Uint8Array){
+        aesKey = await createAESKey(key, ["encrypt"]);
+    }else if(key instanceof CryptoKey){
+        aesKey = key;
+    }
+    const encoded = typeof(secretData) === 'string' ? new TextEncoder().encode(secretData) : secretData;
     // iv will be needed for decryption
     const iv = window.crypto.getRandomValues(new Uint8Array(12));
     const encryptedBuffer = await window.crypto.subtle.encrypt(
         { name: "AES-GCM", iv: iv },
-        AESKey,
+        aesKey,
         encoded
       );
     const buff = ConcatUint8Arrays([iv, new Uint8Array(encryptedBuffer)])
@@ -80,16 +85,21 @@ export async function encryptData(secretData, key) {
 
 /**
  * @param {string} encryptedData 
- * @param {Uint8Array} key 
+ * @param {Uint8Array|CryptoKey} key 
  * @returns 
  */
-export async function decryptData(encryptedData, key, num) {
+export async function decryptData(encryptedData, key) {
+    var aesKey; 
+    if(key instanceof Uint8Array){
+        aesKey = await createAESKey(key, ["decrypt"]);
+    }else if(key instanceof CryptoKey){
+        aesKey = key;
+    }
     
     const encryptedDataBuff = base64ToBytes(encryptedData);
 
     const iv = encryptedDataBuff.slice(0, 12);
     const data = encryptedDataBuff.slice(12);
-    const aesKey = await importSecretKey(key, ["decrypt"]);
     const decryptedContent = await window.crypto.subtle.decrypt(
     {
         name: "AES-GCM",

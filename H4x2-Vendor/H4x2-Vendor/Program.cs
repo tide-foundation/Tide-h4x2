@@ -11,6 +11,8 @@ services.AddDbContext<DataContext>();
 services.AddScoped<IUserService, UserService>();
 
 var app = builder.Build();
+app.UseStaticFiles();
+app.UseCors(builder => builder.AllowAnyOrigin()); 
 
 app.MapControllers();
 

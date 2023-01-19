@@ -17,103 +17,87 @@
 
 
 import NodeClient from "../Clients/NodeClient.js"
+import VendorClient from "../Clients/VendorClient.js"
 import Point from "../Ed25519/point.js"
-import { decryptData, encryptData } from "../Tools/AES.js"
+import { createAESKey, decryptData, encryptData } from "../Tools/AES.js"
 import { SHA256_Digest } from "../Tools/Hash.js"
-import { BigIntFromByteArray } from "../Tools/Utils.js"
+import { BigIntFromByteArray, BigIntToByteArray } from "../Tools/Utils.js"
 import { RandomBigInt, mod, mod_inv, bytesToBase64 } from "../Tools/Utils.js"
 
 export default class PrismFlow{
+
     /**
-     * Config should include key/value pairs of: 
-     * @example
-     * {
-     *  urls: string[]
-     *  encryptedData: string[] <- Can be [] for setUp or ["xxxx"] for signle decryption or ["xxxx", "yyyyy"] for multi decryption
-     * }
-     * @example
-     * @param {object} config 
+     * @param {[string, Point][]} orks 
      */
-    constructor(config){
-        if(!Object.hasOwn(config, 'urls')){ throw Error("Urls has not been included in config")}
-        if(!Object.hasOwn(config, 'encryptedData')){ throw Error("EncryptedData has not been included in config")}
-        
+    constructor(orks){
         /**
-         * @type {string[]}
+         * @type {[string, Point][]}  // everything about orks of this user
          */
-        this.urls = config.urls
-        /**
-         * @type {string[]}
-         */
-        this.encryptedData = config.encryptedData
+        this.orks = orks
     }
 
     /**
      * Starts the Prism Flow to attempt to decrypt the supplied data with the given password.
      * NOTE: It will attempt to decrypt the data on both keyIds (Test and Prize)
      * * Requires config object to include urls and encryptedData
-     * @param {string} pass The password to encrypt your data
-     * @param {string} user
-     * @returns {Promise<string>}
+     * @param {Point} passwordPoint The password of a user
+     * @param {string} uid The username of a user
+     * @returns {Promise<bigint>}
      */
-    async run(user, pass){                                                                                                                                                                                                                                                                                
+    async Authenticate(uid, passwordPoint){                                                                                                                                                                                                                                                                                
         const random = RandomBigInt();
-        const uid = BigIntFromByteArray(await SHA256_Digest(user)).toString();
-        const passwordPoint_R = (await Point.fromString(pass)).times(random); // password point * random
-        const clients = this.urls.map(url => new NodeClient(url, "Prism")) // create node clients
-        const appliedPoints = clients.map(client => client.Apply(uid, passwordPoint_R)); // get the applied points from clients
+        const passwordPoint_R = passwordPoint.times(random); // password point * random
+        const clients = this.orks.map(ork => new NodeClient(ork[0])) // create node clients
 
-        var authPoint_R;
-        try{
-            authPoint_R = (await Promise.all(appliedPoints)).reduce((sum, next) => sum.add(next)); // sum all points returned from nodes
-        }catch(err){
-            return this.responseString("", err) // catch on TimeOut. This is messy but we really wanted to show timeout length to user
-        }
-        
-        const authPoint = authPoint_R.times(mod_inv(random)); // remove the random to get the authentication point
-        
-        const keyToEncrypt = await SHA256_Digest(authPoint.toBase64()); // Hash the authentication point for added security
+        const pre_appliedPoints = clients.map(client => client.ApplyPRISM(uid, passwordPoint_R)); // appllied responses consist of [encryptedState, appliedPoint][]
+        const keyPoint_R = (await Promise.all(pre_appliedPoints)).reduce((sum, next) => sum.add(next));
+        const hashed_keyPoint = BigIntFromByteArray(await SHA256_Digest(keyPoint_R.times(mod_inv(random)).toBase64())); // remove the random to get the authentication point
 
-        var decrypted = null;
-        var i;
-        for(i = 0; i< this.encryptedData.length && decrypted == null; i++){
-            try{
-                decrypted = await decryptData(this.encryptedData[i], keyToEncrypt); // Attempt to decrypt the data with the authPoint as a base64 string (acting as password)
-            }catch{
-                decrypted = null;
-            }
-        }
-        return this.responseString(decrypted);
+        const pre_prismAuthi = this.orks.map(async ork => createAESKey(await SHA256_Digest(ork[1].times(hashed_keyPoint).toArray()), ["encrypt", "decrypt"])) // create a prismAuthi for each ork
+        const prismAuthi = await Promise.all(pre_prismAuthi); // wait for all async functions to finish
+        const pre_authDatai = prismAuthi.map(async prismAuth => await encryptData("Authenticated", prismAuth)); // construct authData to authenticate to orks
+        const authDatai = await Promise.all(pre_authDatai);
+
+        const pre_encryptedCVKs = clients.map((client, i) => client.ApplyCVK(uid, authDatai[i])); // authenticate to ORKs and retirve CVK
+        const encryptedCVKs = await Promise.all(pre_encryptedCVKs);
+        const pre_CVKs = encryptedCVKs.map(async (encCVK, i) => await decryptData(encCVK, prismAuthi[i])); // decrypt CVKs with prismAuth of each ork
+        const CVK = (await Promise.all(pre_CVKs)).map(cvk => BigInt(cvk)).reduce((sum, next) => mod(sum + next)); // sum all CVKs to find full CVK
+        return CVK;
     }
 
     /**
-     * Encrypts the supplied data with the specified keyId held by the nodes.
-     * * Requires config object to include url. EncryptedData of this object will be set following this function.
-     * @param {string} user
-     * @param {string} pass The password to encrypt your data
-     * @param {string} keyId The keyId the flow will target (Test or Prize)
+     * To be used for account creation. This flow creates an account with the orks, and returns the required data
+     * for the simulator and vendor.
+     * @param {Point} passwordPoint The password of a user
+     * @param {string} uid The username of a user
      * @param {string} dataToEncrypt
+     * @returns {Promise<[string, string[]]>}
      */
-    async setUp(user, pass, keyId, dataToEncrypt){
+    async SetUp(uid, passwordPoint, dataToEncrypt){
         const random = RandomBigInt();
-        const uid = BigIntFromByteArray(await SHA256_Digest(user)).toString();
-        const passwordPoint_R = (await Point.fromString(pass)).times(random); // password point * random
-        const clients = this.urls.map(url => new NodeClient(url, keyId)) // create node clients
-        const appliedPoints = clients.map(client => client.Apply(uid, passwordPoint_R)); // get the applied points from clients
+        const passwordPoint_R = passwordPoint.times(random); // password point * random
+        const clients = this.orks.map(ork => new NodeClient(ork[0])) // create node clients
+        const pre_createPRISMResponses = clients.map(client => client.CreatePRISM(uid, passwordPoint_R)); // appllied responses consist of [encryptedState, appliedPoint][]
+        const createPRISMResponses = await Promise.all(pre_createPRISMResponses);
 
-        var authPoint_R;
-        try{
-            authPoint_R = (await Promise.all(appliedPoints)).reduce((sum, next) => sum.add(next)); // sum all points returned from nodes
-        }catch(err){
-            return this.responseString(null, err) // catch on TimeOut. This is messy but we really wanted to show timeout length to user
-        }
-        const authPoint = authPoint_R.times(mod_inv(random)); // remove the random to get the authentication point
+        const keyPoint_R = createPRISMResponses.map(p => p[1]).reduce((sum, next) => sum.add(next)); // sum all points returned from nodes
+        const hashed_keyPoint = BigIntFromByteArray(await SHA256_Digest(keyPoint_R.times(mod_inv(random)).toBase64())); // remove the random to get the authentication point
 
-        const keyToEncrypt = await SHA256_Digest(authPoint.toBase64()); // Hash the authentication point for added security
+        const pre_prismAuthi = this.orks.map(async ork => createAESKey(await SHA256_Digest(ork[1].times(hashed_keyPoint).toArray()), ["encrypt", "decrypt"])) // create a prismAuthi for each ork
+        const prismAuthi = await Promise.all(pre_prismAuthi); // wait for all async functions to finish
+        const prismPub = Point.g.times(hashed_keyPoint); // its like a DiffieHellman, so we can get PrismAuth to the ORKs, while keeping keyPoint secret
 
-        // Add encrypted data to existing array
-        this.encryptedData.push(await encryptData(dataToEncrypt, keyToEncrypt)); // Use the hashed point as a key to encrypt the data
+        const encryptedStateList = createPRISMResponses.map(resp => resp[0]);
+        const pre_createAccountResponses = clients.map((client, i) => client.CreateAccount(prismPub, encryptedStateList[i])); // request orks to create your account
+        const createAccountResponses = await Promise.all(pre_createAccountResponses);
+
+        const pre_CVKs = createAccountResponses.map(async (resp, i) => await decryptData(resp[0], prismAuthi[i])); // decrypt CVKs with prismAuth of each ork
+        const CVK = (await Promise.all(pre_CVKs)).map(cvk => BigInt(cvk)).reduce((sum, next) => mod(sum + next)); // sum all CVKs to find full CVK
+        const encryptedCode = await encryptData(dataToEncrypt, BigIntToByteArray(CVK)); // the secretCode encrypted by the CVK - will be sent to vendor
+        const signedEntries = createAccountResponses.map(sig => sig[1]); // the proof each ork created this user. will be sent to simulator
+        return [encryptedCode, signedEntries];
     }
+
 
     responseString(decryptedMessage, timeOut=null){
         if(decryptedMessage == null){return "Decryption failed"}

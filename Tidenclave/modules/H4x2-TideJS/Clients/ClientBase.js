@@ -58,4 +58,20 @@ export default class ClientBase {
             body: data
         });
     }
+
+    /** 
+     * @param {string} endpoint 
+     * @param {Object} data
+     * @returns {Promise<Response>}
+     */
+    async _postJSON(endpoint, data){
+        return fetch(this.url + endpoint, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+         });
+     }
 }

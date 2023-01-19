@@ -20,12 +20,10 @@ import ClientBase from "./ClientBase.js"
 
 export default class NodeClient extends ClientBase {
     /**
-     * @param {string} url 
-     * @param {string} keyID
+     * @param {string} url
      */
-    constructor(url, keyID){
+    constructor(url){
         super(url)
-        this.keyID = keyID
     }
 
     /**
@@ -33,23 +31,56 @@ export default class NodeClient extends ClientBase {
      * @param {string} uid 
      * @returns {Promise<Point>}
      */
-    async Apply(uid, point){
+    async ApplyPRISM(uid, point){
         const data = this._createFormData({'point': point.toBase64()})
-        const response = await this._post(`/Apply/${this.keyID}/${uid}`, data)
+        const response = await this._post(`/Apply/Prism/${uid}`, data)
         if(response.ok){
             return Point.fromB64(await response.text());
         }
-        if(response.status == 429){
-            throw await response.text(); // Error's name will be timeout length.
-        }
-        return Promise.reject(); // should never get here
+        return Promise.reject("Node client: " + response.status); // should never get here
     }
 
     /**
-     * @returns {Promise<number>}
+     * @param {string} authData
+     * @param {string} uid 
+     * @returns {Promise<string>}
      */
-    async Throttle(){
-        const response = await this._get(`/Throttle`)
-        return parseInt(await response.text());
+    async ApplyCVK(uid, authData){
+        const data = this._createFormData({'authData': authData})
+        const response = await this._post(`/Apply/CVK/${uid}`, data)
+        if(response.ok){
+            return await response.text();
+        }
+        return Promise.reject("Node client: " + response.status); // should never get here
+    }
+
+    /**
+     * @param {Point} point
+     * @param {string} uid 
+     * @returns {Promise<[string, Point]>}
+     */
+    async CreatePRISM(uid, point){
+        const data = this._createFormData({'point': point.toBase64()})
+        const response = await this._post(`/Create/Prism/${uid}`, data)
+        if(response.ok){
+            const resp_obj = JSON.parse(await response.text());
+            return [resp_obj.encryptedState, Point.fromB64(resp_obj.point)];
+        }
+        return Promise.reject("Node client: " + response.status);
+    }
+
+    /**
+     * @param {Point} prismPub 
+     * @param {string} encryptedState 
+     * @returns {Promise<[string, string]>}
+     */
+    async CreateAccount(prismPub, encryptedState){
+        const data = this._createFormData({'prismPub': prismPub.toBase64(), 'encryptedState': encryptedState})
+        const response = await this._post('/Create/Account', data);
+        if(response.ok){
+            const resp_obj = JSON.parse(await response.text());
+            return [resp_obj.encryptedCVK, resp_obj.signedUID]
+        }
+        return Promise.reject("Node client: " + response.status);
     }
 }

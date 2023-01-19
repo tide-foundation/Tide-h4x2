@@ -7,7 +7,6 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 
 var services = builder.Services;
-services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 services.AddDbContext<DataContext>();
 services.AddScoped<IUserService, UserService>();
 services.AddScoped<IOrkService, OrkService>();
@@ -15,6 +14,7 @@ services.AddScoped<IOrkService, OrkService>();
 
 
 var app = builder.Build();
+app.UseCors(builder => builder.AllowAnyOrigin());
 
 app.MapControllers();
 

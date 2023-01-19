@@ -9,10 +9,11 @@ using H4x2_Vendor.Entities;
 public class UsersController : ControllerBase
 {
     private IUserService _userService;
-
-    public UsersController(IUserService userService)
+    protected readonly IConfiguration _config;
+    public UsersController(IUserService userService, IConfiguration config)
     {
         _userService = userService;
+        _config = config;
     }
 
     [HttpGet]
@@ -29,13 +30,23 @@ public class UsersController : ControllerBase
         return Ok(user);
     }
 
-    [HttpPost]
-    public IActionResult Create(User user)
-    {
-        _userService.Create(user);
-        return Ok(new { message = "Entry created" });
-    }
-
-
-   
+    [HttpPost("{uid}")]
+    public async Task<IActionResult> Create([FromRoute] string uid, [FromForm] string secret)
+    {  
+        try
+        {
+            // check user exists in simulator first
+            string Baseurl = _config.GetValue<string>("Endpoints:Simulator:Api");
+            await _userService.GetEntryAsync(Baseurl + uid);
+            User newUser = new User();
+            newUser.UId =uid ;
+            newUser.Secret = secret;
+            _userService.Create(newUser);
+            return Ok(new { message = "Entry created" });
+        
+        }catch(Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }  
+    }   
 }
