@@ -32,6 +32,8 @@ public class UsersController : ControllerBase
     [HttpPost("{uid}")]
     public IActionResult Create([FromRoute] string uid, [FromForm] string secret)
     {
+        // check user exists in simulator first
+
          User newUser = new User();
          newUser.UId =uid ;
          newUser.Secret = secret;

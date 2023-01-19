@@ -15,7 +15,7 @@ services.AddScoped<IOrkService, OrkService>();
 
 
 var app = builder.Build();
-app.UseCors(builder => builder.AllowAnyOrigin()); // change this when ORKs host enclave themselves
+app.UseCors(builder => builder.AllowAnyOrigin());
 
 app.MapControllers();
 
