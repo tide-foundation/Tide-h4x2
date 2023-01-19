@@ -12,9 +12,10 @@ namespace H4x2_TinySDK.Tools
     {
         public static string Encrypt(string plaintext, string key) => Encrypt(plaintext, Convert.FromBase64String(key));
         public static string Encrypt(string plaintext, BigInteger key) => Encrypt(plaintext, key.ToByteArray(true, false));
-        public static string Encrypt(string plaintext, byte[] key) // check this works with JS
+        public static string Encrypt(string plaintext, byte[] key_p) // check this works with JS
         {
-            using (var aes = new AesGcm(key))
+            var paddedKey = Utils.PadRight(key_p, 32);
+            using (var aes = new AesGcm(paddedKey))
             {
                 var nonce = new byte[AesGcm.NonceByteSizes.MaxSize];
                 RandomNumberGenerator.Fill(nonce);
