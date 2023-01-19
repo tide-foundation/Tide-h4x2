@@ -2,6 +2,8 @@ namespace H4x2_Node.Services;
 
 using H4x2_Node.Entities;
 using H4x2_Node.Helpers;
+using System.Data.SqlTypes;
+
 public interface IUserService
 {
     IEnumerable<User> GetAll();
@@ -33,7 +35,7 @@ public class UserService : IUserService
     {
         // validate
         if (_context.Users.Any(x => x.UID == user.UID))
-            throw new InvalidOperationException("User with the Id '" + user.UID + "' already exists");
+            throw new InvalidDataException("User with the Id '" + user.UID + "' already exists");
         // save user
         _context.Users.Add(user);
         _context.SaveChanges();
