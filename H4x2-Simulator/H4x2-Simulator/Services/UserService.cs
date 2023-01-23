@@ -79,7 +79,7 @@ public class UserService : IUserService
         // Verify signature
         for(int i = 0 ; i < orksPubs.Length ; i++){
             var edPoint = Point.FromBase64(orksPubs[i]);
-            if(!EdDSA.Verify(user.OrkUrls[i], user.SignedEntries[i], edPoint))
+            if(!EdDSA.Verify(user.UserId, user.SignedEntries[i], edPoint))
                 throw new Exception("Invalid signed entry for ork url '" + user.OrkUrls[i] + "' !");
         }
     }
