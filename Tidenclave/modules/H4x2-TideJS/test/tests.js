@@ -20,7 +20,7 @@ import NodeClient from "../Clients/NodeClient.js";
 import Point from "../Ed25519/point.js";
 import PrismFlow from "../Flow/Prism.js";
 import { decryptData, encryptData } from "../Tools/AES.js";
-import { RandomBigInt } from "../Tools/Utils.js";
+import { BigIntToByteArray, RandomBigInt } from "../Tools/Utils.js";
 import { SHA256_Digest } from "../Tools/Hash.js"
 import { BigIntFromByteArray } from "../Tools/Utils.js"
 
@@ -35,31 +35,36 @@ export async function test1(){ // initial client testing
 
 export async function test2(){ // test Prism flow
   
+  /**
+   * @type {[string, Point][]}
+   */
   var orkUrls = [['http://localhost', Point.fromB64('Ds5DKE6hxYNfpNcVRY4NCKznMxh9OwQ9bARan0w4qzbJo/hqrkZfDlZROGRRDzmXVh+iyeheoh3CKSMJ881gIg==')]];
 
   var pflow = new PrismFlow(orkUrls);
   var pass = "pass1";
   var pPoint = await Point.fromString(pass);
 
-  var [state, sig] = await pflow.SetUp('myfirstuidd', pPoint, "encryptThis");
+  var [state, sig] = await pflow.SetUp('myfirstuid5', pPoint, "encryptThis3");
 
   console.log(state)
   console.log(sig)
 }
 
 export async function test3(){ // full set up and decryption test
-  var config = {
-    urls: ["http://localhost:6001", "http://localhost:7001"],
-    encryptedData: []
-  }
+  /**
+   * @type {[string, Point][]}
+   */
+  var orkUrls = [['http://localhost', Point.fromB64('Ds5DKE6hxYNfpNcVRY4NCKznMxh9OwQ9bARan0w4qzbJo/hqrkZfDlZROGRRDzmXVh+iyeheoh3CKSMJ881gIg==')]];
 
-  const flow = new PrismFlow(config);
-  await flow.setUp("Julio's UserName","Julio's Password", "Prism", "Encrypt My Chickens");
-  // At this point the message "Encrypt My Chickens" will be encrypted with the prismFlow using the password "Julio's Password"
-  // The strength of this is that no-one can offline attack the AES encrypted data, even if the password is very short. The attacker MUST 
-  // bruteforce by requesting the Test/Prize keys from the orks, which allows us to throttle and MAJORLY slow the attack.
-  const decrypted = await flow.run("Julio's UserName","Julio's Password");
-  console.log(decrypted);
+  var pflow = new PrismFlow(orkUrls);
+  var pass = "pass1";
+  var pPoint = await Point.fromString(pass);
+
+  var CVK = await pflow.Authenticate('myfirstuid5', pPoint);
+
+  var decrypted = await decryptData('9ZVVQCfJsQ5t6TJk7hNT+C97CQm6R3CovhAcVaPqMaoL+ViLxwux', BigIntToByteArray(CVK));
+
+  console.log(decrypted)
 }
 
 export async function test4(){ // Test to encrypt data
