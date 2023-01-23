@@ -17,9 +17,7 @@
     <Folder Include="Models\Users\" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="H4x2-TinySDK" Version="0.1.6" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="7.0.2" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\H4x2-TinySDK\H4x2-TinySDK\H4x2-TinySDK.csproj" />
   </ItemGroup>
 </Project>

@@ -23,7 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\H4x2-TinySDK\H4x2-TinySDK\H4x2-TinySDK.csproj" />
+    <PackageReference Include="H4x2-TinySDK" Version="0.1.6" />
   </ItemGroup>
 
 </Project>
