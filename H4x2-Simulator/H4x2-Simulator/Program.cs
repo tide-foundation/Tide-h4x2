@@ -26,5 +26,11 @@ app.MapControllerRoute(
 
 app.MapControllers();
 
+using (var scope = app.Services.CreateScope())
+{
+    var dataContext = scope.ServiceProvider.GetRequiredService<DataContext>();
+    dataContext.Database.EnsureCreated();
+}
+
 app.Run();
 
