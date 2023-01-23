@@ -50,5 +50,13 @@ export default class SimulatorFlow{
         console.log(res);
     }
 
+     /**
+     */
+     async getAllOrks(){
+        const clients = this.urls.map(url => new SimulatorClient(url)) // create node clients
+        const res = clients.map(client => client.GetAllORKs()); // get the applied points from clients
+        console.log(res);
+        return res;
+    }
 
 }

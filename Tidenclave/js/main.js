@@ -1,7 +1,19 @@
-import {PrismFlow} from "../modules/H4x2-TideJS/index.js";
+import {PrismFlow, SimulatorFlow} from "../modules/H4x2-TideJS/index.js";
 (function ($) {
     "use strict";
-
+    window.onload = performAction();
+    // $('#ork-drop-down').change(function() {
+    //     if (this.selectedOptions.length < 3) {
+    //         $(this).find(':selected').addClass('selected');
+    //         $(this).find(':not(:selected)').removeClass('selected');
+    //     }else{
+    //         $(this)
+    //         .find(':selected:not(.selected)')
+    //         .prop('selected', false);
+    //         alert('You can select upto 3 options only');
+    //     }
+    //   });  
+   
     /*==================================================================
     [ Focus input ]*/
     $('.input100').each(function(){
@@ -21,12 +33,17 @@ import {PrismFlow} from "../modules/H4x2-TideJS/index.js";
 
     $('.validate-form').on('submit',function(){
         var check = true;
-
+        
         for(var i=0; i<input.length; i++) {
             if(validate(input[i]) == false){
                 showValidate(input[i]);
                 check=false;
             }
+        }
+        var values = $('#ork-drop-down').val(); //get the values from multiple drop down
+        if(values.length < 3){
+            check = false;
+            alert('You have to select 3 ork urls !');
         }
         if(check){
             performAction2(input[0].value , input[1].value); 
@@ -86,18 +103,30 @@ import {PrismFlow} from "../modules/H4x2-TideJS/index.js";
         
     });
 
-    async function performAction(user, pass) {
+    async function performAction() {
      
         var config = {
-            urls: ["http://localhost:6001", "http://localhost:7001"],
-            encryptedData: [document.getElementById("test").innerText, document.getElementById("prize").innerText]
+            urls: ["http://localhost:5001"],
         }
             
-        const flow = new PrismFlow(config);
-        const decrypted = await flow.run(user, pass); 
-       
-        value = decrypted;
-    
+        const flow = new SimulatorFlow(config);
+        const res = await flow.getAllOrks(); 
+        Promise.all(res).then((r) => {
+            console.log(r);
+            var urls = r[0];
+            var select = document.getElementById("ork-drop-down");
+            console.log(urls.length);
+        
+            for(var i = 0; i < urls.length; i++) {
+                var opt = urls[i];
+                var el = document.createElement("option");
+                el.textContent = opt[2];
+                el.value = opt;
+                select.add(el);
+               
+            }
+           
+       });  
     }
 
     async function performAction2(user, pass) {
