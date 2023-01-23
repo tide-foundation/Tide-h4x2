@@ -30,7 +30,7 @@ public interface IUserService
     User GetById(string id);
     void Create(User user);
     void Delete(string id);
-    Task<User> ValidateUser(string uid, string[] orkUrls, string[] signedEntries);
+    void ValidateUser(User user);
 }
 
 public class UserService : IUserService
@@ -38,9 +38,11 @@ public class UserService : IUserService
     private DataContext _context;
     static readonly HttpClient _client = new HttpClient();
 
-    public UserService(DataContext context)
+    private IOrkService _orkService;
+    public UserService(DataContext context, IOrkService orkService)
     {
         _context = context;
+        _orkService = orkService;
     }
 
     public IEnumerable<User> GetAll()
@@ -64,28 +66,22 @@ public class UserService : IUserService
         _context.SaveChanges();
     }
 
-    public async Task<User> ValidateUser(string uid, string[] orkUrls, string[] signedEntries)
+    public void ValidateUser(User user)
     {    
         List<string> orkPubList = new List<string>();
+        if(user.OrkUrls.Length <= 0 || user.OrkUrls.Length != user.SignedEntries.Length)
+            throw new Exception("Ork Urls are not passed or not matching with signed entries!");
         // Query ORK public
-        foreach(string orkUrl in orkUrls)
-            orkPubList.Add(await _client.GetStringAsync(orkUrl + "/public"));
+        foreach(string orkUrl in user.OrkUrls)
+            orkPubList.Add(_orkService.GetOrkByUrl(orkUrl).OrkPub);
         
         String[] orksPubs = orkPubList.ToArray();
-
         // Verify signature
-        for(int i = 0 ; i < orkUrls.Length ; i++){
+        for(int i = 0 ; i < orksPubs.Length ; i++){
             var edPoint = Point.FromBase64(orksPubs[i]);
-            if(!EdDSA.Verify(orkUrls[i], signedEntries[i], edPoint))
-                throw new Exception("Invalid signed entry for ork url '" + orkUrls[i] + "' !");
+            if(!EdDSA.Verify(user.OrkUrls[i], user.SignedEntries[i], edPoint))
+                throw new Exception("Invalid signed entry for ork url '" + user.OrkUrls[i] + "' !");
         }
-
-        return new User{
-            UserId = uid,
-            OrkUrls = orkUrls,
-            SignedEntries = signedEntries
-        };
-        
     }
 
     private User getUser(string id)

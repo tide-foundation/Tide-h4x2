@@ -68,5 +68,12 @@ public class OrksController : ControllerBase
         var tideOrkUrl = _orkService.GetTideOrk();
         return  Ok(tideOrkUrl);
     }
+
+    [HttpGet("orkUrl/")]
+    public IActionResult GetByOrkUrl([FromForm] string url){
+        Console.WriteLine("here");
+        var ork = _orkService.GetOrkByUrl(url);
+        return Ok(ork);
+    }
 }
 

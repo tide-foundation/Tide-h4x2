@@ -32,6 +32,7 @@ public interface IOrkService
     void Create(Ork ork);
     Task<Ork> ValidateOrk(string OrkUrl, string SignedOrkUrl);
     string GetTideOrk();
+    Ork GetOrkByUrl(string url);
 }
 
 public class OrkService : IOrkService
@@ -98,6 +99,11 @@ public class OrkService : IOrkService
         var tideOrk = orks.First();
         if(tideOrk != null) return tideOrk.OrkUrl;
         return string.Empty;
+    }
+
+    public Ork GetOrkByUrl(string orkUrl){
+        var ork = _context.Orks.Where(o => o.OrkUrl == orkUrl).FirstOrDefault();
+        return ork;
     }
 
 }
