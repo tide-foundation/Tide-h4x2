@@ -42,13 +42,30 @@ namespace H4x2_Node.Controllers
                 if (point == null) throw new Exception("Apply Controller: Point supplied is not valid and/or safe");
                 var user = _userService.GetById(uid); // get user
                 var userPrism = BigInteger.Parse(user.Prismi); // get user prism
-                Point appliedPoint = PRISM.Apply(point, userPrism); // apply user prism to point
-                return Ok(appliedPoint.ToBase64()); // return point
+                var response = Flows.Apply.Prism(point, userPrism);
+                return Ok(response);
             }
-            catch (Exception ex)
+            catch (Exception ex) // TODO: Make exceptions more concise
             {
                 return BadRequest(new { message = ex.Message });
             }
+        }
+
+        [HttpPost]
+        public ActionResult AuthData(string uid, [FromForm] string authData)
+        {
+            try
+            {
+                var user = _userService.GetById(uid);
+                var userCVK = BigInteger.Parse(user.CVKi); // get user CVK
+                var response = Flows.Apply.AuthData(authData, user.PrismAuthi, userCVK);
+                return Ok(response);
+            }
+            catch (Exception e)
+            {
+                return BadRequest();
+            }
+            
         }
     }
 }

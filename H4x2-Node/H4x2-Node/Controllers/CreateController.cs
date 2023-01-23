@@ -19,7 +19,7 @@ namespace H4x2_Node.Controllers
         {
             // call to simulater checking uid does not exist
 
-            var response = Flows.Prism.CreatePrism(uid, point, _settings.Key.Priv);
+            var response = Flows.Create.Prism(uid, point, _settings.Key.Priv);
             return Ok(response);
         }
 
@@ -28,8 +28,8 @@ namespace H4x2_Node.Controllers
         {
             try
             {
-                var (user, response) = Flows.Prism.CreateAccount(encryptedState, prismPub, _settings.Key);
-                //_userService.Create(user);
+                var (user, response) = Flows.Create.Account(encryptedState, prismPub, _settings.Key);
+                _userService.Create(user);
                 return Ok(response);
             }
             catch (InvalidDataException ie) // if user exists

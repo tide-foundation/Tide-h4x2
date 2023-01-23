@@ -11,14 +11,14 @@ using System.Text.Json;
 
 namespace H4x2_Node.Flows
 {
-    public class Prism
+    public class Create
     {
-        public static CreatePrismResponse CreatePrism(string uid, Point point, BigInteger orkPrivate)
+        public static CreatePrismResponse Prism(string uid, Point point, BigInteger orkPrivate)
         {
             BigInteger prism = Utils.RandomBigInt();
             Point applied = PRISM.Apply(point, prism);
 
-            State state = new State
+            CreatePrismState state = new CreatePrismState
             {
                 Prism = prism.ToString(),
                 UID = uid
@@ -34,9 +34,9 @@ namespace H4x2_Node.Flows
             return response;
         }
 
-        public static (User, CreateAccountResponse) CreateAccount(string encryptedState, Point prismPub, Key orkKey)
+        public static (User, CreateAccountResponse) Account(string encryptedState, Point prismPub, Key orkKey)
         {
-            State? state = JsonSerializer.Deserialize<State>(AES.Decrypt(encryptedState, orkKey.Priv));
+            CreatePrismState? state = JsonSerializer.Deserialize<CreatePrismState>(AES.Decrypt(encryptedState, orkKey.Priv));
 
             BigInteger CVK = Utils.RandomBigInt();
             byte[] prismAuthi = SHA256.HashData((prismPub * orkKey.Priv).ToByteArray());
@@ -72,5 +72,10 @@ namespace H4x2_Node.Flows
     {
         public string encryptedCVK { get; set; }
         public string signedUID { get; set; }
+    }
+    public class CreatePrismState
+    {
+        public string UID { get; set; } 
+        public string Prism { get; set; }
     }
 }
