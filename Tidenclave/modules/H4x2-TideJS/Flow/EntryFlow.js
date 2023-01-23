@@ -1,4 +1,4 @@
-import SimulatorClient from "../Clients/SimulatorClient"
+import SimulatorClient from "../Clients/SimulatorClient.js"
 
 export default class EntryFlow{
     /**
@@ -11,8 +11,8 @@ export default class EntryFlow{
         this.url = url
     }
 
-    async SubmitEntry(userID, signedEntry, ORKUrls){
+    async SubmitEntry(userID, signedEntries, ORKUrls){
         const client = new SimulatorClient(this.url);
-        await client.AddUserEntry(userID, signedEntry, ORKUrls);
+        await client.AddUserEntry(userID, signedEntries, ORKUrls);
     }
 }

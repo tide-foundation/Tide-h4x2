@@ -1,13 +1,13 @@
-import Point from "../Ed25519/point"
-import EntryFlow from "../Flow/EntryFlow"
-import PrismFlow from "../Flow/Prism"
-import { SHA256_Digest } from "../Tools/Hash"
-import { BigIntFromByteArray, BigIntToByteArray, Bytes2Hex } from "../Tools/Utils"
-import SimulatorClient from "../Clients/SimulatorClient"
-import VendorClient from "../Clients/VendorClient"
-import { decryptData } from "../Tools/AES"
+import Point from "../Ed25519/point.js"
+import EntryFlow from "../Flow/EntryFlow.js"
+import PrismFlow from "../Flow/Prism.js"
+import { SHA256_Digest } from "../Tools/Hash.js"
+import { BigIntFromByteArray, BigIntToByteArray, Bytes2Hex } from "../Tools/Utils.js"
+import SimulatorClient from "../Clients/SimulatorClient.js"
+import VendorClient from "../Clients/VendorClient.js"
+import { decryptData } from "../Tools/AES.js"
 
-export default class SignUp{
+export default class SignIn{
     /**
      * Config should include key/value pairs of: 
      * @example

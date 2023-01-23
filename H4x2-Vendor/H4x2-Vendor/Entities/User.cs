@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 public class User
 {
     [Key]
-    public string UId { get; set; }
+    public string UID { get; set; }
     public string Secret { get; set; }
     
 

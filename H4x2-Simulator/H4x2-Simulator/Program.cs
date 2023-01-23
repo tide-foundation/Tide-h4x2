@@ -14,7 +14,15 @@ services.AddScoped<IOrkService, OrkService>();
 
 
 var app = builder.Build();
-app.UseCors(builder => builder.AllowAnyOrigin());
+app.UseCors(builder => {
+    builder.AllowAnyOrigin();
+    builder.AllowAnyMethod();
+    builder.AllowAnyHeader();
+    });
+
+app.MapControllerRoute(
+    name: "default",
+    pattern: "{controller=Home}/{action=Index}/{uid?}");
 
 app.MapControllers();
 
