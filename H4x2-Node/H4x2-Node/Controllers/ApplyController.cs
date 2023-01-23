@@ -47,7 +47,7 @@ namespace H4x2_Node.Controllers
             }
             catch (Exception ex) // TODO: Make exceptions more concise
             {
-                return BadRequest(new { message = ex.Message });
+                return BadRequest();
             }
         }
 

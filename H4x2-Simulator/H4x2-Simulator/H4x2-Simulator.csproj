@@ -6,10 +6,6 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <RootNamespace>H4x2_Simulator</RootNamespace>
   </PropertyGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.1" />
-  </ItemGroup>
   <ItemGroup>
     <None Remove="Helpers\" />
     <None Remove="Models\" />
@@ -21,6 +17,7 @@
     <Folder Include="Models\Users\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\H4x2-TinySDK\H4x2-TinySDK\H4x2-TinySDK.csproj" />
+    <PackageReference Include="H4x2-TinySDK" Version="0.1.6" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="7.0.2" />
   </ItemGroup>
 </Project>

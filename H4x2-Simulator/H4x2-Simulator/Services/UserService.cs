@@ -23,11 +23,13 @@ using H4x2_Simulator.Helpers;
 using H4x2_TinySDK.Ed25519;
 using H4x2_TinySDK.Math;
 using System.Text;
+using System.Text.Json;
 
 public interface IUserService
 {
     IEnumerable<User> GetAll();
     User GetById(string id);
+    string GetUserOrks(string id);
     void Create(User user);
     void Delete(string id);
     void ValidateUser(User user);
@@ -55,6 +57,20 @@ public class UserService : IUserService
         return getUser(id);
     }
 
+    public string GetUserOrks(string id)
+    {
+        var user = GetById(id);
+        List<string> orkPubs = new List<string>();
+        foreach (string orkUrl in user.OrkUrls)
+            orkPubs.Add(_orkService.GetOrkByUrl(orkUrl).OrkPub);
+        var response = new
+        {
+            orkUrls = user.OrkUrls,
+            orkPubs = orkPubs.ToArray()
+        };
+        return JsonSerializer.Serialize(response);
+    }
+
     public void Create(User user)
     {
         // validate for user existence
@@ -79,7 +95,7 @@ public class UserService : IUserService
         // Verify signature
         for(int i = 0 ; i < orksPubs.Length ; i++){
             var edPoint = Point.FromBase64(orksPubs[i]);
-            if(!EdDSA.Verify(user.OrkUrls[i], user.SignedEntries[i], edPoint))
+            if(!EdDSA.Verify(user.UserId, user.SignedEntries[i], edPoint))
                 throw new Exception("Invalid signed entry for ork url '" + user.OrkUrls[i] + "' !");
         }
     }

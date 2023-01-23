@@ -14,7 +14,7 @@ public class DataContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder options)
     {
-        options.UseSqlServer(Configuration.GetConnectionString("WebApiDatabase"));
+        options.UseSqlite(Configuration.GetConnectionString("WebApiDatabase"));
     }
 
     public DbSet<User> UserSecrets { get; set; }

@@ -46,6 +46,13 @@ public class UsersController : ControllerBase
         return Ok(user);
     }
 
+    [HttpGet("/users/orks/{id}")]
+    public IActionResult GetUserOrks(string id)
+    {
+        var response = _userService.GetUserOrks(id);
+        return Ok(response);
+    }
+
     [HttpPost]
     public IActionResult Create(User user)
     {

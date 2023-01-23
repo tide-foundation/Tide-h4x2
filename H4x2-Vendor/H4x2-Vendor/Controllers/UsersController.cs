@@ -30,6 +30,13 @@ public class UsersController : ControllerBase
         return Ok(user);
     }
 
+    [HttpGet("code/{id}")]
+    public IActionResult GetCode(string id)
+    {
+        var user = _userService.GetById(id);
+        return Ok(user.Secret);
+    }
+
     [HttpPost]
     public async Task<IActionResult> Create(User user)
     {  
@@ -37,7 +44,7 @@ public class UsersController : ControllerBase
         {
             // check user exists in simulator first
             string Baseurl = _config.GetValue<string>("Endpoints:Simulator:Api");
-            await _userService.GetEntryAsync(Baseurl + user.uid);
+            await _userService.GetEntryAsync(Baseurl + user.UID);
  
             _userService.Create(user);
             return Ok(new { message = "Entry created" });

@@ -38,13 +38,13 @@ export default class SimulatorClient extends ClientBase {
         return returnedResponse;
     }
 
-    async AddUserEntry(userID, signedEntry, orkUrls){
+    async AddUserEntry(userID, signedEntries, orkUrls){
         var user = {
             userId: userID,
             orkUrls: orkUrls,
-            signedUID: signedEntry
+            signedEntries: signedEntries
         }
-        const response = await this._postJSON('', user);
+        const response = await this._postJSON('Users', user);
         if(!response.ok){
             return Promise.reject("Adding user to simulator failed.")
         }
@@ -60,7 +60,8 @@ export default class SimulatorClient extends ClientBase {
         if(response.ok){
             const resp_obj = JSON.parse(await response.text());
             const pubs = resp_obj.orkPubs.map(pub => Point.fromB64(pub));
-            return [resp_obj.orkUrls, pubs]
+            const returnData = pubs.map((pub, i) => [resp_obj.orkUrls[i], pub]);  // format data so instead of ( [urls], [points] ) we have (url1, point1), (url2, point2) []
+            return returnData
         }
         return Promise.reject("Simulator Client: Failed to get user's orks");
     }

@@ -23,6 +23,8 @@ import { decryptData, encryptData } from "../Tools/AES.js";
 import { BigIntToByteArray, RandomBigInt } from "../Tools/Utils.js";
 import { SHA256_Digest } from "../Tools/Hash.js"
 import { BigIntFromByteArray } from "../Tools/Utils.js"
+import SignUp from "../Functions/SignUp.js";
+import SignIn from "../Functions/SignIn.js";
 
 var tx = new TextEncoder();
 
@@ -68,28 +70,35 @@ export async function test3(){ // full set up and decryption test
 }
 
 export async function test4(){ // Test to encrypt data
+  /**
+   * @type {[string, Point][]}
+   */
+  var orkUrls = [['http://localhost', Point.fromB64('Ds5DKE6hxYNfpNcVRY4NCKznMxh9OwQ9bARan0w4qzbJo/hqrkZfDlZROGRRDzmXVh+iyeheoh3CKSMJ881gIg==')]];
+
   var config = {
-    urls: ["http://localhost:6001", "http://localhost:7001"],
-    encryptedData: []
+    orkInfo: orkUrls,
+    simulatorUrl: 'http://localhost:5062/',
+    vendorUrl: 'http://localhost:5231/'
   }
 
-  const flow = new PrismFlow(config);
-
-  await flow.setUp("Julio's UserName","AAA", "Prism", "Example")
-
-  console.log(flow.encryptedData)
+  var signup = new SignUp(config);
+  await signup.start('username18', 'password1', 'mySecret');
 }
 
 export async function test5(){ // test to decrypt data
+  /**
+   * @type {[string, Point][]}
+   */
+  var orkUrls = [['http://localhost', Point.fromB64('Ds5DKE6hxYNfpNcVRY4NCKznMxh9OwQ9bARan0w4qzbJo/hqrkZfDlZROGRRDzmXVh+iyeheoh3CKSMJ881gIg==')]];
+
   var config = {
-    urls: ["http://localhost:6001", "http://localhost:7001"],
-    encryptedData: ["G4GmY31zIa35tEwck14URCEAIjeTA8NV+DgjHpngxASGnTU="] // change this value
+    simulatorUrl: 'http://localhost:5062/',
+    vendorUrl: 'http://localhost:5231/'
   }
 
-  const flow = new PrismFlow(config)
-  const decrypted = await flow.run("Julio's UserName","AAA")
-
-  console.log(decrypted)
+  var signin = new SignIn(config);
+  var decrypted = await signin.start('username18', 'password1')
+  console.log(decrypted);
 }
 
 export async function getRandom(){
