@@ -73,7 +73,7 @@ export async function test4(){ // Test to encrypt data
   /**
    * @type {[string, Point][]}
    */
-  var orkUrls = [['http://localhost', Point.fromB64('Ds5DKE6hxYNfpNcVRY4NCKznMxh9OwQ9bARan0w4qzbJo/hqrkZfDlZROGRRDzmXVh+iyeheoh3CKSMJ881gIg==')]];
+  var orkUrls = [['https://26e511d500104f11.tunnel.tide.org', Point.fromB64('jAcA22UePnZzMbNSxSVt7sozlKA86cGEM77pdoPR1z0CQBhFBdXiNU+XswIqD/4IWSIa/MI0qtaF22vZIfnKFQ==')], ['https://a530acffa31b53a1.tunnel.tide.org', Point.fromB64('YoOu8R56f9pTCVs7unc3BpZkDWXJKK4d0TqrBkxvBkXTOqSFM+O4YCH/TEXZ9wY8dsADYC6eAEjpRSSFutV6Rw==')]];
 
   var config = {
     orkInfo: orkUrls,
@@ -82,14 +82,14 @@ export async function test4(){ // Test to encrypt data
   }
 
   var signup = new SignUp(config);
-  await signup.start('username18', 'password1', 'mySecret');
+  await signup.start('hulio', 'password1', 'mySecret2');
 }
 
 export async function test5(){ // test to decrypt data
   /**
    * @type {[string, Point][]}
    */
-  var orkUrls = [['http://localhost', Point.fromB64('Ds5DKE6hxYNfpNcVRY4NCKznMxh9OwQ9bARan0w4qzbJo/hqrkZfDlZROGRRDzmXVh+iyeheoh3CKSMJ881gIg==')]];
+  var orkUrls = [['https://26e511d500104f11.tunnel.tide.org', Point.fromB64('jAcA22UePnZzMbNSxSVt7sozlKA86cGEM77pdoPR1z0CQBhFBdXiNU+XswIqD/4IWSIa/MI0qtaF22vZIfnKFQ==')], ['https://a530acffa31b53a1.tunnel.tide.org', Point.fromB64('YoOu8R56f9pTCVs7unc3BpZkDWXJKK4d0TqrBkxvBkXTOqSFM+O4YCH/TEXZ9wY8dsADYC6eAEjpRSSFutV6Rw==')]];
 
   var config = {
     simulatorUrl: 'http://localhost:5062/',
@@ -97,7 +97,7 @@ export async function test5(){ // test to decrypt data
   }
 
   var signin = new SignIn(config);
-  var decrypted = await signin.start('username18', 'password1')
+  var decrypted = await signin.start('hulio', 'password1')
   console.log(decrypted);
 }
 

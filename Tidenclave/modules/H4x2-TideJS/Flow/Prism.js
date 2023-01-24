@@ -37,9 +37,7 @@ export default class PrismFlow{
     }
 
     /**
-     * Starts the Prism Flow to attempt to decrypt the supplied data with the given password.
-     * NOTE: It will attempt to decrypt the data on both keyIds (Test and Prize)
-     * * Requires config object to include urls and encryptedData
+     * Starts the Prism Flow to attempt to decrypt the supplied data with the given password
      * @param {Point} passwordPoint The password of a user
      * @param {string} uid The username of a user
      * @returns {Promise<bigint>}
@@ -88,7 +86,7 @@ export default class PrismFlow{
         const prismPub = Point.g.times(hashed_keyPoint); // its like a DiffieHellman, so we can get PrismAuth to the ORKs, while keeping keyPoint secret
 
         const encryptedStateList = createPRISMResponses.map(resp => resp[0]);
-        const pre_createAccountResponses = clients.map((client, i) => client.CreateAccount(prismPub, encryptedStateList[i])); // request orks to create your account
+        const pre_createAccountResponses = clients.map((client, i) => client.CreateAccount(uid, prismPub, encryptedStateList[i])); // request orks to create your account
         const createAccountResponses = await Promise.all(pre_createAccountResponses);
 
         const pre_CVKs = createAccountResponses.map(async (resp, i) => await decryptData(resp[0], prismAuthi[i])); // decrypt CVKs with prismAuth of each ork

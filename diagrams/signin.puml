@@ -25,6 +25,7 @@ note over ork
     userID = hash(username)
     PrismAuth = hash( ORKPriv * [G * hash(a * Prism)] ) 
     Prism = 32 byte number
+    CVK = 32 byte number
 end note
 
 end
@@ -51,10 +52,10 @@ note over usr
 keyPoint = (a * r * Prism) * r^-1  (remove r)
 PrismAuth = hash( ORKPub * hash(keyPoint) )
 
-EncryptedData = Encrypt("Authenticated", PrismAuth)
+AuthData = Encrypt("Authenticated", PrismAuth)
 endnote
 
-usr -> ork: EncryptedData, userID
+usr -> ork: AuthData, userID
 
 note over ork
 Get PrismAuth for this userID

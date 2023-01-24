@@ -72,13 +72,14 @@ export default class NodeClient extends ClientBase {
     }
 
     /**
+     * @param {string} uid
      * @param {Point} prismPub 
      * @param {string} encryptedState 
      * @returns {Promise<[string, string]>}
      */
-    async CreateAccount(prismPub, encryptedState){
+    async CreateAccount(uid, prismPub, encryptedState){
         const data = this._createFormData({'prismPub': prismPub.toBase64(), 'encryptedState': encryptedState})
-        const response = await this._post('/Create/Account', data);
+        const response = await this._post(`/Create/Account/${uid}`, data);
         if(response.ok){
             const resp_obj = JSON.parse(await response.text());
             return [resp_obj.encryptedCVK, resp_obj.signedUID]
