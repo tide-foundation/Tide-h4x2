@@ -22,8 +22,8 @@ using H4x2_Simulator.Entities;
 using H4x2_Simulator.Helpers;
 using H4x2_TinySDK.Ed25519;
 using H4x2_TinySDK.Math;
-using System.Text;
 using System.Text.Json;
+
 
 public interface IUserService
 {
@@ -38,8 +38,6 @@ public interface IUserService
 public class UserService : IUserService
 {
     private DataContext _context;
-    static readonly HttpClient _client = new HttpClient();
-
     private IOrkService _orkService;
     public UserService(DataContext context, IOrkService orkService)
     {

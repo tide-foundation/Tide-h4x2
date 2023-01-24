@@ -17,10 +17,11 @@
 <!--===============================================================================================-->	
 	<link rel="stylesheet" type="text/css" href="vendor/animsition/css/animsition.min.css">
 <!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="vendor/select2/select2.min.css">
-<!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="css/util.css">
 	<link rel="stylesheet" type="text/css" href="css/main.css">
+<!--===============================================================================================-->
+	<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+	<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <!--===============================================================================================-->
 </head>
 <body>
@@ -57,21 +58,23 @@
 						<input class="input100" type="text" name="secret" placeholder="Secret">
 						<span class="focus-input100" data-placeholder="&#xf1c8;"></span>
 					</div>
-
-					<div class="text-left p-t-5">
-						<a class="txt2"  href="orkselect.html">
-							ORK Select
-						</a>
-						
-					</div>
 					
-					<div class="container-enclave-form-btn p-t-30">
+					<div class="txt2 p-t-5">	
+							Select Orks
+					</div>
+					<div class = "dropdown">
+						<select class="js-example-basic-multiple form-control" id="ork-drop-down" name="orks[]" multiple="multiple">
+					   </select>
+				   </div>
+
+					
+					<div class="container-enclave-form-btn  p-b-3 p-t-27">
 						<button class="enclave-form-btn">
 							Sign-up
 						</button>
 					</div>
 
-					<div class="text-center p-t-90">
+					<div class="text-center p-t-50">
 						<a class="txt1" href="index.html">
 							Login?
 						</a>
@@ -95,6 +98,13 @@
 	<script src="vendor/select2/select2.min.js"></script>
 <!--===============================================================================================-->
 	<script type="module" src="js/main.js"></script>
-
+<!--===============================================================================================-->
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$(".js-example-basic-multiple").select2({
+				maximumSelectionLength: 3
+			});
+		});
+	</script>
 </body>
 </html>
