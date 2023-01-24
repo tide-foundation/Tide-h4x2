@@ -12,7 +12,11 @@ services.AddScoped<IUserService, UserService>();
 
 var app = builder.Build();
 app.UseStaticFiles();
-app.UseCors(builder => builder.AllowAnyOrigin()); 
+app.UseCors(builder => {
+    builder.AllowAnyOrigin();
+    builder.AllowAnyMethod();
+    builder.AllowAnyHeader();
+});
 
 app.MapControllers();
 

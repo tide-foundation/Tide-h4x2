@@ -37,9 +37,7 @@ export default class PrismFlow{
     }
 
     /**
-     * Starts the Prism Flow to attempt to decrypt the supplied data with the given password.
-     * NOTE: It will attempt to decrypt the data on both keyIds (Test and Prize)
-     * * Requires config object to include urls and encryptedData
+     * Starts the Prism Flow to attempt to decrypt the supplied data with the given password
      * @param {Point} passwordPoint The password of a user
      * @param {string} uid The username of a user
      * @returns {Promise<bigint>}
@@ -58,7 +56,7 @@ export default class PrismFlow{
         const pre_authDatai = prismAuthi.map(async prismAuth => await encryptData("Authenticated", prismAuth)); // construct authData to authenticate to orks
         const authDatai = await Promise.all(pre_authDatai);
 
-        const pre_encryptedCVKs = clients.map((client, i) => client.ApplyCVK(uid, authDatai[i])); // authenticate to ORKs and retirve CVK
+        const pre_encryptedCVKs = clients.map((client, i) => client.ApplyAuthData(uid, authDatai[i])); // authenticate to ORKs and retirve CVK
         const encryptedCVKs = await Promise.all(pre_encryptedCVKs);
         const pre_CVKs = encryptedCVKs.map(async (encCVK, i) => await decryptData(encCVK, prismAuthi[i])); // decrypt CVKs with prismAuth of each ork
         const CVK = (await Promise.all(pre_CVKs)).map(cvk => BigInt(cvk)).reduce((sum, next) => mod(sum + next)); // sum all CVKs to find full CVK
@@ -88,7 +86,7 @@ export default class PrismFlow{
         const prismPub = Point.g.times(hashed_keyPoint); // its like a DiffieHellman, so we can get PrismAuth to the ORKs, while keeping keyPoint secret
 
         const encryptedStateList = createPRISMResponses.map(resp => resp[0]);
-        const pre_createAccountResponses = clients.map((client, i) => client.CreateAccount(prismPub, encryptedStateList[i])); // request orks to create your account
+        const pre_createAccountResponses = clients.map((client, i) => client.CreateAccount(uid, prismPub, encryptedStateList[i])); // request orks to create your account
         const createAccountResponses = await Promise.all(pre_createAccountResponses);
 
         const pre_CVKs = createAccountResponses.map(async (resp, i) => await decryptData(resp[0], prismAuthi[i])); // decrypt CVKs with prismAuth of each ork

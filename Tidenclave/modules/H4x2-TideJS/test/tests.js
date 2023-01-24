@@ -20,9 +20,11 @@ import NodeClient from "../Clients/NodeClient.js";
 import Point from "../Ed25519/point.js";
 import PrismFlow from "../Flow/Prism.js";
 import { decryptData, encryptData } from "../Tools/AES.js";
-import { RandomBigInt } from "../Tools/Utils.js";
+import { BigIntToByteArray, RandomBigInt } from "../Tools/Utils.js";
 import { SHA256_Digest } from "../Tools/Hash.js"
 import { BigIntFromByteArray } from "../Tools/Utils.js"
+import SignUp from "../Functions/SignUp.js";
+import SignIn from "../Functions/SignIn.js";
 
 var tx = new TextEncoder();
 
@@ -35,56 +37,68 @@ export async function test1(){ // initial client testing
 
 export async function test2(){ // test Prism flow
   
+  /**
+   * @type {[string, Point][]}
+   */
   var orkUrls = [['http://localhost', Point.fromB64('Ds5DKE6hxYNfpNcVRY4NCKznMxh9OwQ9bARan0w4qzbJo/hqrkZfDlZROGRRDzmXVh+iyeheoh3CKSMJ881gIg==')]];
 
   var pflow = new PrismFlow(orkUrls);
   var pass = "pass1";
   var pPoint = await Point.fromString(pass);
 
-  var [state, sig] = await pflow.SetUp('myfirstuidd', pPoint, "encryptThis");
+  var [state, sig] = await pflow.SetUp('myfirstuid5', pPoint, "encryptThis3");
 
   console.log(state)
   console.log(sig)
 }
 
 export async function test3(){ // full set up and decryption test
-  var config = {
-    urls: ["http://localhost:6001", "http://localhost:7001"],
-    encryptedData: []
-  }
+  /**
+   * @type {[string, Point][]}
+   */
+  var orkUrls = [['http://localhost', Point.fromB64('Ds5DKE6hxYNfpNcVRY4NCKznMxh9OwQ9bARan0w4qzbJo/hqrkZfDlZROGRRDzmXVh+iyeheoh3CKSMJ881gIg==')]];
 
-  const flow = new PrismFlow(config);
-  await flow.setUp("Julio's UserName","Julio's Password", "Prism", "Encrypt My Chickens");
-  // At this point the message "Encrypt My Chickens" will be encrypted with the prismFlow using the password "Julio's Password"
-  // The strength of this is that no-one can offline attack the AES encrypted data, even if the password is very short. The attacker MUST 
-  // bruteforce by requesting the Test/Prize keys from the orks, which allows us to throttle and MAJORLY slow the attack.
-  const decrypted = await flow.run("Julio's UserName","Julio's Password");
-  console.log(decrypted);
+  var pflow = new PrismFlow(orkUrls);
+  var pass = "pass1";
+  var pPoint = await Point.fromString(pass);
+
+  var CVK = await pflow.Authenticate('myfirstuid5', pPoint);
+
+  var decrypted = await decryptData('9ZVVQCfJsQ5t6TJk7hNT+C97CQm6R3CovhAcVaPqMaoL+ViLxwux', BigIntToByteArray(CVK));
+
+  console.log(decrypted)
 }
 
 export async function test4(){ // Test to encrypt data
+  /**
+   * @type {[string, Point][]}
+   */
+  var orkUrls = [['https://26e511d500104f11.tunnel.tide.org', Point.fromB64('jAcA22UePnZzMbNSxSVt7sozlKA86cGEM77pdoPR1z0CQBhFBdXiNU+XswIqD/4IWSIa/MI0qtaF22vZIfnKFQ==')], ['https://a530acffa31b53a1.tunnel.tide.org', Point.fromB64('YoOu8R56f9pTCVs7unc3BpZkDWXJKK4d0TqrBkxvBkXTOqSFM+O4YCH/TEXZ9wY8dsADYC6eAEjpRSSFutV6Rw==')]];
+
   var config = {
-    urls: ["http://localhost:6001", "http://localhost:7001"],
-    encryptedData: []
+    orkInfo: orkUrls,
+    simulatorUrl: 'http://localhost:5062/',
+    vendorUrl: 'http://localhost:5231/'
   }
 
-  const flow = new PrismFlow(config);
-
-  await flow.setUp("Julio's UserName","AAA", "Prism", "Example")
-
-  console.log(flow.encryptedData)
+  var signup = new SignUp(config);
+  await signup.start('hulio', 'password1', 'mySecret2');
 }
 
 export async function test5(){ // test to decrypt data
+  /**
+   * @type {[string, Point][]}
+   */
+  var orkUrls = [['https://26e511d500104f11.tunnel.tide.org', Point.fromB64('jAcA22UePnZzMbNSxSVt7sozlKA86cGEM77pdoPR1z0CQBhFBdXiNU+XswIqD/4IWSIa/MI0qtaF22vZIfnKFQ==')], ['https://a530acffa31b53a1.tunnel.tide.org', Point.fromB64('YoOu8R56f9pTCVs7unc3BpZkDWXJKK4d0TqrBkxvBkXTOqSFM+O4YCH/TEXZ9wY8dsADYC6eAEjpRSSFutV6Rw==')]];
+
   var config = {
-    urls: ["http://localhost:6001", "http://localhost:7001"],
-    encryptedData: ["G4GmY31zIa35tEwck14URCEAIjeTA8NV+DgjHpngxASGnTU="] // change this value
+    simulatorUrl: 'http://localhost:5062/',
+    vendorUrl: 'http://localhost:5231/'
   }
 
-  const flow = new PrismFlow(config)
-  const decrypted = await flow.run("Julio's UserName","AAA")
-
-  console.log(decrypted)
+  var signin = new SignIn(config);
+  var decrypted = await signin.start('hulio', 'password1')
+  console.log(decrypted);
 }
 
 export async function getRandom(){

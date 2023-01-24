@@ -46,12 +46,19 @@ public class UsersController : ControllerBase
         return Ok(user);
     }
 
-    [HttpPost("{uid}")]
-    public async Task<IActionResult> Create([FromRoute] string uid, IFormCollection formData)
+    [HttpGet("/users/orks/{id}")]
+    public IActionResult GetUserOrks(string id)
+    {
+        var response = _userService.GetUserOrks(id);
+        return Ok(response);
+    }
+
+    [HttpPost]
+    public IActionResult Create(User user)
     {
         try {
-            User newUser = await _userService.ValidateUser(uid, formData["OrkUrls"].ToArray(), formData["SignedEntries"].ToArray());
-            _userService.Create(newUser);
+            _userService.ValidateUser(user);
+            _userService.Create(user);
             return Ok(new { message = "User created" });
         }
         catch(Exception ex)

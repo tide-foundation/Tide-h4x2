@@ -35,7 +35,8 @@ export default class NodeClient extends ClientBase {
         const data = this._createFormData({'point': point.toBase64()})
         const response = await this._post(`/Apply/Prism/${uid}`, data)
         if(response.ok){
-            return Point.fromB64(await response.text());
+            const resp_obj = JSON.parse(await response.text());
+            return Point.fromB64(resp_obj.applied);
         }
         return Promise.reject("Node client: " + response.status); // should never get here
     }
@@ -45,13 +46,14 @@ export default class NodeClient extends ClientBase {
      * @param {string} uid 
      * @returns {Promise<string>}
      */
-    async ApplyCVK(uid, authData){
+    async ApplyAuthData(uid, authData){
         const data = this._createFormData({'authData': authData})
-        const response = await this._post(`/Apply/CVK/${uid}`, data)
+        const response = await this._post(`/Apply/AuthData/${uid}`, data)
         if(response.ok){
-            return await response.text();
+            const resp_obj = JSON.parse(await response.text());
+            return resp_obj.encryptedCVK;
         }
-        return Promise.reject("Node client: " + response.status); // should never get here
+        return Promise.reject("Node client: " + response.status);
     }
 
     /**
@@ -70,13 +72,14 @@ export default class NodeClient extends ClientBase {
     }
 
     /**
+     * @param {string} uid
      * @param {Point} prismPub 
      * @param {string} encryptedState 
      * @returns {Promise<[string, string]>}
      */
-    async CreateAccount(prismPub, encryptedState){
+    async CreateAccount(uid, prismPub, encryptedState){
         const data = this._createFormData({'prismPub': prismPub.toBase64(), 'encryptedState': encryptedState})
-        const response = await this._post('/Create/Account', data);
+        const response = await this._post(`/Create/Account/${uid}`, data);
         if(response.ok){
             const resp_obj = JSON.parse(await response.text());
             return [resp_obj.encryptedCVK, resp_obj.signedUID]

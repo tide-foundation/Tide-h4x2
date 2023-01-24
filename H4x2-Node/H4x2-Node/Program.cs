@@ -28,11 +28,6 @@ using H4x2_Node.Services;
 var builder = WebApplication.CreateBuilder(args);
 
 
-/*
-var prism = Environment.GetEnvironmentVariable("PRISM_VAL");
-var isThrottled = Convert.ToBoolean(Environment.GetEnvironmentVariable("IS_THROTTLED"));
-var insightsKey = Environment.GetEnvironmentVariable("INSIGHT_KEY");
-*/
 var isThrottled = false;
 var key = new Key(BigInteger.Parse(args[0]));
 
@@ -73,7 +68,7 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Home}/{action=Index}/{uid?}");
 app.UseForwardedHeaders();
 app.MapControllers();
 

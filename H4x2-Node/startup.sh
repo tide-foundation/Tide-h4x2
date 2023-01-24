@@ -28,5 +28,5 @@ localtunnel --subdomain $hash -s https://tunnel.tide.org --port 80 --no-dashboar
 #localtunnel --subdomain $hash -s https://tunnel.tide.org --port 8443 --no-dashboard http
 
 # Start ORK
-pub=$(tide-key public-key $Ed25519Key)
-dotnet H4x2-Node.dll $pub
+priv=$(tide-key private-key $Ed25519Key)
+dotnet H4x2-Node.dll $priv

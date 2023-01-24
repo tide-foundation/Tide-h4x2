@@ -34,8 +34,8 @@ public class UserService : IUserService
     public void Create(User user)
     {
         // validate
-        if (_context.UserSecrets.Any(x => x.UId == user.UId))
-            throw new Exception("Entry with the UId '" + user.UId + "' already exists");
+        if (_context.UserSecrets.Any(x => x.UID == user.UID))
+            throw new Exception("Entry with the UId '" + user.UID + "' already exists");
         // save user secret
         _context.UserSecrets.Add(user);
         _context.SaveChanges();   

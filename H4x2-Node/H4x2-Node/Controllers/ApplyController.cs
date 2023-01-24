@@ -34,56 +34,38 @@ namespace H4x2_Node.Controllers
             _userService = userService;
         }
 
-        [HttpPost("Create/Prism/{uid}")]
-        public ActionResult CreatePrism([FromRoute] string uid, Point point){
-            // call to simulater checking uid does not exist
-            var response = Flows.Prism.CreatePrism(uid, point, _settings.Key.Priv);
-            return Ok(response);
-        }
-
-        [HttpPost("Create/Account")]
-        public ActionResult CreateAccount([FromForm] string encryptedState, [FromForm] Point prismPub) // check from form works here
+        [HttpPost]
+        public ActionResult Prism(string uid, Point point)
         {
             try
             {
-                var (user, response) = Flows.Prism.CreateAccount(encryptedState, prismPub, _settings.Key);
-                _userService.Create(user);
+                if (point == null) throw new Exception("Apply Controller: Point supplied is not valid and/or safe");
+                var user = _userService.GetById(uid); // get user
+                var userPrism = BigInteger.Parse(user.Prismi); // get user prism
+                var response = Flows.Apply.Prism(point, userPrism);
                 return Ok(response);
             }
-            catch(InvalidDataException ie) // if user exists
-            {
-                return StatusCode(409, ie.Message);
-            }
-            catch
+            catch (Exception ex) // TODO: Make exceptions more concise
             {
                 return BadRequest();
             }
         }
 
-        [HttpPost("Apply/Prism/{uid}")]
-        public ActionResult Prismm([FromRoute] string uid, [FromBody] Point point) => Apply(uid, point, _settings.Key.Priv);
-
-        private ActionResult Apply(string uid, Point toApply, BigInteger key)
+        [HttpPost]
+        public ActionResult AuthData(string uid, [FromForm] string authData)
         {
             try
             {
-                if (toApply == null) throw new Exception("Apply Controller: Point supplied is not valid and/or safe");
-                
-                var user = _userService.GetById(uid); 
-
-                Point appliedPoint = PRISM.Apply(toApply, key);
-                return Ok(appliedPoint.ToBase64());
+                var user = _userService.GetById(uid);
+                var userCVK = BigInteger.Parse(user.CVKi); // get user CVK
+                var response = Flows.Apply.AuthData(authData, user.PrismAuthi, userCVK);
+                return Ok(response);
             }
-            catch (Exception ex)
+            catch (Exception e)
             {
-                return BadRequest(new {message = ex.Message});
+                return BadRequest();
             }
+            
         }
-    }
-
-    public class State
-    {
-        public string Prism { get; set; }
-        public string UID { get; set; }
     }
 }

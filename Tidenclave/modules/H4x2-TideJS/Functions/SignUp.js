@@ -1,9 +1,9 @@
-import Point from "../Ed25519/point"
-import EntryFlow from "../Flow/EntryFlow"
-import PrismFlow from "../Flow/Prism"
-import { SHA256_Digest } from "../Tools/Hash"
-import { BigIntFromByteArray, Bytes2Hex } from "../Tools/Utils"
-import VendorClient from "../Clients/VendorClient"
+import Point from "../Ed25519/point.js"
+import EntryFlow from "../Flow/EntryFlow.js"
+import PrismFlow from "../Flow/Prism.js"
+import { SHA256_Digest } from "../Tools/Hash.js"
+import { BigIntFromByteArray, Bytes2Hex } from "../Tools/Utils.js"
+import VendorClient from "../Clients/VendorClient.js"
 
 export default class SignUp{
     /**
@@ -43,10 +43,10 @@ export default class SignUp{
         const passwordPoint = (await Point.fromString(password));
         
         const prismFlow = new PrismFlow(this.orkInfo);
-        const [encryptedCode, signedEntry] = await prismFlow.SetUp(uid, passwordPoint, secretCode);
+        const [encryptedCode, signedEntries] = await prismFlow.SetUp(uid, passwordPoint, secretCode);
         
         const entryFlow = new EntryFlow(this.simulatorUrl);
-        await entryFlow.SubmitEntry(uid, signedEntry, this.orkInfo.map(ork => ork[0]))
+        await entryFlow.SubmitEntry(uid, signedEntries, this.orkInfo.map(ork => ork[0]))
 
         const vendorClient = new VendorClient(this.vendorUrl, uid);
         await vendorClient.AddToVendor(encryptedCode);
