@@ -24,11 +24,11 @@ namespace H4x2_Node.Controllers
         }
 
         [HttpPost]
-        public ActionResult Account(string encryptedState, Point prismPub)
+        public ActionResult Account(string uid, string encryptedState, Point prismPub)
         {
             try
             {
-                var (user, response) = Flows.Create.Account(encryptedState, prismPub, _settings.Key);
+                var (user, response) = Flows.Create.Account(uid, encryptedState, prismPub, _settings.Key);
                 _userService.Create(user);
                 return Ok(response);
             }
